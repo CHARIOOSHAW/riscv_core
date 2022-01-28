@@ -1,0 +1,50 @@
+{
+    "std": [
+        "std",
+        "reYIK",
+        "module",
+        1
+    ],
+    "commit": [
+        "commit",
+        "kWEBF",
+        "module",
+        2
+    ],
+    "decoder": [
+        "decoder",
+        "zf0bY",
+        "module",
+        3
+    ],
+    "excp_dbg": [
+        "excp_dbg",
+        "S3FV3",
+        "module",
+        4
+    ],
+    "ifu_top": [
+        "ifu_top",
+        "He9nS",
+        "module",
+        5
+    ],
+    "wbck": [
+        "wbck",
+        "Da1cw",
+        "module",
+        6
+    ],
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
+        "module",
+        8
+    ],
+    "sim_core_top": [
+        "sim_core_top",
+        "Jm6Rb",
+        "module",
+        7
+    ]
+}

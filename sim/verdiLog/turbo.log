@@ -1,0 +1,3 @@
+Command Line: /home/synopsys/verdi/Verdi_O-2018.09-SP2/platform/LINUXAMD64/bin/Novas -f /home/ICer/shaw/riscv_core/filelist/filelist.f -top core_top
+uname(Linux IC_EDA 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64)
+au time 129.461902 7.417241 3.403293 delta 922750976 922750976 total 1347833856 1347833856

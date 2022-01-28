@@ -1,0 +1,20 @@
+Command: /home/ICer/shaw/riscv_core/sim/simv_riscv_core -cm line+cond+fsm+branch+tgl -cm_name simv_riscv_core -cm_dir /home/ICer/shaw/riscv_core/sim/simv_riscv_core.vdb +vpdfiles+simv_riscv_core.vpd -l /home/ICer/shaw/riscv_core/log/simv_riscv_core.log
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-1; Runtime version O-2018.09-1;  Jan 28 15:11 2022
+read finished!!!
+Let's go!
+so we finished.
+Interrupt at time 58903645000
+
+quit()
+ invalid command name "quit()"
+Received SIGHUP (signal 1), exiting.
+
+---------------------------------------------------------------------------
+VCS Coverage Metrics: during simulation line, cond, FSM, branch, tgl was monitored
+---------------------------------------------------------------------------
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 58903645000 ps
+CPU Time:    104.700 seconds;       Data structure size:   0.1Mb
+Fri Jan 28 15:13:38 2022
