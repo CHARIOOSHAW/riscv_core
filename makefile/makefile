@@ -18,28 +18,34 @@ VPD_NAME   = +vpdfiles+$(OUTPUT).vpd
 
 #compile command
 VCS = vcs -R \
+			   	+lint=TFIPC-L\
           -full64 \
           -sverilog +v2k -timescale=1ns/1ns \
-	      -debug_all \
-		  +notimingchec \
-	      +nospecify \
-	      +vcs+flush+all \
-		  -fsdb \
-		  +define+FSDB \
-		  +incdir+$(INC_DIR) \
-		  -o $(SIM_DIR)/$(OUTPUT) \
+					-debug_access \
+					-debug_region=cell+lib \
+					-debug_all \
+					+notimingchec \
+					+nospecify \
+					+vcs+flush+all \
+					-fsdb \
+					-kdb \
+					-lca \
+					+define+FSDB \
+					+incdir+$(INC_DIR) \
+					-o $(SIM_DIR)/$(OUTPUT) \
           -f $(FILE_LIST) \
-		  -l $(LOG_DIR)/compile.log
-	      ## $(CM) 
-		  ## $(CM_NAME) 
-		  ## $(CM_DIR) 
+					-l $(LOG_DIR)/compile.log
+					## $(CM) 
+		  		## $(CM_NAME) 
+		  		## $(CM_DIR) 
 
 # simulation command
-SIM = $(SIM_DIR)/$(OUTPUT)                   \
-		-l $(LOG_DIR)/$(OUTPUT).log
+SIM =  $(SIM_DIR)/$(OUTPUT) \
+    -l $(LOG_DIR)/$(OUTPUT).log
  		## $(CM) $(CM_NAME) $(CM_DIR)        
 
-VERDI = verdi -f $(FILE_LIST) \
+VERDI = verdi -2001 \
+							-f $(FILE_LIST) \
               -top $(TOP_MODULE) 
 
 # start compile
@@ -62,5 +68,3 @@ verdi:
 clean:
 	rm -r $(SIM_DIR)
 	mkdir ../sim
-
-

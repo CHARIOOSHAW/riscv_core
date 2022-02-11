@@ -2,7 +2,7 @@ Magic 271485
 Revision Verdi_O-2018.09-SP2
 
 ; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
-viewPort 0 27 3834 799 100 65
+viewPort 0 27 3838 749 296 65
 
 ; File list:
 ; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
@@ -16,7 +16,7 @@ signalSpacing 5
 
 ; windowTimeUnit is used for zoom, cursor & marker
 ; waveform viewport range
-zoom 0.000000 20.200000
+zoom 0.000000 955.956866
 cursor 0.000000
 marker 0.000000
 
@@ -25,7 +25,7 @@ marker 0.000000
 ; visible top row signal index
 top 0
 ; marker line index
-markerPos 0
+markerPos 5
 
 ; event list
 ; addEvent event_name event_expression
@@ -46,7 +46,30 @@ curSTATUS ByChange
 
 
 addGroup "G1"
+activeDirFile "" "/home/ICer/shaw/riscv_core/sim/wave_core_top.fsdb"
+addSignal -h 15 /sim_core_top/CT/rsu/buff1
+addSignal -h 15 -holdScope buff2
+addSignal -h 15 -holdScope clk
+addSignal -h 15 -holdScope rst_n
+addSignal -h 15 -holdScope rst_n_syn
+addGroup "G2"
 
 ; getSignalForm Scope Hierarchy Status
 ; active file of getSignalForm
+activeDirFile "" "/home/ICer/shaw/riscv_core/sim/wave_core_top.fsdb"
+
+GETSIGNALFORM_SCOPE_HIERARCHY_BEGIN
+getSignalForm close
+
+"/sim_core_top"
+"/sim_core_top/CT"
+
+SCOPE_LIST_BEGIN
+"/excp_dbg"
+"/sim_core_top/CT/EXT"
+"/sim_core_top/CT/rsu"
+SCOPE_LIST_END
+
+GETSIGNALFORM_SCOPE_HIERARCHY_END
+
 

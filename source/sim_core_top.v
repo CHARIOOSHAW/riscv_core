@@ -56,14 +56,14 @@ module sim_core_top;
     end
 
     initial begin
-	  #200 $finish();
+	  #1000 $finish();
     end 
 
 
     `ifdef FSDB
         initial begin
             $fsdbDumpfile("wave_core_top.fsdb");
-            $fsdbDumpvars;
+            $fsdbDumpvars(0);
             $display("Dump finished.");
         end
     `endif

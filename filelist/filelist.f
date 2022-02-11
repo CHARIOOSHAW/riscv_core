@@ -34,7 +34,7 @@
 ~/shaw/riscv_core/source/sim_core_top.v
 ~/shaw/riscv_core/source/config.v
 ~/shaw/riscv_core/source/mcu_defines.v
-
+~/shaw/riscv_core/source/rst_syn_unit.v
 
 
 

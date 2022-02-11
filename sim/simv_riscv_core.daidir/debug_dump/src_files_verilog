@@ -29,6 +29,7 @@
 /home/ICer/shaw/riscv_core/source/ralu.v
 /home/ICer/shaw/riscv_core/source/ram_module.v
 /home/ICer/shaw/riscv_core/source/regfile.v
+/home/ICer/shaw/riscv_core/source/rst_syn_unit.v
 /home/ICer/shaw/riscv_core/source/sim_core_top.v
 /home/ICer/shaw/riscv_core/source/sirv_gnrl_dffl.v
 /home/ICer/shaw/riscv_core/source/sirv_gnrl_dfflr.v

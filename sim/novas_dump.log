@@ -111,61 +111,68 @@ ANF: vhdi_node_ist_add_scsd_callback('/home/ICer/shaw/riscv_core/sim/simv_riscv_
 ANF: vhdi_node_ist_get_value_addr('/home/ICer/shaw/riscv_core/sim/simv_riscv_core: undefined symbol: vhdi_node_ist_get_value_addr')
 VCS compile option:
  option[0]: /home/ICer/shaw/riscv_core/sim/simv_riscv_core
- option[1]: +v2k
- option[2]: +notimingchec
- option[3]: +nospecify
- option[4]: +vcs+flush+all
- option[5]: +define+FSDB
- option[6]: -a
- option[7]: /home/ICer/shaw/riscv_core/log/compile.log
- option[8]: /home/synopsys/vcs-mx/O-2018.09-1/linux64/bin/vcs1
- option[9]: -Mcc=gcc
- option[10]: -Mcplusplus=g++
- option[11]: -Masflags=
- option[12]: -Mcfl= -pipe -fPIC -O -I/home/synopsys/vcs-mx/O-2018.09-1/include 
- option[13]: -Mxcflags= -pipe -fPIC -I/home/synopsys/vcs-mx/O-2018.09-1/include
- option[14]: -Mldflags= -rdynamic 
- option[15]: -Mout=/home/ICer/shaw/riscv_core/sim/simv_riscv_core
- option[16]: -Mamsrun=
- option[17]: -Mvcsaceobjs=
- option[18]: -Mobjects= /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libvirsim.so /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/liberrorinf.so /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libsnpsmalloc.so /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libvfs.so 
- option[19]: -Mexternalobj=
- option[20]: -Msaverestoreobj=/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcs_save_restore_new.o
- option[21]: -Mcrt0=
- option[22]: -Mcrtn=
- option[23]: -Mcsrc=
- option[24]: -Msyslibs=/home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/pli.a -ldl 
- option[25]: -l
- option[26]: /home/ICer/shaw/riscv_core/log/compile.log
- option[27]: -Xvcs_run_simv=1
- option[28]: -full64
- option[29]: +v2k
- option[30]: -timescale=1ns/1ns
- option[31]: -debug_access+all+bc
- option[32]: +vpi
- option[33]: +vcsd
- option[34]: +memcbk
- option[35]: +itf+/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcsdp.tab
- option[36]: -debug_region+cell
- option[37]: +notimingchec
- option[38]: +nospecify
- option[39]: +vcs+flush+all
- option[40]: -fsdb
- option[41]: -P
- option[42]: /home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/verdi.tab
- option[43]: +define+FSDB
- option[44]: -o
- option[45]: /home/ICer/shaw/riscv_core/sim/simv_riscv_core
- option[46]: -picarchive
- option[47]: -debug_acc+fsdb
- option[48]: -sverilog
- option[49]: -gen_obj
- option[50]: +incdir+../source
- option[51]: -f
- option[52]: /home/ICer/shaw/riscv_core/filelist/filelist.f
- option[53]: -load
- option[54]: /home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/libnovas.so:FSDBDumpCmd
- option[55]: timescale=1ns/1ns
+ option[1]: +lint=TFIPC-L
+ option[2]: +v2k
+ option[3]: +notimingchec
+ option[4]: +nospecify
+ option[5]: +vcs+flush+all
+ option[6]: -lca
+ option[7]: +define+FSDB
+ option[8]: -a
+ option[9]: /home/ICer/shaw/riscv_core/log/compile.log
+ option[10]: /home/synopsys/vcs-mx/O-2018.09-1/linux64/bin/vcs1
+ option[11]: -Mcc=gcc
+ option[12]: -Mcplusplus=g++
+ option[13]: -Masflags=
+ option[14]: -Mcfl= -pipe -fPIC -O -I/home/synopsys/vcs-mx/O-2018.09-1/include 
+ option[15]: -Mxcflags= -pipe -fPIC -I/home/synopsys/vcs-mx/O-2018.09-1/include
+ option[16]: -Mldflags= -rdynamic 
+ option[17]: -Mout=/home/ICer/shaw/riscv_core/sim/simv_riscv_core
+ option[18]: -Mamsrun=
+ option[19]: -Mvcsaceobjs=
+ option[20]: -Mobjects= /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libvirsim.so /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/liberrorinf.so /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libsnpsmalloc.so /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libvfs.so 
+ option[21]: -Mexternalobj=
+ option[22]: -Msaverestoreobj=/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcs_save_restore_new.o
+ option[23]: -Mcrt0=
+ option[24]: -Mcrtn=
+ option[25]: -Mcsrc=
+ option[26]: -Msyslibs=/home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/pli.a -ldl 
+ option[27]: -l
+ option[28]: /home/ICer/shaw/riscv_core/log/compile.log
+ option[29]: -Xvcs_run_simv=1
+ option[30]: +lint=TFIPC-L
+ option[31]: -full64
+ option[32]: +v2k
+ option[33]: -timescale=1ns/1ns
+ option[34]: -debug_access
+ option[35]: +vpi
+ option[36]: +vcsd1
+ option[37]: +itf+/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcsdp_lite.tab
+ option[38]: -debug_region=cell+lib
+ option[39]: -debug_access+all+bc
+ option[40]: -debug_region+cell
+ option[41]: +notimingchec
+ option[42]: +nospecify
+ option[43]: +vcs+flush+all
+ option[44]: -fsdb
+ option[45]: -P
+ option[46]: /home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/verdi.tab
+ option[47]: -kdb
+ option[48]: -Xufe=2steps
+ option[49]: -lca
+ option[50]: +define+FSDB
+ option[51]: -o
+ option[52]: /home/ICer/shaw/riscv_core/sim/simv_riscv_core
+ option[53]: -picarchive
+ option[54]: -debug_acc+fsdb
+ option[55]: -sverilog
+ option[56]: -gen_obj
+ option[57]: +incdir+../source
+ option[58]: -f
+ option[59]: /home/ICer/shaw/riscv_core/filelist/filelist.f
+ option[60]: -load
+ option[61]: /home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/libnovas.so:FSDBDumpCmd
+ option[62]: timescale=1ns/1ns
 Chronologic Simulation VCS Release O-2018.09-1_Full64
 Linux 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64
 CPU cores: 8
@@ -187,22 +194,23 @@ maxproc		4096
 Runtime environment variables:
 XDG_VTNR=1
 LC_PAPER=zh_CN.UTF-8
-SSH_AGENT_PID=3415
-XDG_SESSION_ID=2
+SSH_AGENT_PID=3081
+XDG_SESSION_ID=1
 HOSTNAME=IC_EDA
 LC_MONETARY=zh_CN.UTF-8
-DBUS_STARTER_ADDRESS=unix:abstract=/tmp/dbus-h3VArCBjnK,guid=baf836f5e831f62e25d15d6061eced19
+DBUS_STARTER_ADDRESS=unix:abstract=/tmp/dbus-1okb8Owdu6,guid=17d6f51a8468c1cc8e9683be6200e0b9
+SNPS_VERDI_INTERNAL_LP_XML_NEW_FLOW=1
 UNAME=/bin/uname
 IMSETTINGS_INTEGRATE_DESKTOP=yes
 SCRNAME=vcs
 VCS_DEPTH=0
-SHELL=/bin/bash
+SHELL=/bin/tcsh
 VTE_VERSION=5204
 XDG_MENU_PREFIX=gnome-
 TERM=xterm-256color
+HOST=IC_EDA
 MAKEFLAGS=
-HISTSIZE=1000
-GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/5c79acde_89de_4ece_bb62_f325904379ed
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/bd1dff89_6e02_4035_a40c_3a14939ee878
 LC_NUMERIC=zh_CN.UTF-8
 VCS_LOG_FILE=/home/ICer/shaw/riscv_core/log/compile.log
 QTDIR=/usr/lib/qt-3.3
@@ -211,25 +219,28 @@ LC_ALL=C
 QT_GRAPHICSSYSTEM_CHECKED=1
 IMSETTINGS_MODULE=none
 USER=ICer
-LS_COLORS=rs=0:di=38;5;27:ln=38;5;51:mh=44;38;5;15:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;232;38;5;3:or=48;5;232;38;5;9:mi=05;48;5;232;38;5;15:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;5;10;38;5;16:ow=48;5;10;38;5;21:st=48;5;21;38;5;15:ex=38;5;34:*.tar=38;5;9:*.tgz=38;5;9:*.arc=38;5;9:*.arj=38;5;9:*.taz=38;5;9:*.lha=38;5;9:*.lz4=38;5;9:*.lzh=38;5;9:*.lzma=38;5;9:*.tlz=38;5;9:*.txz=38;5;9:*.tzo=38;5;9:*.t7z=38;5;9:*.zip=38;5;9:*.z=38;5;9:*.Z=38;5;9:*.dz=38;5;9:*.gz=38;5;9:*.lrz=38;5;9:*.lz=38;5;9:*.lzo=38;5;9:*.xz=38;5;9:*.bz2=38;5;9:*.bz=38;5;9:*.tbz=38;5;9:*.tbz2=38;5;9:*.tz=38;5;9:*.deb=38;5;9:*.rpm=38;5;9:*.jar=38;5;9:*.war=38;5;9:*.ear=38;5;9:*.sar=38;5;9:*.rar=38;5;9:*.alz=38;5;9:*.ace=38;5;9:*.zoo=38;5;9:*.cpio=38;5;9:*.7z=38;5;9:*.rz=38;5;9:*.cab=38;5;9:*.jpg=38;5;13:*.jpeg=38;5;13:*.gif=38;5;13:*.bmp=38;5;13:*.pbm=38;5;13:*.pgm=38;5;13:*.ppm=38;5;13:*.tga=38;5;13:*.xbm=38;5;13:*.xpm=38;5;13:*.tif=38;5;13:*.tiff=38;5;13:*.png=38;5;13:*.svg=38;5;13:*.svgz=38;5;13:*.mng=38;5;13:*.pcx=38;5;13:*.mov=38;5;13:*.mpg=38;5;13:*.mpeg=38;5;13:*.m2v=38;5;13:*.mkv=38;5;13:*.webm=38;5;13:*.ogm=38;5;13:*.mp4=38;5;13:*.m4v=38;5;13:*.mp4v=38;5;13:*.vob=38;5;13:*.qt=38;5;13:*.nuv=38;5;13:*.wmv=38;5;13:*.asf=38;5;13:*.rm=38;5;13:*.rmvb=38;5;13:*.flc=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.xcf=38;5;13:*.xwd=38;5;13:*.yuv=38;5;13:*.cgm=38;5;13:*.emf=38;5;13:*.axv=38;5;13:*.anx=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45:*.axa=38;5;45:*.oga=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:
+GROUP=ICer
+LS_COLORS=rs=0:di=1;34;100:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;33;01:su=37;41:sg=30;43:ca=31;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.tpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.anx=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.axa=00;36:*.oga=00;36:*.spx=00;36:*.xspf=00;36:*.c=01;03;37:*.h=01;03;37:*.v=01;03;37:*.sv=01;03;37:*.cpp=01;03;37:*.pl=01;03;37:*.py=01;03;37:
 LD_LIBRARY_PATH=/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib:/home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64
-GNOME_TERMINAL_SERVICE=:1.251
+GNOME_TERMINAL_SERVICE=:1.127
 SCRIPT_NAME=vcs
 VCS_MX_HOME_INTERNAL=1
 SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+HOSTTYPE=x86_64-linux
 DVE_HOME=/home/synopsys/vcs-mx/O-2018.09-1
 USERNAME=ICer
-SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/3278,unix/unix:/tmp/.ICE-unix/3278
+SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/3094,unix/unix:/tmp/.ICE-unix/3094
 MAKELEVEL=1
 OVA_UUM=0
 MFLAGS=
 VCS_MODE_FLAG=64
 GNOME_SHELL_SESSION_MODE=classic
 DESKTOP_SESSION=gnome-classic
-PATH=.:/home/Xilinx/SDK/2019.1/bin:/home/Xilinx/SDK/2019.1/gnu/microblaze/lin/bin:/home/Xilinx/SDK/2019.1/gnu/arm/lin/bin:/home/Xilinx/SDK/2019.1/gnu/microblaze/linux_toolchain/lin64_le/bin:/home/Xilinx/SDK/2019.1/gnu/aarch32/lin/gcc-arm-linux-gnueabi/bin:/home/Xilinx/SDK/2019.1/gnu/aarch32/lin/gcc-arm-none-eabi/bin:/home/Xilinx/SDK/2019.1/gnu/aarch64/lin/aarch64-linux/bin:/home/Xilinx/SDK/2019.1/gnu/aarch64/lin/aarch64-none/bin:/home/Xilinx/SDK/2019.1/gnu/armr5/lin/gcc-arm-none-eabi/bin:/home/Xilinx/SDK/2019.1/tps/lnx64/cmake-3.3.2/bin:/home/Xilinx/Vivado/2019.1/bin:/home/Xilinx/DocNav:/usr/lib/qt-3.3/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/home/synopsys/pts/O-2018.06-SP1/bin:/home/synopsys/icc2/O-2018.06-SP1/bin:/home/synopsys/syn/O-2018.06-SP1/bin:/home/synopsys/SpyGlass-L2016.06/SPYGLASS_HOME//bin:/home/synopsys/vcs-mx/O-2018.09-1/gui/dve/bin:/home/synopsys/vcs-mx/O-2018.09-1/bin:/home/synopsys/verdi/Verdi_O-2018.09-SP2/bin:/home/synopsys/scl/2018.06/linux64/bin
+PATH=.:/usr/lib/qt-3.3/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/home/synopsys/pts/O-2018.06-SP1/bin:/home/synopsys/icc2/O-2018.06-SP1/bin:/home/synopsys/syn/O-2018.06-SP1/bin:/home/synopsys/SpyGlass-L2016.06/SPYGLASS_HOME//bin:/home/synopsys/vcs-mx/O-2018.09-1/gui/dve/bin:/home/synopsys/vcs-mx/O-2018.09-1/bin:/home/synopsys/verdi/Verdi_O-2018.09-SP2/bin:/home/synopsys/scl/2018.06/linux64/bin:/home/synopsys/pts/O-2018.06-SP1/bin:/home/synopsys/icc2/O-2018.06-SP1/bin:/home/synopsys/syn/O-2018.06-SP1/bin:/home/synopsys/SpyGlass-L2016.06/SPYGLASS_HOME//bin:/home/synopsys/vcs-mx/O-2018.09-1/gui/dve/bin:/home/synopsys/vcs-mx/O-2018.09-1/bin:/home/synopsys/verdi/Verdi_O-2018.09-SP2/bin:/home/synopsys/scl/2018.06/linux64/bin
 MAIL=/var/spool/mail/ICer
 PT_HOME=/home/synopsys/pts/O-2018.06-SP1
 QT_IM_MODULE=ibus
+RV_ROOT=/home/j_tsui/projects/Cores-SweRV-EL2
 VERDI_HOME=/home/synopsys/verdi/Verdi_O-2018.09-SP2
 XDG_SESSION_TYPE=x11
 PWD=/home/ICer/shaw/riscv_core/makefile
@@ -240,27 +251,29 @@ GDM_LANG=zh_CN.UTF-8
 KDEDIRS=/usr
 VCS_ARCH_OVERRIDE=linux
 LC_MEASUREMENT=zh_CN.UTF-8
+TURBO_LOG_DIR=/tmp/vcs_20220211081021_57702
 VMR_MODE_FLAG=64
 GDMSESSION=gnome-classic
 LM_LICENSE_FILE=27000@IC_EDA
-XILINX_VIVADO=/home/Xilinx/Vivado/2019.1
-HISTCONTROL=ignoredups
 VCS_ARG_ADDED_FOR_TMP=1
-SNPS_VCS_TMPDIR=/tmp/vcs_20220128091320_55504
+SNPS_VCS_TMPDIR=/tmp/vcs_20220211081021_57702
 DBUS_STARTER_BUS_TYPE=session
 HOME=/home/ICer
 XDG_SEAT=seat0
 SHLVL=4
+OSTYPE=linux
 ICC2_HOME=/home/synopsys/icc2/O-2018.06-SP1
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
 VCS_COM=/home/synopsys/vcs-mx/O-2018.09-1/linux64/bin/vcs1
+VENDOR=unknown
+MACHTYPE=x86_64
 XDG_SESSION_DESKTOP=gnome-classic
 LOGNAME=ICer
 DC_HOME=/home/synopsys/syn/O-2018.06-SP1
 QTLIB=/usr/lib/qt-3.3/lib
 SPYGLASS_HOME=/home/synopsys/SpyGlass-L2016.06/SPYGLASS_HOME/
 XDG_DATA_DIRS=/home/ICer/.local/share/flatpak/exports/share/:/var/lib/flatpak/exports/share/:/usr/local/share/:/usr/share/
-DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-h3VArCBjnK,guid=baf836f5e831f62e25d15d6061eced19
+DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-1okb8Owdu6,guid=17d6f51a8468c1cc8e9683be6200e0b9
 LESSOPEN=||/usr/bin/lesspipe.sh %s
 SCL_HOME=/home/synopsys/scl/2018.06
 sysc_uni_pwd=/home/ICer/shaw/riscv_core/makefile
@@ -272,7 +285,7 @@ QT_PLUGIN_PATH=/usr/lib64/kde4/plugins:/usr/lib/kde4/plugins
 TOOL_HOME=/home/synopsys/vcs-mx/O-2018.09-1/linux64
 XDG_CURRENT_DESKTOP=GNOME-Classic:GNOME
 LC_TIME=zh_CN.UTF-8
-XAUTHORITY=/run/gdm/auth-for-ICer-pSnOFj/database
+XAUTHORITY=/run/gdm/auth-for-ICer-kkTBOi/database
 COLORTERM=truecolor
 _=/home/ICer/shaw/riscv_core/sim/simv_riscv_core
 OLDPWD=/home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/debug_dump/fsearch
@@ -281,68 +294,74 @@ VCS_PATHMAP_PRELOAD_DONE=1
 VCS_EXEC_DONE=1
 DVE=/home/synopsys/vcs-mx/O-2018.09-1/gui/dve
 SPECMAN_OUTPUT_TO_TTY=1
+VCS_LCAMSG_PRINT_OFF=1
 Runtime command line arguments:
 argv[0]=/home/ICer/shaw/riscv_core/sim/simv_riscv_core
-argv[1]=+v2k
-argv[2]=+notimingchec
-argv[3]=+nospecify
-argv[4]=+vcs+flush+all
-argv[5]=+define+FSDB
-argv[6]=-a
-argv[7]=/home/ICer/shaw/riscv_core/log/compile.log
-292 profile - 100
-          CPU/Mem usage: 0.020 sys,  0.140 user,  250.45M mem
-293 Fri Jan 28 17:13:21 2022
-294 pliAppInit
-295 FSDB_GATE is set.
-296 FSDB_RTL is set.
-297 Enable Parallel Dumping.
-298 pliAppMiscSet: New Sim Round
-299 pliEntryInit
-300 LIBSSCORE=found /home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/lib/LINUXAMD64/libsscore_vcs201809.so through $NOVAS_HOME setting.
-301 FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
-302 (C) 1996 - 2019 by Synopsys, Inc.
-303 sps_call_fsdbDumpfile_main at 0 : /home/ICer/shaw/riscv_core/source/sim_core_top.v(65)
-304 argv[0]: (wave_core_top.fsdb)
-305 *Verdi* : Create FSDB file 'wave_core_top.fsdb'
-306 compile option from '/home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/vcs_rebuild'.
-307   "vcs '-R' '-full64' '-sverilog' '+v2k' '-timescale=1ns/1ns' '-debug_all' '+notimingchec' '+nospecify' '+vcs+flush+all' '-fsdb' '+define+FSDB' '+incdir+../source' '-o' '/home/ICer/shaw/riscv_core/sim/simv_riscv_core' '-f' '/home/ICer/shaw/riscv_core/filelist/filelist.f' '-l' '/home/ICer/shaw/riscv_core/log/compile.log' 2>&1"
-308 FSDB_VCS_ENABLE_FAST_VC is enable
-309 sps_call_fsdbDumpvars_vd_main at 0 : /home/ICer/shaw/riscv_core/source/sim_core_top.v(66)
-310 [spi_vcs_vd_ppi_create_root]: no upf option
-311 FSDB dumper cannot dump UPF related power signal ($power_tree): no ppiPowerNetwork.
-312 *Verdi* : Begin traversing the scopes, layer (0).
-313 *Verdi* : End of traversing.
-314 pliAppHDL_DumpVarComplete traverse var: profile - 
-          CPU/Mem usage: 0.040 sys,  0.150 user,  346.99M mem
-                   incr: 0.010 sys,  0.010 user,  9.01M mem
-                   accu: 0.010 sys,  0.010 user,  9.01M mem
-              accu incr: 0.010 sys,  0.010 user,  9.01M mem
+argv[1]=+lint=TFIPC-L
+argv[2]=+v2k
+argv[3]=+notimingchec
+argv[4]=+nospecify
+argv[5]=+vcs+flush+all
+argv[6]=-lca
+argv[7]=+define+FSDB
+argv[8]=-a
+argv[9]=/home/ICer/shaw/riscv_core/log/compile.log
+308 profile - 100
+          CPU/Mem usage: 0.020 sys,  0.130 user,  253.32M mem
+309 Fri Feb 11 16:10:23 2022
+310 pliAppInit
+311 [pliEnvSetDefaultValueWithLCA] start
+312 [pliEnvSetDefaultValueWithLCA] end
+313 FSDB_GATE is set.
+314 FSDB_RTL is set.
+315 Enable Parallel Dumping.
+316 pliAppMiscSet: New Sim Round
+317 pliEntryInit
+318 LIBSSCORE=found /home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/lib/LINUXAMD64/libsscore_vcs201809.so through $NOVAS_HOME setting.
+319 FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
+320 (C) 1996 - 2019 by Synopsys, Inc.
+321 sps_call_fsdbDumpfile_main at 0 : /home/ICer/shaw/riscv_core/source/sim_core_top.v(65)
+322 argv[0]: (wave_core_top.fsdb)
+323 *Verdi* : Create FSDB file 'wave_core_top.fsdb'
+324 compile option from '/home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/vcs_rebuild'.
+325   "vcs '-R' '+lint=TFIPC-L' '-full64' '-sverilog' '+v2k' '-timescale=1ns/1ns' '-debug_access' '-debug_region=cell+lib' '-debug_all' '+notimingchec' '+nospecify' '+vcs+flush+all' '-fsdb' '-kdb' '-lca' '+define+FSDB' '+incdir+../source' '-o' '/home/ICer/shaw/riscv_core/sim/simv_riscv_core' '-f' '/home/ICer/shaw/riscv_core/filelist/filelist.f' '-l' '/home/ICer/shaw/riscv_core/log/compile.log' 2>&1"
+326 FSDB_VCS_ENABLE_FAST_VC is enable
+327 sps_call_fsdbDumpvars_vd_main at 0 : /home/ICer/shaw/riscv_core/source/sim_core_top.v(66)
+328 argv[0]: (0)
+329 [spi_vcs_vd_ppi_create_root]: no upf option
+330 FSDB dumper cannot dump UPF related power signal ($power_tree): no ppiPowerNetwork.
+331 *Verdi* : Begin traversing the scopes, layer (0).
+332 *Verdi* : End of traversing.
+333 pliAppHDL_DumpVarComplete traverse var: profile - 
+          CPU/Mem usage: 0.040 sys,  0.150 user,  349.88M mem
+                   incr: 0.010 sys,  0.010 user,  9.00M mem
+                   accu: 0.010 sys,  0.010 user,  9.00M mem
+              accu incr: 0.010 sys,  0.010 user,  9.00M mem
 
-          Count usage: 1708 var,  1095 idcode,  171 callback
-                 incr: 1708 var,  1095 idcode,  171 callback
-                 accu: 1708 var,  1095 idcode,  171 callback
-            accu incr: 1708 var,  1095 idcode,  171 callback
-315 Fri Jan 28 17:13:21 2022
-316 pliAppHDL_DumpVarComplete: profile - 
-          CPU/Mem usage: 0.040 sys,  0.150 user,  348.05M mem
+          Count usage: 1714 var,  1099 idcode,  173 callback
+                 incr: 1714 var,  1099 idcode,  173 callback
+                 accu: 1714 var,  1099 idcode,  173 callback
+            accu incr: 1714 var,  1099 idcode,  173 callback
+334 Fri Feb 11 16:10:23 2022
+335 pliAppHDL_DumpVarComplete: profile - 
+          CPU/Mem usage: 0.040 sys,  0.150 user,  350.93M mem
                    incr: 0.000 sys,  0.000 user,  1.05M mem
-                   accu: 0.010 sys,  0.010 user,  10.06M mem
+                   accu: 0.010 sys,  0.010 user,  10.05M mem
               accu incr: 0.000 sys,  0.000 user,  1.05M mem
 
-          Count usage: 1708 var,  1095 idcode,  171 callback
+          Count usage: 1714 var,  1099 idcode,  173 callback
                  incr: 0 var,  0 idcode,  0 callback
-                 accu: 1708 var,  1095 idcode,  171 callback
+                 accu: 1714 var,  1099 idcode,  173 callback
             accu incr: 0 var,  0 idcode,  0 callback
-317 Fri Jan 28 17:13:21 2022
-318 End of simulation at 200
-319 Fri Jan 28 17:13:21 2022
-320 Begin FSDB profile info:
-321 FSDB Writer : bc1(156) bcn(273) mtf/stf(0/0)
-FSDB Writer elapsed time : flush(0.003710) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
+336 Fri Feb 11 16:10:23 2022
+337 End of simulation at 1000
+338 Fri Feb 11 16:10:23 2022
+339 Begin FSDB profile info:
+340 FSDB Writer : bc1(533) bcn(1121) mtf/stf(0/0)
+FSDB Writer elapsed time : flush(0.003573) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
 FSDB Writer cpu time : MT Compression : 0
-322 End FSDB profile info
-323 Parallel profile    -  Flush:3 Expand:0 ProduceWait:0 ConsumerWait:0 BlockUsed:0
-324                        ProduceTime:0.206275108 ConsumerTime:0.000000000 Buffer:64MB
-325 SimExit
-326 Sim process exit
+341 End FSDB profile info
+342 Parallel profile    -  Flush:3 Expand:0 ProduceWait:0 ConsumerWait:0 BlockUsed:0
+343                        ProduceTime:0.204065674 ConsumerTime:0.000000000 Buffer:64MB
+344 SimExit
+345 Sim process exit

@@ -3,16 +3,16 @@
 0 /home/synopsys/vcs-mx/O-2018.09-1/etc/systemverilog/mcu_defines.v
 0 config.v
 0 /home/synopsys/vcs-mx/O-2018.09-1/etc/systemverilog/config.v
-43
+48
 +define+FSDB
 +incdir+../source
-+itf+/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcsdp.tab
-+memcbk
++itf+/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcsdp_lite.tab
++lint=TFIPC-L
 +nospecify
 +notimingchec
 +v2k
 +vcs+flush+all
-+vcsd
++vcsd1
 +vpi
 -Mamsrun=
 -Masflags=
@@ -31,15 +31,20 @@
 -Mvcsaceobjs=
 -Mxcflags= -pipe -fPIC -I/home/synopsys/vcs-mx/O-2018.09-1/include
 -P
+-Xufe=2steps
 -Xvcs_run_simv=1
 -debug_acc+fsdb
+-debug_access
 -debug_access+all+bc
 -debug_region+cell
+-debug_region=cell+lib
 -f /home/ICer/shaw/riscv_core/filelist/filelist.f
 -fsdb
 -full64
 -gen_obj
+-kdb
 -l
+-lca
 -o /home/ICer/shaw/riscv_core/sim/simv_riscv_core
 -picarchive
 -sverilog
@@ -47,27 +52,28 @@
 /home/ICer/shaw/riscv_core/log/compile.log
 /home/synopsys/vcs-mx/O-2018.09-1/linux64/bin/vcs1
 /home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/verdi.tab
-71
+76
 sysc_uni_pwd=/home/ICer/shaw/riscv_core/makefile
 XMODIFIERS=@im=ibus
-XILINX_VIVADO=/home/Xilinx/Vivado/2019.1
 XDG_VTNR=1
 XDG_SESSION_TYPE=x11
-XDG_SESSION_ID=2
+XDG_SESSION_ID=1
 XDG_SESSION_DESKTOP=gnome-classic
 XDG_SEAT=seat0
 XDG_RUNTIME_DIR=/run/user/1000
 XDG_MENU_PREFIX=gnome-
 XDG_DATA_DIRS=/home/ICer/.local/share/flatpak/exports/share/:/var/lib/flatpak/exports/share/:/usr/local/share/:/usr/share/
 XDG_CURRENT_DESKTOP=GNOME-Classic:GNOME
-XAUTHORITY=/run/gdm/auth-for-ICer-pSnOFj/database
+XAUTHORITY=/run/gdm/auth-for-ICer-kkTBOi/database
 WINDOWPATH=1
 VTE_VERSION=5204
 VMR_MODE_FLAG=64
 VERDI_HOME=/home/synopsys/verdi/Verdi_O-2018.09-SP2
+VENDOR=unknown
 VCS_MX_HOME_INTERNAL=1
 VCS_MODE_FLAG=64
 VCS_LOG_FILE=/home/ICer/shaw/riscv_core/log/compile.log
+VCS_LCAMSG_PRINT_OFF=1
 VCS_HOME=/home/synopsys/vcs-mx/O-2018.09-1
 VCS_DEPTH=0
 VCS_ARG_ADDED_FOR_TMP=1
@@ -77,12 +83,14 @@ USERNAME=ICer
 UNAME=/bin/uname
 TOOL_HOME=/home/synopsys/vcs-mx/O-2018.09-1/linux64
 SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
-SSH_AGENT_PID=3415
+SSH_AGENT_PID=3081
 SPYGLASS_HOME=/home/synopsys/SpyGlass-L2016.06/SPYGLASS_HOME/
-SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/3278,unix/unix:/tmp/.ICE-unix/3278
+SNPS_VERDI_INTERNAL_LP_XML_NEW_FLOW=1
+SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/3094,unix/unix:/tmp/.ICE-unix/3094
 SCRNAME=vcs
 SCRIPT_NAME=vcs
 SCL_HOME=/home/synopsys/scl/2018.06
+RV_ROOT=/home/j_tsui/projects/Cores-SweRV-EL2
 QT_PLUGIN_PATH=/usr/lib64/kde4/plugins:/usr/lib/kde4/plugins
 QT_IM_MODULE=ibus
 QT_GRAPHICSSYSTEM_CHECKED=1
@@ -91,6 +99,7 @@ QTINC=/usr/lib/qt-3.3/include
 QTDIR=/usr/lib/qt-3.3
 PT_HOME=/home/synopsys/pts/O-2018.06-SP1
 OVA_UUM=0
+OSTYPE=linux
 MFLAGS=
 MAKELEVEL=1
 MAKEFLAGS=
@@ -105,9 +114,10 @@ KDEDIRS=/usr
 IMSETTINGS_MODULE=none
 IMSETTINGS_INTEGRATE_DESKTOP=yes
 ICC2_HOME=/home/synopsys/icc2/O-2018.06-SP1
-HISTCONTROL=ignoredups
-GNOME_TERMINAL_SERVICE=:1.251
-GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/5c79acde_89de_4ece_bb62_f325904379ed
+HOSTTYPE=x86_64-linux
+GROUP=ICer
+GNOME_TERMINAL_SERVICE=:1.127
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/bd1dff89_6e02_4035_a40c_3a14939ee878
 GNOME_SHELL_SESSION_MODE=classic
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
 GDM_LANG=zh_CN.UTF-8
@@ -116,16 +126,17 @@ DVE_HOME=/home/synopsys/vcs-mx/O-2018.09-1
 DESKTOP_SESSION=gnome-classic
 DC_HOME=/home/synopsys/syn/O-2018.06-SP1
 DBUS_STARTER_BUS_TYPE=session
-DBUS_STARTER_ADDRESS=unix:abstract=/tmp/dbus-h3VArCBjnK,guid=baf836f5e831f62e25d15d6061eced19
-DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-h3VArCBjnK,guid=baf836f5e831f62e25d15d6061eced19
+DBUS_STARTER_ADDRESS=unix:abstract=/tmp/dbus-1okb8Owdu6,guid=17d6f51a8468c1cc8e9683be6200e0b9
+DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-1okb8Owdu6,guid=17d6f51a8468c1cc8e9683be6200e0b9
 COLORTERM=truecolor
 0
-41
+42
 1632385309 ../source/config.v
 1631859933 ../source/mcu_defines.v
+1644566905 /home/ICer/shaw/riscv_core/source/rst_syn_unit.v
 1631859933 /home/ICer/shaw/riscv_core/source/mcu_defines.v
 1632385309 /home/ICer/shaw/riscv_core/source/config.v
-1643359448 /home/ICer/shaw/riscv_core/source/sim_core_top.v
+1644234140 /home/ICer/shaw/riscv_core/source/sim_core_top.v
 1643359481 /home/ICer/shaw/riscv_core/source/wbck.v
 1643359472 /home/ICer/shaw/riscv_core/source/sirv_gnrl_dffr.v
 1643359462 /home/ICer/shaw/riscv_core/source/sirv_gnrl_dfflr.v
@@ -154,18 +165,18 @@ COLORTERM=truecolor
 1643359165 /home/ICer/shaw/riscv_core/source/decoder.v
 1643359152 /home/ICer/shaw/riscv_core/source/csr_ctrl.v
 1643359136 /home/ICer/shaw/riscv_core/source/csr.v
-1643359126 /home/ICer/shaw/riscv_core/source/core_top.v
+1644566995 /home/ICer/shaw/riscv_core/source/core_top.v
 1643359111 /home/ICer/shaw/riscv_core/source/commit.v
 1643359079 /home/ICer/shaw/riscv_core/source/bjp.v
 1643359068 /home/ICer/shaw/riscv_core/source/alu_top.v
 1643359058 /home/ICer/shaw/riscv_core/source/agu.v
-1643360573 /home/ICer/shaw/riscv_core/filelist/filelist.f
+1644566320 /home/ICer/shaw/riscv_core/filelist/filelist.f
 1550753332 /home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/verdi.tab
-1539400757 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcsdp.tab
+1539400757 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcsdp_lite.tab
 4
 1539402341 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libvirsim.so
 1539401183 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/liberrorinf.so
 1539401125 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libsnpsmalloc.so
 1539401175 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libvfs.so
-1643361201 /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir
+1644567023 /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir
 -1 partitionlib

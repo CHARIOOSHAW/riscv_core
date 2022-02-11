@@ -1,6 +1,7 @@
 *design* DebussyLib (btIdent Verdi_O-2018.09-SP2)
 Command arguments:
     +define+verilog
+    -2001
     -f /home/ICer/shaw/riscv_core/filelist/filelist.f
         ~/shaw/riscv_core/source/agu.v
         ~/shaw/riscv_core/source/alu_top.v
@@ -38,6 +39,7 @@ Command arguments:
         ~/shaw/riscv_core/source/sim_core_top.v
         ~/shaw/riscv_core/source/config.v
         ~/shaw/riscv_core/source/mcu_defines.v
+        ~/shaw/riscv_core/source/rst_syn_unit.v
     -top
     core_top
 

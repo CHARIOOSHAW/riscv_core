@@ -1,0 +1,7 @@
+Command Line: /home/synopsys/vcs-mx/O-2018.09-1/linux64/bin/elabcom -logdir /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/elabcomLog -simvdaidir /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir -lib /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/work -saveLevel -elab /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/kdb -simflow -simdir /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/kdb_libs -top excp_dbg sim_core_top -ssz -ssz -ssz -ssv -ssy -Lf work +disable_message+C00380+C00381 +disable_message+C00388+C00389
+uname(Linux IC_EDA 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64)
+[INFO] error/warning message 'C00380' has been suppressed.
+[INFO] error/warning message 'C00381' has been suppressed.
+[INFO] error/warning message 'C00388' has been suppressed.
+[INFO] error/warning message 'C00389' has been suppressed.
+au time 0.039894 0.023690 0.009836 delta 96890880 96890880 total 188518400 188518400

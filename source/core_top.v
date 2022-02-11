@@ -57,7 +57,8 @@ module core_top(
     wire [`PC_SIZE-1:0] epc_r            ;
     wire                pc_vld_4irqexcp  ;
     wire [`PC_SIZE-1:0] mtvec_r          ;
-    wire                exu_ifu_excp     ;    
+    wire                exu_ifu_excp     ;  
+    wire                rst_n_syn        ;
 
     ifu_top IFT (
 
@@ -83,7 +84,7 @@ module core_top(
         .ifu_o_wbck_epc           ( epc_r                       ),
                              
         .clk                      ( clk                         ),
-        .rst_n                    ( rst_n                       )
+        .rst_n                    ( rst_n_syn                   )
     );
 
 
@@ -127,8 +128,21 @@ module core_top(
         
         .clk                       ( clk                        ),
         .clk_aon                   ( clk_aon                    ),
-        .rst_n                     ( rst_n                      )
+        .rst_n                     ( rst_n_syn                  )
     );
+
+    //////////////////////////////////////////////////////////////////////////////
+    // U3: rst_syn
+    // Description: external rst_n converter
+    //////////////////////////////////////////////////////////////////////////////
+    rst_syn_unit rsu(
+      .clk                         ( clk                        ),
+      .rst_n                       ( rst_n                      ),
+    
+      .rst_n_syn                   ( rst_n_syn                  )
+    );
+
+
 
 
 endmodule

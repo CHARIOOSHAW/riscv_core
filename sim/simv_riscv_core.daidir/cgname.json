@@ -5,6 +5,12 @@
         "module",
         1
     ],
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
+        "module",
+        8
+    ],
     "commit": [
         "commit",
         "kWEBF",
@@ -29,22 +35,16 @@
         "module",
         5
     ],
-    "wbck": [
-        "wbck",
-        "Da1cw",
-        "module",
-        6
-    ],
-    "...MASTER...": [
-        "SIM",
-        "amcQw",
-        "module",
-        8
-    ],
     "sim_core_top": [
         "sim_core_top",
         "Jm6Rb",
         "module",
         7
+    ],
+    "wbck": [
+        "wbck",
+        "Da1cw",
+        "module",
+        6
     ]
 }
