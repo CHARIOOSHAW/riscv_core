@@ -117,7 +117,7 @@ ICC2_HOME=/home/synopsys/icc2/O-2018.06-SP1
 HOSTTYPE=x86_64-linux
 GROUP=ICer
 GNOME_TERMINAL_SERVICE=:1.127
-GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/bd1dff89_6e02_4035_a40c_3a14939ee878
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/4cdb3bac_7917_4ee4_8a33_9cc98e3d0ebd
 GNOME_SHELL_SESSION_MODE=classic
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
 GDM_LANG=zh_CN.UTF-8
@@ -178,5 +178,5 @@ COLORTERM=truecolor
 1539401183 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/liberrorinf.so
 1539401125 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libsnpsmalloc.so
 1539401175 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libvfs.so
-1644567023 /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir
+1644568672 /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir
 -1 partitionlib

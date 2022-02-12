@@ -1,2 +1,45 @@
-## no-load checking 
-## This check is used to simplify the structure inside V file. 
+## ck1. no-load checking 
+##      The check is used to simplify the structure inside V file.
+#
+
+# .V FILE STRUCTURE
+core_top |
+         |
+         |---- ifu_top |
+         |             |---- otp4k8 (rtl-level flash model, changeable)
+         |             |---- ifu
+         |             |---- PC
+         |
+         |---- exu_top |
+         |             |---- alu_top |
+         |             |             |---- agu
+         |             |             |---- bjp
+         |             |             |---- csr_ctrl
+         |             |             |---- muldiv_top |
+         |             |             |                |---- mul
+         |             |             |                |---- div
+         |             |             |
+         |             |             |---- ralu | 
+         |             |                        |---- micro_adder_unit
+         |             |
+         |             |---- commit |
+         |             |            |---- exu_excp_top |
+         |             |                               |---- exu_aluexcp  
+         |             |                               |---- excp_cmt_csr   
+         |             |                               |---- excp_irq  
+         |             |                               |---- excp_wfi 
+         |             |                               |---- excp_dbg (undone)
+         |             |                               |-----excp_tmr_irq (undone)
+         |             |             
+         |             |---- csr
+         |             |---- decoder
+         |             |---- multi_counter
+         |             |---- mem_top |
+         |             |             |---- lsu_ctrl  
+         |             |             |---- ram_db (rtl-level sram model, changeable)
+         |             |              
+         |             |---- regfile
+         |             |---- wbck
+         |
+         |
+         |---- rst_syn_unit

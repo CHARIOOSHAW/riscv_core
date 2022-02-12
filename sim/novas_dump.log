@@ -210,7 +210,7 @@ XDG_MENU_PREFIX=gnome-
 TERM=xterm-256color
 HOST=IC_EDA
 MAKEFLAGS=
-GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/bd1dff89_6e02_4035_a40c_3a14939ee878
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/4cdb3bac_7917_4ee4_8a33_9cc98e3d0ebd
 LC_NUMERIC=zh_CN.UTF-8
 VCS_LOG_FILE=/home/ICer/shaw/riscv_core/log/compile.log
 QTDIR=/usr/lib/qt-3.3
@@ -251,12 +251,12 @@ GDM_LANG=zh_CN.UTF-8
 KDEDIRS=/usr
 VCS_ARCH_OVERRIDE=linux
 LC_MEASUREMENT=zh_CN.UTF-8
-TURBO_LOG_DIR=/tmp/vcs_20220211081021_57702
+TURBO_LOG_DIR=/tmp/vcs_20220211083750_62996
 VMR_MODE_FLAG=64
 GDMSESSION=gnome-classic
 LM_LICENSE_FILE=27000@IC_EDA
 VCS_ARG_ADDED_FOR_TMP=1
-SNPS_VCS_TMPDIR=/tmp/vcs_20220211081021_57702
+SNPS_VCS_TMPDIR=/tmp/vcs_20220211083750_62996
 DBUS_STARTER_BUS_TYPE=session
 HOME=/home/ICer
 XDG_SEAT=seat0
@@ -307,8 +307,8 @@ argv[7]=+define+FSDB
 argv[8]=-a
 argv[9]=/home/ICer/shaw/riscv_core/log/compile.log
 308 profile - 100
-          CPU/Mem usage: 0.020 sys,  0.130 user,  253.32M mem
-309 Fri Feb 11 16:10:23 2022
+          CPU/Mem usage: 0.020 sys,  0.140 user,  253.32M mem
+309 Fri Feb 11 16:37:52 2022
 310 pliAppInit
 311 [pliEnvSetDefaultValueWithLCA] start
 312 [pliEnvSetDefaultValueWithLCA] end
@@ -334,34 +334,34 @@ argv[9]=/home/ICer/shaw/riscv_core/log/compile.log
 332 *Verdi* : End of traversing.
 333 pliAppHDL_DumpVarComplete traverse var: profile - 
           CPU/Mem usage: 0.040 sys,  0.150 user,  349.88M mem
-                   incr: 0.010 sys,  0.010 user,  9.00M mem
-                   accu: 0.010 sys,  0.010 user,  9.00M mem
-              accu incr: 0.010 sys,  0.010 user,  9.00M mem
+                   incr: 0.000 sys,  0.010 user,  9.00M mem
+                   accu: 0.000 sys,  0.010 user,  9.00M mem
+              accu incr: 0.000 sys,  0.010 user,  9.00M mem
 
           Count usage: 1714 var,  1099 idcode,  173 callback
                  incr: 1714 var,  1099 idcode,  173 callback
                  accu: 1714 var,  1099 idcode,  173 callback
             accu incr: 1714 var,  1099 idcode,  173 callback
-334 Fri Feb 11 16:10:23 2022
+334 Fri Feb 11 16:37:52 2022
 335 pliAppHDL_DumpVarComplete: profile - 
           CPU/Mem usage: 0.040 sys,  0.150 user,  350.93M mem
                    incr: 0.000 sys,  0.000 user,  1.05M mem
-                   accu: 0.010 sys,  0.010 user,  10.05M mem
+                   accu: 0.000 sys,  0.010 user,  10.05M mem
               accu incr: 0.000 sys,  0.000 user,  1.05M mem
 
           Count usage: 1714 var,  1099 idcode,  173 callback
                  incr: 0 var,  0 idcode,  0 callback
                  accu: 1714 var,  1099 idcode,  173 callback
             accu incr: 0 var,  0 idcode,  0 callback
-336 Fri Feb 11 16:10:23 2022
+336 Fri Feb 11 16:37:52 2022
 337 End of simulation at 1000
-338 Fri Feb 11 16:10:23 2022
+338 Fri Feb 11 16:37:52 2022
 339 Begin FSDB profile info:
 340 FSDB Writer : bc1(533) bcn(1121) mtf/stf(0/0)
-FSDB Writer elapsed time : flush(0.003573) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
+FSDB Writer elapsed time : flush(0.003077) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
 FSDB Writer cpu time : MT Compression : 0
 341 End FSDB profile info
 342 Parallel profile    -  Flush:3 Expand:0 ProduceWait:0 ConsumerWait:0 BlockUsed:0
-343                        ProduceTime:0.204065674 ConsumerTime:0.000000000 Buffer:64MB
+343                        ProduceTime:0.204889751 ConsumerTime:0.000000000 Buffer:64MB
 344 SimExit
 345 Sim process exit

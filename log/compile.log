@@ -4,7 +4,7 @@ Command: vcs -R +lint=TFIPC-L -full64 -sverilog +v2k -timescale=1ns/1ns -debug_a
 -f /home/ICer/shaw/riscv_core/filelist/filelist.f -l /home/ICer/shaw/riscv_core/log/compile.log \
 
                          Chronologic VCS (TM)
-        Version O-2018.09-1_Full64 -- Fri Feb 11 16:10:21 2022
+        Version O-2018.09-1_Full64 -- Fri Feb 11 16:37:51 2022
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -220,7 +220,7 @@ fi
 g++  -o /home/ICer/shaw/riscv_core/sim/simv_riscv_core    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv_riscv_core.daidir/ \
 -Wl,-rpath=./simv_riscv_core.daidir/ -Wl,-rpath='$ORIGIN'/simv_riscv_core.daidir//scsim.db.dir \
 -rdynamic  -Wl,-rpath=/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib -L/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib \
-objs/amcQw_d.o   _58448_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o \
+objs/amcQw_d.o   _63742_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o \
 rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lzerosoft_rt_stubs -lvirsim \
 -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcs_tls.o \
 -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive        _vcs_pli_stub_.o   /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcs_save_restore_new.o \
@@ -231,7 +231,7 @@ make[1]: Leaving directory `/home/ICer/shaw/riscv_core/makefile/csrc'
 Command: /home/ICer/shaw/riscv_core/sim/simv_riscv_core +lint=TFIPC-L +v2k +notimingchec +nospecify +vcs+flush+all -lca +define+FSDB -a /home/ICer/shaw/riscv_core/log/compile.log
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-1_Full64; Runtime version O-2018.09-1_Full64;  Feb 11 16:10 2022
+Compiler version O-2018.09-1_Full64; Runtime version O-2018.09-1_Full64;  Feb 11 16:37 2022
 read finished!!!
 Let's go!
 *Verdi* Loading libsscore_vcs201809.so
@@ -247,5 +247,5 @@ $finish at simulation time                 1000
            V C S   S i m u l a t i o n   R e p o r t 
 Time: 1000 ns
 CPU Time:      0.200 seconds;       Data structure size:   0.1Mb
-Fri Feb 11 16:10:23 2022
-CPU time: .776 seconds to compile + .199 seconds to elab + .143 seconds to link + .215 seconds in simulation
+Fri Feb 11 16:37:52 2022
+CPU time: .748 seconds to compile + .188 seconds to elab + .133 seconds to link + .215 seconds in simulation

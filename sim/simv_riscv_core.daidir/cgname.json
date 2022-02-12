@@ -1,21 +1,21 @@
 {
-    "std": [
-        "std",
-        "reYIK",
-        "module",
-        1
-    ],
     "...MASTER...": [
         "SIM",
         "amcQw",
         "module",
         8
     ],
-    "commit": [
-        "commit",
-        "kWEBF",
+    "ifu_top": [
+        "ifu_top",
+        "He9nS",
         "module",
-        2
+        5
+    ],
+    "std": [
+        "std",
+        "reYIK",
+        "module",
+        1
     ],
     "decoder": [
         "decoder",
@@ -23,17 +23,11 @@
         "module",
         3
     ],
-    "excp_dbg": [
-        "excp_dbg",
-        "S3FV3",
+    "commit": [
+        "commit",
+        "kWEBF",
         "module",
-        4
-    ],
-    "ifu_top": [
-        "ifu_top",
-        "He9nS",
-        "module",
-        5
+        2
     ],
     "sim_core_top": [
         "sim_core_top",
@@ -46,5 +40,11 @@
         "Da1cw",
         "module",
         6
+    ],
+    "excp_dbg": [
+        "excp_dbg",
+        "S3FV3",
+        "module",
+        4
     ]
 }
