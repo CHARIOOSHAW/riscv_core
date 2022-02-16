@@ -15,7 +15,7 @@
 // 
 // Revision:
 // Revision 0.01 - File Created
-// Additional Comments: Synchronous unit for rst signals,
+// Additional Comments: The rst_n signal in the core will be unset asynchronously and set synchronously. 
 // 
 //////////////////////////////////////////////////////////////////////////////////
 `include "mcu_defines.v"

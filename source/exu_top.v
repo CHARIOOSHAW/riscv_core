@@ -178,9 +178,13 @@ module exu_top(
     // Connect : DC -> MC, MC -> TOP
     ////////////////////////////////////////////////////////////////////////////
     // wire                        exu_o_exu_ready    ; // exu ready
-    wire [`MAX_DELAY_WIDTH-1:0  ] exu_pc_cycle_count;
-    wire                          exu_mc_delay_err  ;
-    assign exu_o_unexpected_err = exu_mc_delay_err;
+    wire [`MAX_DELAY_WIDTH-1:0  ] exu_pc_cycle_count ;
+    wire                          exu_mc_delay_err   ;
+    assign exu_o_unexpected_err = exu_mc_delay_err   ;
+
+    wire                          memtop_o_ready     ;
+    wire                          memtop_i_valid     ;
+
 
     multi_counter MC (
         .mc_i_pc_cycle   ( exu_dec_pc_cycle           ),
@@ -189,6 +193,9 @@ module exu_top(
         .mc_o_delay_err  ( exu_mc_delay_err           ),
         .mc_o_exu_ready  ( exu_o_exu_ready            ),
         .count_t         ( exu_pc_cycle_count         ),
+
+        .memtop_enable   ( memtop_i_valid             ),
+        .memtop_ready    ( memtop_o_ready             ),
                             
         .clk             ( clk                        ),
         .rst_n           ( rst_n                      )
@@ -205,7 +212,6 @@ module exu_top(
     ////////////////////////////////////////////////////////////////////////////
 
     // alu - memtop signals
-    wire                          exu_agu_cmd_enable       ;  
     wire                          exu_agu_cmd_read         ;  
     wire                          exu_agu_cmd_write        ;  
     wire                          exu_agu_cmd_usign        ;  
@@ -295,6 +301,8 @@ module exu_top(
     // Connect : AU -> MEMT
     //           MEMT -> CMT
     ////////////////////////////////////////////////////////////////////////////
+    assign memtop_i_valid = exu_agu_cmd_enable; // valid is set when the instr is ld or st. 
+
     mem_top MEMT (
 
         .memtop_i_cmd_enable    ( exu_agu_cmd_enable              ),
@@ -306,7 +314,10 @@ module exu_top(
         .memtop_i_cmd_wdata     ( exu_agu_cmd_wdata               ),
         .memtop_i_cmd_wmask     ( exu_agu_cmd_wmask               ),
         .memtop_i_cmd_misalgn   ( exu_agu_cmd_misalgn             ),
-                                           
+
+        .memtop_o_ready         ( memtop_o_ready                  ),
+        .memtop_i_valid         ( memtop_i_valid                  ),
+
         .lsu_o_wbck_wdata       ( exu_memt_agu_wbck_wdata         ),
         .lsu_o_wbck_err         ( exu_memt_agu_wbck_err           ),
                                  

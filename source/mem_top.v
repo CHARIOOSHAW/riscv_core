@@ -39,8 +39,9 @@ module mem_top(
     output [`XLEN-1:0             ] lsu_o_wbck_wdata      ,
     output                          lsu_o_wbck_err        ,
     
-    // ready
+    // valid & ready
     output                          memtop_o_ready        ,
+    input                           memtop_i_valid        , // from agu
 
     `ifdef TEST_MODE
       // test ports        
@@ -69,6 +70,8 @@ module mem_top(
     wire [`XLEN-1:0               ] lsu_ram_wdata         ;
     wire [`XLEN-1:0               ] lsu_ram_addr          ;
     wire [`XLEN-1:0               ] ram_lsu_rdata         ;
+    wire                            lsu_ram_valid         ;
+    wire                            ram_lsu_ready         ;
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -85,17 +88,19 @@ module mem_top(
         .agu_i_cmd_wmask     (      memtop_i_cmd_wmask      ),
         .agu_i_cmd_misalgn   (      memtop_i_cmd_misalgn    ),
  
-        .lsu_o_wr            (      lsu_ram_wr              ),
-        .lsu_o_rd            (      lsu_ram_rd              ),
-        .lsu_o_wdata         (      lsu_ram_wdata           ),
-        .lsu_o_addr          (      lsu_ram_addr            ),
-        .ram_i_rdata         (      ram_lsu_rdata           ),
+        .lsu_ram_wr          (      lsu_ram_wr              ),
+        .lsu_ram_rd          (      lsu_ram_rd              ),
+        .lsu_ram_wdata       (      lsu_ram_wdata           ),
+        .lsu_ram_addr        (      lsu_ram_addr            ),
+        .ram_lsu_rdata       (      ram_lsu_rdata           ),
+        .lsu_ram_valid       (      lsu_ram_valid           ),
+        .ram_lsu_ready       (      ram_lsu_ready           ),
  
         .lsu_o_wbck_wdata    (      lsu_o_wbck_wdata        ),
         .lsu_o_wbck_err      (      lsu_o_wbck_err          ),
  
         .lsu_o_ready         (      memtop_o_ready          ),
-        .lsu_i_valid         (      1'b1                    ),
+        .lsu_i_valid         (      memtop_i_valid          ),
  
         `ifdef TEST_MODE 
          .ls_nxt_state_t     (      ls_nxt_state_t          ),
@@ -109,7 +114,7 @@ module mem_top(
     
     ////////////////////////////////////////////////////////////////////////////////
     // ram unit
-    wire lsu_ram_cs = memtop_i_cmd_enable & (~lsu_o_wbck_err); // only read or write when the instr is legal.
+    wire lsu_ram_cs = lsu_ram_valid & (~lsu_o_wbck_err); // only read or write when the instr is legal.
 
     ram_db exu_ram_unit (
         .DB_r                (      ram_lsu_rdata           ),
@@ -123,7 +128,8 @@ module mem_top(
         `ifdef TEST_MODE 
          .rd_data_t          (      mem_data_t              ),
         `endif  
- 
+        
+        .ready               (      ram_lsu_ready           ),
         .clk                 (      clk                     )
     );
 

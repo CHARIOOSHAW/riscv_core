@@ -26,6 +26,9 @@ module multi_counter(
     input                             mc_i_ifu_valid ,
     output                            mc_o_delay_err , 
     output                            mc_o_exu_ready ,
+
+    input                             memtop_enable  ,
+    input                             memtop_ready   ,
  
     input                             clk            ,
     input                             rst_n          ,
@@ -36,14 +39,14 @@ module multi_counter(
 
     // Internal signals
     reg    [`MAX_DELAY_WIDTH-1:0]     count      ;
-    wire   [1:0                 ]     curr_state ;
+    reg    [1:0                 ]     curr_state ;
     
 
     // Build a counter.
     // Counter keeps counting which the nxt_state is not IDLE.
     // And it return to 0 when the nxt_state is IDLE.
     always@ (posedge clk or negedge rst_n) begin
-        if (~rst_n) begin: CLR
+        if ((~rst_n)|(memtop_enable)) begin: CLR
             count <= `MAX_DELAY_WIDTH'd1;
         end
 
@@ -65,9 +68,18 @@ module multi_counter(
     // 1. READY (00) : IR has been fully excuted. PC and IR is permitted to refresh.  
     // 2. BUSY  (01) : Current IR is still running.
     // 3. WAIT  (11) : Next IR is not valid yet. Waiting for IFU.
-    assign curr_state  =  (count == mc_i_pc_cycle) & ~mc_i_ifu_valid      ? 2'b11: //WAIT
-                         ~(count == mc_i_pc_cycle)                        ? 2'b01: //BUSY
-                                                                            2'b00; //READY
+    wire integrated_ready = (count == mc_i_pc_cycle) | (memtop_enable & memtop_ready); // when the instr is ld or st, count will be locked at 1 and use external ready from memtop.
+    always@(*) begin
+        if (integrated_ready & ~mc_i_ifu_valid) begin: WAITING
+            curr_state = 2'b11;
+        end
+        else if (~integrated_ready) begin: BUSY
+            curr_state = 2'b01;
+        end
+        else begin: READY
+            curr_state = 2'b00;
+        end
+    end
 
     // Logic output   
     assign mc_o_exu_ready = (curr_state == 2'b00)? 1'b1: 1'b0;                                               

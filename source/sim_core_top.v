@@ -56,7 +56,7 @@ module sim_core_top;
     end
 
     initial begin
-	  #1000 $finish();
+	  #3000 $finish();
     end 
 
 

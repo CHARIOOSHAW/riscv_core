@@ -28,8 +28,8 @@ core_top |
          |             |                               |---- excp_cmt_csr   
          |             |                               |---- excp_irq  
          |             |                               |---- excp_wfi 
-         |             |                               |---- excp_dbg (undone)
-         |             |                               |-----excp_tmr_irq (undone)
+         |             |                               |---- excp_dbg (debug unit, undone)
+         |             |
          |             |             
          |             |---- csr
          |             |---- decoder
@@ -43,3 +43,4 @@ core_top |
          |
          |
          |---- rst_syn_unit
+         |---- irqagent (undone)

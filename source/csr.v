@@ -106,7 +106,7 @@ module csr(
     // Implement MPIE field
 
     wire status_mpie_r;
-        // The MPIE Feilds will be updates when: 
+    // The MPIE Feilds will be updates when: 
     wire status_mpie_ena = 
             // The CSR is written by CSR instructions, write csr
             (wr_mstatus & wbck_csr_wen) | 
@@ -139,7 +139,7 @@ module csr(
     //////////////////////////
     // Implement MIE field
 
-        // The MIE Feilds will be updates same as MPIE
+    // The MIE Feilds will be updates same as MPIE
     wire status_mie_ena  = status_mpie_ena; 
     wire status_mie_nxt  = 
         //   See Priv SPEC:
@@ -176,11 +176,11 @@ module csr(
     //  See Priv SPEC:
     //    XS field is read-only
     //    The XS field represents a summary of all extensions' status
-        // But in E200 we implement XS exactly same as FS to make it usable by software to 
-        //   disable extended accelerators
+    // But in E200 we implement XS exactly same as FS to make it usable by software to 
+    //   disable extended accelerators
     `ifndef HAS_EAI
        // If no EAI coprocessor interface configured, the XS is just hardwired to 0
-    assign status_xs_r = 2'b00;
+       assign status_xs_r = 2'b00;
     `endif
 
     //////////////////////////
@@ -188,7 +188,7 @@ module csr(
     //
     `ifndef HAS_FPU
        // If no FPU configured, the FS is just hardwired to 0
-    assign status_fs_r = 2'b00; 
+       assign status_fs_r = 2'b00; 
     `endif
 
     //////////////////////////
@@ -316,7 +316,6 @@ module csr(
     wire rd_minstreth    = csr_rd_en & sel_minstreth;
 
     // 7 self-def CSRs
-
     `ifdef SUPPORT_MCYCLE_MINSTRET //{
         wire wr_mcycle        = csr_wr_en & sel_mcycle    ;
         wire wr_mcycleh       = csr_wr_en & sel_mcycleh   ;
@@ -493,8 +492,8 @@ module csr(
 
     /////////////////////////////////////////////////////////////////////
     //  Generate the Read path
-      //Currently we only support the M mode to simplify the implementation and 
-      //      reduce the gatecount because we are a privite core
+    //Currently we only support the M mode to simplify the implementation and 
+    //      reduce the gatecount because we are a privite core
     assign read_csr_dat = `XLEN'b0 
                    | ({`XLEN{rd_mstatus    }} & csr_mstatus    )
                    | ({`XLEN{rd_mie        }} & csr_mie        )

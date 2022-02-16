@@ -52,7 +52,7 @@
 /home/ICer/shaw/riscv_core/log/compile.log
 /home/synopsys/vcs-mx/O-2018.09-1/linux64/bin/vcs1
 /home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/verdi.tab
-76
+74
 sysc_uni_pwd=/home/ICer/shaw/riscv_core/makefile
 XMODIFIERS=@im=ibus
 XDG_VTNR=1
@@ -116,8 +116,8 @@ IMSETTINGS_INTEGRATE_DESKTOP=yes
 ICC2_HOME=/home/synopsys/icc2/O-2018.06-SP1
 HOSTTYPE=x86_64-linux
 GROUP=ICer
-GNOME_TERMINAL_SERVICE=:1.127
-GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/4cdb3bac_7917_4ee4_8a33_9cc98e3d0ebd
+GNOME_TERMINAL_SERVICE=:1.220
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/c2cf0460_62ec_4a63_82d5_aa66d9f64366
 GNOME_SHELL_SESSION_MODE=classic
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
 GDM_LANG=zh_CN.UTF-8
@@ -125,36 +125,34 @@ GDMSESSION=gnome-classic
 DVE_HOME=/home/synopsys/vcs-mx/O-2018.09-1
 DESKTOP_SESSION=gnome-classic
 DC_HOME=/home/synopsys/syn/O-2018.06-SP1
-DBUS_STARTER_BUS_TYPE=session
-DBUS_STARTER_ADDRESS=unix:abstract=/tmp/dbus-1okb8Owdu6,guid=17d6f51a8468c1cc8e9683be6200e0b9
 DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-1okb8Owdu6,guid=17d6f51a8468c1cc8e9683be6200e0b9
 COLORTERM=truecolor
 0
 42
 1632385309 ../source/config.v
 1631859933 ../source/mcu_defines.v
-1644566905 /home/ICer/shaw/riscv_core/source/rst_syn_unit.v
+1644764624 /home/ICer/shaw/riscv_core/source/rst_syn_unit.v
 1631859933 /home/ICer/shaw/riscv_core/source/mcu_defines.v
 1632385309 /home/ICer/shaw/riscv_core/source/config.v
-1644234140 /home/ICer/shaw/riscv_core/source/sim_core_top.v
+1645015168 /home/ICer/shaw/riscv_core/source/sim_core_top.v
 1643359481 /home/ICer/shaw/riscv_core/source/wbck.v
 1643359472 /home/ICer/shaw/riscv_core/source/sirv_gnrl_dffr.v
 1643359462 /home/ICer/shaw/riscv_core/source/sirv_gnrl_dfflr.v
 1643359455 /home/ICer/shaw/riscv_core/source/sirv_gnrl_dffl.v
-1634386980 /home/ICer/shaw/riscv_core/source/ram_module.v
+1645013497 /home/ICer/shaw/riscv_core/source/ram_module.v
 1643359442 /home/ICer/shaw/riscv_core/source/regfile.v
 1643359429 /home/ICer/shaw/riscv_core/source/ralu.v
 1643359421 /home/ICer/shaw/riscv_core/source/PC.v
-1643359413 /home/ICer/shaw/riscv_core/source/otp4k8.v
-1643359405 /home/ICer/shaw/riscv_core/source/multi_counter.v
+1644988431 /home/ICer/shaw/riscv_core/source/otp4k8.v
+1644989394 /home/ICer/shaw/riscv_core/source/multi_counter.v
 1643359399 /home/ICer/shaw/riscv_core/source/muldiv_top.v
 1643359391 /home/ICer/shaw/riscv_core/source/mul.v
 1643359385 /home/ICer/shaw/riscv_core/source/micro_adder_unit.v
-1643359374 /home/ICer/shaw/riscv_core/source/mem_top.v
-1643359362 /home/ICer/shaw/riscv_core/source/lsu_ctrl.v
+1644981542 /home/ICer/shaw/riscv_core/source/mem_top.v
+1645017563 /home/ICer/shaw/riscv_core/source/lsu_ctrl.v
 1643359341 /home/ICer/shaw/riscv_core/source/ifu_top.v
 1643359349 /home/ICer/shaw/riscv_core/source/ifu.v
-1643359333 /home/ICer/shaw/riscv_core/source/exu_top.v
+1644909806 /home/ICer/shaw/riscv_core/source/exu_top.v
 1643359322 /home/ICer/shaw/riscv_core/source/exu_excp_top.v
 1643359298 /home/ICer/shaw/riscv_core/source/excp_wfi.v
 1643359219 /home/ICer/shaw/riscv_core/source/excp_irq.v
@@ -164,7 +162,7 @@ COLORTERM=truecolor
 1643359176 /home/ICer/shaw/riscv_core/source/div.v
 1643359165 /home/ICer/shaw/riscv_core/source/decoder.v
 1643359152 /home/ICer/shaw/riscv_core/source/csr_ctrl.v
-1643359136 /home/ICer/shaw/riscv_core/source/csr.v
+1644825634 /home/ICer/shaw/riscv_core/source/csr.v
 1644566995 /home/ICer/shaw/riscv_core/source/core_top.v
 1643359111 /home/ICer/shaw/riscv_core/source/commit.v
 1643359079 /home/ICer/shaw/riscv_core/source/bjp.v
@@ -178,5 +176,5 @@ COLORTERM=truecolor
 1539401183 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/liberrorinf.so
 1539401125 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libsnpsmalloc.so
 1539401175 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libvfs.so
-1644568672 /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir
+1645017590 /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir
 -1 partitionlib

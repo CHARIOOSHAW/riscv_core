@@ -20,19 +20,20 @@ module otp4k8(
     input  [31:0]      pa          //otp address bus
 
 );
-
+    
     reg  [31:0] mem [50:0];
     wire [31:0] pa_true = {2'b00,pa[31:2]};
+    wire [31:0] mem_t;
 
     initial begin
-        $readmemb("../instr/instr_new.txt",mem);
+        $readmemb("../instr/instr.txt",mem);
         $display("read finished!!!");
     end 
 
     //----------------------------------usre program	   
     //usr nomal mode read
     assign pdataout = mem[pa_true];
-
+    assign mem_t = mem[3];
 
 
 endmodule          

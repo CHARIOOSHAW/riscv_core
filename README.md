@@ -7,6 +7,8 @@ This is a simplified RISC_V core based on E203 which is permitted for learning u
 # Introduction
 This project is intended to design a low-power CPU based on RISC-V architecture with the prototype of hummingbird E203 developed by Bob Hu. Our references are the official documents published by RISC-V Foundation and the technical literature written by Mr. Hu. Due to the limitation of my experience on the field of digital circuit design, many deep-level structures used by advanced processor, such as cache, have not been implemented in this project. Thanks for the technical and environmental support from Mr. Lv, Dr. Ding and Mr. Cui. This project is open to all CPU designers and enthusiasts. Technical discussions are welcomed with the e-mail address of shaojiayuanic@hotmail.com.
 
-
+# Revision
+2022.02.13  v1.0  Initial version;
+2022.02.16  v1.1  Mem_top related units revision;
 
 

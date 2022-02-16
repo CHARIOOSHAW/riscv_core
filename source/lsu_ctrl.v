@@ -34,11 +34,14 @@ module lsu_ctrl(
     input                           agu_i_cmd_misalgn  ,
 
     // data path for ram
-    output                          lsu_o_wr           ,
-    output                          lsu_o_rd           ,
-    output [`XLEN-1:0             ] lsu_o_wdata        , // lsu -> ram, store instrs.
-    output [`PC_SIZE-1:0          ] lsu_o_addr         ,
-    input  [`XLEN-1:0             ] ram_i_rdata        , // ram -> lsu, the 1st step for write.
+    output                          lsu_ram_wr         ,
+    output                          lsu_ram_rd         ,
+    output [`XLEN-1:0             ] lsu_ram_wdata      , // lsu -> ram, store instrs.
+    output [`PC_SIZE-1:0          ] lsu_ram_addr       ,
+    output                          lsu_ram_valid      , // ram enable
+ 
+    input  [`XLEN-1:0             ] ram_lsu_rdata      , // ram -> lsu, the 1st step for write or read.
+    input                           ram_lsu_ready      , // ram -> lsu, data read ready.
 
     // Commit data path
     output [`XLEN-1:0             ] lsu_o_wbck_wdata   , // ram -> lsu -> commit -> rd, load instrs.
@@ -64,26 +67,31 @@ module lsu_ctrl(
     wire [`XLEN-1:0 ] lsu_expend_wmask;
 
     // FSM for read&write enable control.
-    wire [1:0]                     ls_state     ; // 0 read; 1 write;   
+    wire [1:0]                     ls_state     ; // 00/01 read; 10 write;   
     wire [1:0]                     ls_nxt_state ;
+    wire                           shift_enable ; // FSM state shift enable
+    
+    assign shift_enable = ((lsu_i_valid&ram_lsu_ready) & (ls_state == 2'b00)) | // ls_state = read ram 1 st, wait for ready.
+                          ((lsu_i_valid&ram_lsu_ready) & (ls_state == 2'b10)) | // ls_state = write ram 2 nd, wait for ready.
+                          ((ls_state == 2'b01));                                // ls_state = write rf 2 nd, no wait.
 
     sirv_gnrl_dfflr #(.DW(2)) lsu_dff (
-        .lden(1'b1)         ,
-        .dnxt(ls_nxt_state) ,
-        .qout(ls_state)     ,
-        .clk(clk)           ,
-        .rst_n(rst_n)
+        .lden(shift_enable             ) ,
+        .dnxt(ls_nxt_state             ) ,
+        .qout(ls_state                 ) ,
+        .clk (clk                      ) ,
+        .rst_n(rst_n                   )
     );
 
     assign ls_nxt_state  =  (agu_i_cmd_enable & ~lsu_o_wbck_err & agu_i_cmd_write & (ls_state == 2'b00))? 2'b10:
                             (agu_i_cmd_enable & ~lsu_o_wbck_err & agu_i_cmd_read  & (ls_state == 2'b00))? 2'b01:
                             2'b00;
 
-    assign lsu_o_wr      =  (ls_state == 2'b10)? 1'b1: 1'b0;
-    assign lsu_o_rd      =  (ls_state == 2'b00)? 1'b1: 1'b0; // ram excute reading when the state is IDLE and stay silence when state is READ.
+    assign lsu_ram_wr      =  (ls_state == 2'b10)? 1'b1: 1'b0;
+    assign lsu_ram_rd      =  (ls_state == 2'b00)? 1'b1: 1'b0; // ram excute reading when the state is IDLE and stay silence when state is READ.
  
     // To Ram
-    assign lsu_o_addr    =  {2'b00, agu_i_cmd_addr[`XLEN-1:2]};
+    assign lsu_ram_addr    =  {2'b00, agu_i_cmd_addr[`XLEN-1:2]};
 
     // To RAM
     genvar j;
@@ -93,9 +101,9 @@ module lsu_ctrl(
         end
     endgenerate
 
-    assign lsu_o_wdata =  (agu_i_cmd_size == 2'b10)? agu_i_cmd_wdata:
-                          // we should remain the data unchanged if the instr don't intend to write it. 
-                          (agu_i_cmd_wdata & lsu_expend_wmask ) | (ram_i_rdata & ~lsu_expend_wmask);
+    assign lsu_ram_wdata =  (agu_i_cmd_size == 2'b10)? agu_i_cmd_wdata:
+                            // we should remain the data unchanged if the instr don't intend to write it. 
+                            (agu_i_cmd_wdata & lsu_expend_wmask ) | (ram_lsu_rdata & ~lsu_expend_wmask);
 
     // To rd
     // For read operation the rdata have to be reorganized.
@@ -127,22 +135,22 @@ module lsu_ctrl(
     // For b  | highest_8 | higher_8 | lower_8 | lowest_8 |
     // For hw | higher 16 | lower 16 |
     //                                1.                2.              3.
-    assign lsu_o_wbck_wdata =  (({32{~agu_i_cmd_usign & rdata_size_w                    }}) & ram_i_rdata                                        )| // lw
+    assign lsu_o_wbck_wdata =  (({32{~agu_i_cmd_usign & rdata_size_w                    }}) & ram_lsu_rdata                                          )| // lw
 
-                               (({32{agu_i_cmd_usign  & rdata_size_hw & rdata_lower_16  }}) & {{(`XLEN-16){1'b0}},ram_i_rdata[15:0 ]}            )| // lhu lower   16
-                               (({32{agu_i_cmd_usign  & rdata_size_hw & rdata_higher_16 }}) & {{(`XLEN-16){1'b0}},ram_i_rdata[31:16]}            )| // lhu higher  16
-                               (({32{~agu_i_cmd_usign & rdata_size_hw & rdata_lower_16  }}) & {{(`XLEN-16){ram_i_rdata[15]}},ram_i_rdata[15:0]}  )| // lh  lower   16
-                               (({32{~agu_i_cmd_usign & rdata_size_hw & rdata_higher_16 }}) & {{(`XLEN-16){ram_i_rdata[31]}},ram_i_rdata[31:16]} )| // lh  higher  16
+                               (({32{agu_i_cmd_usign  & rdata_size_hw & rdata_lower_16  }}) & {{(`XLEN-16){1'b0}},ram_lsu_rdata[15:0 ]}              )| // lhu lower   16
+                               (({32{agu_i_cmd_usign  & rdata_size_hw & rdata_higher_16 }}) & {{(`XLEN-16){1'b0}},ram_lsu_rdata[31:16]}              )| // lhu higher  16
+                               (({32{~agu_i_cmd_usign & rdata_size_hw & rdata_lower_16  }}) & {{(`XLEN-16){ram_lsu_rdata[15]}},ram_lsu_rdata[15:0]}  )| // lh  lower   16
+                               (({32{~agu_i_cmd_usign & rdata_size_hw & rdata_higher_16 }}) & {{(`XLEN-16){ram_lsu_rdata[31]}},ram_lsu_rdata[31:16]} )| // lh  higher  16
     
-                               (({32{agu_i_cmd_usign  & rdata_size_b  & rdata_lowest_8  }}) & {{(`XLEN-8){1'b0}},ram_i_rdata[7:0   ]}            )| // lbu lowest  8
-                               (({32{agu_i_cmd_usign  & rdata_size_b  & rdata_lower_8   }}) & {{(`XLEN-8){1'b0}},ram_i_rdata[15:8  ]}            )| // lbu lower   8
-                               (({32{agu_i_cmd_usign  & rdata_size_b  & rdata_higher_8  }}) & {{(`XLEN-8){1'b0}},ram_i_rdata[23:16 ]}            )| // lbu higher  8
-                               (({32{agu_i_cmd_usign  & rdata_size_b  & rdata_highest_8 }}) & {{(`XLEN-8){1'b0}},ram_i_rdata[31:24 ]}            )| // lbu higher  8
+                               (({32{agu_i_cmd_usign  & rdata_size_b  & rdata_lowest_8  }}) & {{(`XLEN-8){1'b0}},ram_lsu_rdata[7:0   ]}              )| // lbu lowest  8
+                               (({32{agu_i_cmd_usign  & rdata_size_b  & rdata_lower_8   }}) & {{(`XLEN-8){1'b0}},ram_lsu_rdata[15:8  ]}              )| // lbu lower   8
+                               (({32{agu_i_cmd_usign  & rdata_size_b  & rdata_higher_8  }}) & {{(`XLEN-8){1'b0}},ram_lsu_rdata[23:16 ]}              )| // lbu higher  8
+                               (({32{agu_i_cmd_usign  & rdata_size_b  & rdata_highest_8 }}) & {{(`XLEN-8){1'b0}},ram_lsu_rdata[31:24 ]}              )| // lbu higher  8
 
-                               (({32{~agu_i_cmd_usign & rdata_size_b  & rdata_lowest_8  }}) & {{(`XLEN-8){ram_i_rdata[7]}} ,ram_i_rdata[7:0  ]}  )| // lb  lowest  8
-                               (({32{~agu_i_cmd_usign & rdata_size_b  & rdata_lower_8   }}) & {{(`XLEN-8){ram_i_rdata[15]}},ram_i_rdata[15:8 ]}  )| // lb  lower   8
-                               (({32{~agu_i_cmd_usign & rdata_size_b  & rdata_higher_8  }}) & {{(`XLEN-8){ram_i_rdata[23]}},ram_i_rdata[23:16]}  )| // lb  higher  8
-                               (({32{~agu_i_cmd_usign & rdata_size_b  & rdata_highest_8 }}) & {{(`XLEN-8){ram_i_rdata[31]}},ram_i_rdata[31:24]}  )  // lb  highest 8
+                               (({32{~agu_i_cmd_usign & rdata_size_b  & rdata_lowest_8  }}) & {{(`XLEN-8){ram_lsu_rdata[7]}} ,ram_lsu_rdata[7:0  ]}  )| // lb  lowest  8
+                               (({32{~agu_i_cmd_usign & rdata_size_b  & rdata_lower_8   }}) & {{(`XLEN-8){ram_lsu_rdata[15]}},ram_lsu_rdata[15:8 ]}  )| // lb  lower   8
+                               (({32{~agu_i_cmd_usign & rdata_size_b  & rdata_higher_8  }}) & {{(`XLEN-8){ram_lsu_rdata[23]}},ram_lsu_rdata[23:16]}  )| // lb  higher  8
+                               (({32{~agu_i_cmd_usign & rdata_size_b  & rdata_highest_8 }}) & {{(`XLEN-8){ram_lsu_rdata[31]}},ram_lsu_rdata[31:24]}  )  // lb  highest 8
                                 ;
 
 
@@ -150,7 +158,17 @@ module lsu_ctrl(
     assign lsu_o_wbck_err   =  agu_i_cmd_misalgn;
 
     // handshake interface
-    assign lsu_o_ready      =  ~(ls_state == 2'b00) & lsu_i_valid;
+    // to exu
+    // For mem_top, 
+    // Write : the ready signal is set when the data have been taken out at 2nd state (ready set twice).
+    // Read  : the ready signal is set when enter the 2nd state(ready set once).
+    assign lsu_o_ready      =  ((ls_state == 2'b10) & lsu_i_valid & ram_lsu_ready)|
+                                (ls_state == 2'b01) ;
+
+
+    // to ram
+    assign lsu_ram_valid    =  lsu_i_valid & (~ls_state[0]);                        // For ram, the valid signal is set when the instr is ld or st, and ram need to paticipate in.
+
 
     `ifdef TEST_MODE
         // test ports

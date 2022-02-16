@@ -10,7 +10,9 @@ module ram_db (
     input              wr      , // write signal
     input              clk     , // clk
     input              cs      , // ram select signal
-    input              rd      
+    input              rd      ,
+
+    output             ready
 
 );
 
@@ -27,11 +29,17 @@ module ram_db (
     wire [`XLEN-1:0 ] rd_data_t0 = mem[0];
     wire [`XLEN-1:0 ] rd_data_t1 = mem[1];
     wire [`XLEN-1:0 ] rd_data_t2 = mem[2];
+
+    reg  [1:0       ] mem_count;
+
+    always@(posedge clk or negedge cs) begin
+        if (~cs) 
+            mem_count <= 2'b00;
+        else begin:count
+            mem_count <= mem_count + 2'b01;
+        end
+    end
     
-endmodule    
-        
-   
-   
-
-   
-
+    assign ready = (mem_count == 2'b11) ?1'b1 :1'b0;
+    
+    endmodule
