@@ -370,7 +370,7 @@ saveWaveformStat = TRUE
 savePropStat = FALSE
 savePropDtl = TRUE
 [QtDialog]
-QwUserAskDlg = 1630,947,324,130
+QwUserAskDlg = 1757,838,324,130
 [Relationship]
 hideRecursiceNode = FALSE
 [Session Cache]
@@ -555,7 +555,7 @@ pdmlMacro = ID_BLACK
 font = COURIER12
 annotFont = Helvetica_M_R_10
 [Text.1]
-viewport = 0 0 900 700 45
+viewport = -10 20 3838 1676 45
 [TextPrinter]
 Orientation = Landscape
 Indicator = FALSE
@@ -645,9 +645,9 @@ DefaultLogTimeUnit = "1.000000ns"
 [VIA.oneSearch.preference.vgifColumnSettingRC.setting0]
 parRuleSets = ""
 [VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column0]
-name = Code
+name = Severity
 width = 60
-visualIndex = 2
+visualIndex = 1
 isHidden = TRUE
 isUserChangeColumnVisible = FALSE
 [VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column1]
@@ -669,9 +669,9 @@ visualIndex = 4
 isHidden = FALSE
 isUserChangeColumnVisible = FALSE
 [VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column4]
-name = Severity
+name = Code
 width = 60
-visualIndex = 1
+visualIndex = 2
 isHidden = TRUE
 isUserChangeColumnVisible = FALSE
 [Vi]

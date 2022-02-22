@@ -10,5 +10,7 @@ This project is intended to design a low-power CPU based on RISC-V architecture 
 # Revision
 2022.02.13  v1.0  Initial version;  
 2022.02.16  v1.1  Mem_top related units revision;  
+2022.02.22  v1.2  Tmr_irq done;  
+
 
 

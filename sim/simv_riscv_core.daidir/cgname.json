@@ -5,17 +5,17 @@
         "module",
         1
     ],
-    "excp_dbg": [
-        "excp_dbg",
-        "S3FV3",
-        "module",
-        4
-    ],
     "commit": [
         "commit",
         "kWEBF",
         "module",
         2
+    ],
+    "decoder": [
+        "decoder",
+        "zf0bY",
+        "module",
+        3
     ],
     "wbck": [
         "wbck",
@@ -23,11 +23,23 @@
         "module",
         7
     ],
-    "decoder": [
-        "decoder",
-        "zf0bY",
+    "sim_core_top": [
+        "sim_core_top",
+        "Jm6Rb",
         "module",
-        3
+        9
+    ],
+    "excp_tmr_irq": [
+        "excp_tmr_irq",
+        "EwNhp",
+        "module",
+        8
+    ],
+    "excp_dbg": [
+        "excp_dbg",
+        "S3FV3",
+        "module",
+        4
     ],
     "ifu_top": [
         "ifu_top",
@@ -41,16 +53,10 @@
         "module",
         6
     ],
-    "sim_core_top": [
-        "sim_core_top",
-        "Jm6Rb",
-        "module",
-        8
-    ],
     "...MASTER...": [
         "SIM",
         "amcQw",
         "module",
-        9
+        10
     ]
 }

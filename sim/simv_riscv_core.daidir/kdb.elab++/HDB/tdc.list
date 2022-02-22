@@ -7,6 +7,7 @@
 /home/ICer/shaw/riscv_core/source/csr.v
 /home/ICer/shaw/riscv_core/source/csr_ctrl.v
 /home/ICer/shaw/riscv_core/source/decoder.v
+/home/ICer/shaw/riscv_core/source/dff_chain.v
 /home/ICer/shaw/riscv_core/source/div.v
 /home/ICer/shaw/riscv_core/source/excp_aluexcp.v
 /home/ICer/shaw/riscv_core/source/excp_cmt_csr.v
@@ -17,6 +18,7 @@
 /home/ICer/shaw/riscv_core/source/exu_top.v
 /home/ICer/shaw/riscv_core/source/ifu.v
 /home/ICer/shaw/riscv_core/source/ifu_top.v
+/home/ICer/shaw/riscv_core/source/intagent.v
 /home/ICer/shaw/riscv_core/source/lsu_ctrl.v
 /home/ICer/shaw/riscv_core/source/mem_top.v
 /home/ICer/shaw/riscv_core/source/micro_adder_unit.v

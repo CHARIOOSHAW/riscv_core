@@ -2,7 +2,7 @@ Magic 271485
 Revision Verdi_O-2018.09-SP2
 
 ; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
-viewPort 0 27 3838 912 216 264
+viewPort 0 27 3838 1066 100 65
 
 ; File list:
 ; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
@@ -17,15 +17,15 @@ signalSpacing 5
 ; windowTimeUnit is used for zoom, cursor & marker
 ; waveform viewport range
 zoom 0.000000 3030.000000
-cursor 965.000000
+cursor 80.000000
 marker 0.000000
 
 ; user define markers
 ; userMarker time_pos marker_name color linestyle
 ; visible top row signal index
-top 0
+top 54
 ; marker line index
-markerPos 126
+markerPos 112
 
 ; event list
 ; addEvent event_name event_expression
@@ -47,84 +47,28 @@ curSTATUS ByChange
 
 addGroup "G1"
 activeDirFile "" "/home/ICer/shaw/riscv_core/sim/wave_core_top.fsdb"
-addSignal -h 15 /sim_core_top/CT/EXT/MEMT/clk
-addSignal -h 15 -holdScope lsu_o_wbck_err
-addSignal -h 15 -holdScope lsu_o_wbck_wdata[31:0]
-addSignal -h 15 -holdScope lsu_ram_addr[31:0]
-addSignal -h 15 -holdScope lsu_ram_cs
-addSignal -h 15 -holdScope lsu_ram_rd
-addSignal -h 15 -holdScope lsu_ram_valid
-addSignal -h 15 -holdScope lsu_ram_wdata[31:0]
-addSignal -h 15 -holdScope lsu_ram_wr
-addSignal -h 15 -holdScope memtop_i_cmd_addr[31:0]
-addSignal -h 15 -holdScope memtop_i_cmd_enable
-addSignal -h 15 -holdScope memtop_i_cmd_misalgn
-addSignal -h 15 -holdScope memtop_i_cmd_read
-addSignal -h 15 -holdScope memtop_i_cmd_size[1:0]
-addSignal -h 15 -holdScope memtop_i_cmd_usign
-addSignal -h 15 -holdScope memtop_i_cmd_wdata[31:0]
-addSignal -h 15 -holdScope memtop_i_cmd_wmask[3:0]
-addSignal -h 15 -holdScope memtop_i_cmd_write
-addSignal -h 15 -holdScope memtop_i_valid
-addSignal -h 15 -holdScope memtop_o_ready
-addSignal -h 15 -holdScope ram_lsu_rdata[31:0]
-addSignal -h 15 -holdScope ram_lsu_ready
+addSignal -h 15 /sim_core_top/CT/IFT/clk
+addSignal -h 15 -holdScope exu_ifu_i_flush_pc[31:0]
+addSignal -h 15 -holdScope exu_ifu_i_pipe_flush_req
+addSignal -h 15 -holdScope ifu_flash_pc[31:0]
+addSignal -h 15 -holdScope ifu_i_excp
+addSignal -h 15 -holdScope ifu_i_exu_ready
+addSignal -h 15 -holdScope ifu_i_interrupt
+addSignal -h 15 -holdScope ifu_i_mtvec[31:0]
+addSignal -h 15 -holdScope ifu_i_pc_init_use
+addSignal -h 15 -holdScope ifu_i_rv32
+addSignal -h 15 -holdScope ifu_ir_r[31:0]
+addSignal -h 15 -holdScope ifu_o_ifu_valid
+addSignal -h 15 -holdScope ifu_o_interrupt_ack
+addSignal -h 15 -holdScope ifu_o_vld_4irqexcp
+addSignal -h 15 -holdScope ifu_o_wbck_epc[31:0]
+addSignal -h 15 -holdScope ifu_pc_nxt[31:0]
+addSignal -h 15 -holdScope ifu_pc_r[31:0]
+addSignal -h 15 -holdScope itcm_ifu_ir[31:0]
+addSignal -h 15 -holdScope pc_ifu_pc_nxt[31:0]
 addSignal -h 15 -holdScope rst_n
-addSignal -h 15 /sim_core_top/CT/EXT/MEMT/exu_lsu/agu_i_cmd_addr[31:0]
-addSignal -h 15 -holdScope agu_i_cmd_enable
-addSignal -h 15 -holdScope agu_i_cmd_misalgn
-addSignal -h 15 -holdScope agu_i_cmd_read
-addSignal -h 15 -holdScope agu_i_cmd_size[1:0]
-addSignal -h 15 -holdScope agu_i_cmd_usign
-addSignal -h 15 -holdScope agu_i_cmd_wdata[31:0]
-addSignal -h 15 -holdScope agu_i_cmd_wmask[3:0]
-addSignal -h 15 -holdScope agu_i_cmd_write
-addSignal -h 15 -holdScope clk
-addSignal -h 15 -holdScope ls_nxt_state[1:0]
-addSignal -h 15 -holdScope ls_state[1:0]
-addSignal -h 15 -holdScope lsu_expend_wmask[31:0]
-addSignal -h 15 -holdScope lsu_i_valid
-addSignal -h 15 -holdScope lsu_o_ready
-addSignal -h 15 -holdScope lsu_o_wbck_err
-addSignal -h 15 -holdScope lsu_o_wbck_wdata[31:0]
-addSignal -h 15 -holdScope lsu_ram_addr[31:0]
-addSignal -h 15 -holdScope lsu_ram_rd
-addSignal -h 15 -holdScope lsu_ram_valid
-addSignal -h 15 -holdScope lsu_ram_wdata[31:0]
-addSignal -h 15 -holdScope lsu_ram_wr
-addSignal -h 15 -holdScope ram_lsu_rdata[31:0]
-addSignal -h 15 -holdScope ram_lsu_ready
-addSignal -h 15 -holdScope rdata_higher_8
-addSignal -h 15 -holdScope rdata_higher_16
-addSignal -h 15 -holdScope rdata_highest_8
-addSignal -h 15 -holdScope rdata_lower_8
-addSignal -h 15 -holdScope rdata_lower_16
-addSignal -h 15 -holdScope rdata_lowest_8
-addSignal -h 15 -holdScope rdata_size_b
-addSignal -h 15 -holdScope rdata_size_hw
-addSignal -h 15 -holdScope rdata_size_w
-addSignal -h 15 -holdScope rst_n
-addSignal -h 15 -holdScope shift_enable
-addSignal -h 15 /sim_core_top/CT/EXT/MEMT/exu_lsu/lsu_dff/clk
-addSignal -h 15 -holdScope dnxt[1:0]
-addSignal -h 15 -holdScope lden
-addSignal -h 15 -holdScope qout[1:0]
-addSignal -h 15 -holdScope qout_r[1:0]
-addSignal -h 15 -holdScope rst_n
-addSignal -h 15 /sim_core_top/CT/EXT/MEMT/exu_ram_unit/DB_r[31:0]
-addSignal -h 15 -holdScope DB_w[31:0]
-addSignal -h 15 -holdScope address[31:0]
-addSignal -h 15 -holdScope clk
-addSignal -h 15 -holdScope cs
-addSignal -h 15 -holdScope mem_count[1:0]
-addSignal -h 15 -holdScope rd
-addSignal -h 15 -holdScope rd_data_t0[31:0]
-addSignal -h 15 -holdScope rd_data_t1[31:0]
-addSignal -h 15 -holdScope rd_data_t2[31:0]
-addSignal -h 15 -holdScope ready
-addSignal -h 15 -holdScope wr
 addSignal -h 15 /sim_core_top/CT/IFT/IFU/IR_nxt[31:0]
-addSignal -h 15 -UNSIGNED -BIN -holdScope IR_r[31:0]
+addSignal -h 15 -holdScope IR_r[31:0]
 addSignal -h 15 -holdScope IR_res[15:0]
 addSignal -h 15 -holdScope IR_res_nxt[15:0]
 addSignal -h 15 -holdScope IR_res_state
@@ -173,6 +117,48 @@ addSignal -h 15 -holdScope lden
 addSignal -h 15 -holdScope qout[1:0]
 addSignal -h 15 -holdScope qout_r[1:0]
 addSignal -h 15 -holdScope rst_n
+addSignal -h 15 /sim_core_top/CT/IFT/PC_CONTROL/PC_flush[31:0]
+addSignal -h 15 -holdScope PC_nxt[31:0]
+addSignal -h 15 -holdScope PC_r[31:0]
+addSignal -h 15 -holdScope clk
+addSignal -h 15 -holdScope int_flag_clr
+addSignal -h 15 -holdScope int_flag_nxt
+addSignal -h 15 -holdScope int_flag_r
+addSignal -h 15 -holdScope int_flag_set
+addSignal -h 15 -holdScope interrupt_ack
+addSignal -h 15 -holdScope need_flush
+addSignal -h 15 -holdScope pc_i_alu_req_flush
+addSignal -h 15 -holdScope pc_i_alu_req_fulsh_pc[31:0]
+addSignal -h 15 -holdScope pc_i_excp
+addSignal -h 15 -holdScope pc_i_exu_ready
+addSignal -h 15 -holdScope pc_i_ifu_valid
+addSignal -h 15 -holdScope pc_i_init_use
+addSignal -h 15 -holdScope pc_i_interrupt
+addSignal -h 15 -holdScope pc_i_mtvec[31:0]
+addSignal -h 15 -holdScope pc_i_rv32
+addSignal -h 15 -holdScope pc_o_interrupt_ack
+addSignal -h 15 -holdScope pc_o_pcnxt[31:0]
+addSignal -h 15 -holdScope pc_o_pcr[31:0]
+addSignal -h 15 -holdScope pc_o_vld_4irqexcp
+addSignal -h 15 -holdScope pc_o_wbck_epc[31:0]
+addSignal -h 15 -holdScope pc_vld_4irqexcp
+addSignal -h 15 -holdScope rst_n
+addSignal -h 15 /sim_core_top/CT/IFT/PC_CONTROL/int_flag/clk
+addSignal -h 15 -holdScope dnxt[0:0]
+addSignal -h 15 -holdScope lden
+addSignal -h 15 -holdScope qout[0:0]
+addSignal -h 15 -holdScope qout_r[0:0]
+addSignal -h 15 -holdScope rst_n
+addSignal -h 15 /sim_core_top/CT/IFT/PC_CONTROL/pcr/clk
+addSignal -h 15 -holdScope dnxt[31:0]
+addSignal -h 15 -holdScope lden
+addSignal -h 15 -holdScope qout[31:0]
+addSignal -h 15 -holdScope qout_r[31:0]
+addSignal -h 15 -holdScope rst_n
+addSignal -h 15 /sim_core_top/CT/IFT/itcm/mem_t[31:0]
+addSignal -h 15 -holdScope pa[31:0]
+addSignal -h 15 -holdScope pa_true[31:0]
+addSignal -h 15 -holdScope pdataout[31:0]
 addGroup "G2"
 
 ; getSignalForm Scope Hierarchy Status
@@ -185,44 +171,13 @@ getSignalForm close
 "/excp_dbg"
 "/sim_core_top"
 "/sim_core_top/CT"
-"/sim_core_top/CT/EXT"
-"/sim_core_top/CT/IFT"
 
 SCOPE_LIST_BEGIN
 "/excp_dbg"
-"/sim_core_top/CT/EXT/RF"
-"/sim_core_top"
 "/sim_core_top/CT"
-"/sim_core_top/CT/EXT"
-"/sim_core_top/CT/EXT/MEMT"
 "/sim_core_top/CT/IFT"
-"/sim_core_top/CT/IFT/PC_CONTROL"
-"/sim_core_top/CT/IFT/IFU"
 SCOPE_LIST_END
 
 GETSIGNALFORM_SCOPE_HIERARCHY_END
 
 
-
-FILTER_SIGNAL_BEGIN
-
-"lsu_o_ready"
-
-FILTER_STRING_LIST_BEGIN
-FILTER_STRING_LIST_END
-
-FILTER_TYPE_LIST_BEGIN
-"All"
-"Input"
-"Output"
-"Inout"
-"Net"
-"Register"
-"Buffer"
-"Linkage"
-"ClassTransaction"
-"Property"
-"Others"
-FILTER_TYPE_LIST_END
-
-FILTER_SIGNAL_END

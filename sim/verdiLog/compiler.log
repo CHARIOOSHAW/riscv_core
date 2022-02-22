@@ -36,15 +36,18 @@ Command arguments:
         ~/shaw/riscv_core/source/sirv_gnrl_dfflr.v
         ~/shaw/riscv_core/source/sirv_gnrl_dffr.v
         ~/shaw/riscv_core/source/wbck.v
-        ~/shaw/riscv_core/source/sim_core_top.v
         ~/shaw/riscv_core/source/config.v
         ~/shaw/riscv_core/source/mcu_defines.v
         ~/shaw/riscv_core/source/rst_syn_unit.v
+        ~/shaw/riscv_core/source/dff_chain.v
+        ~/shaw/riscv_core/source/intagent.v
+        ~/shaw/riscv_core/source/sim_core_top.v
     -top
     core_top
 
 Highest level modules:
 excp_dbg
+excp_tmr_irq
 sim_core_top
 
 Total	0 error(s),   0 warning(s)

@@ -64,6 +64,19 @@ verdi:
 	rm -r ./*
 	cp -r ../sim/makefile ./
 
+# cmp and verdi
+all:
+	$(VCS)
+	cp -r ./* ../sim
+	rm -r ./*
+	cp -r ../sim/makefile ./
+	cp -r ../source/mcu_defines.v ./
+	cp -r ../source/config.v ./
+	$(VERDI)
+	cp -r ./* ../sim
+	rm -r ./*
+	cp -r ../sim/makefile ./
+
 # clean
 clean:
 	rm -r $(SIM_DIR)

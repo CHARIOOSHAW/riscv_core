@@ -43,4 +43,4 @@ core_top |
          |
          |
          |---- rst_syn_unit
-         |---- irqagent (undone)
+         |---- intagent (undone)
