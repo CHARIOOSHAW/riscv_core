@@ -195,20 +195,20 @@ module csr(
     // Pack to the full mstatus register
     //
     wire [`XLEN-1:0] status_r;
-    assign status_r[31]    = status_sd_r;        // SD
-    assign status_r[30:23] = 8'b0;               // Reserved
+    assign status_r[31]    = status_sd_r;                        //SD
+    assign status_r[30:23] = 8'b0; // Reserved
     assign status_r[22:17] = 6'b0;               // TSR--MPRV
-    assign status_r[16:15] = status_xs_r;        // XS
-    assign status_r[14:13] = status_fs_r;        // FS
+    assign status_r[16:15] = status_xs_r;                        // XS
+    assign status_r[14:13] = status_fs_r;                        // FS
     assign status_r[12:11] = 2'b11;              // MPP 
-    assign status_r[10:9]  = 2'b0;               // Reserved
+    assign status_r[10:9]  = 2'b0; // Reserved
     assign status_r[8]     = 1'b0;               // SPP
-    assign status_r[7]     = status_mpie_r;      // MPIE
-    assign status_r[6]     = 1'b0;               // Reserved
+    assign status_r[7]     = status_mpie_r;                      // MPIE
+    assign status_r[6]     = 1'b0; // Reserved
     assign status_r[5]     = 1'b0;               // SPIE 
     assign status_r[4]     = 1'b0;               // UPIE 
-    assign status_r[3]     = status_mie_r;       // MIE
-    assign status_r[2]     = 1'b0;               // Reserved
+    assign status_r[3]     = status_mie_r;                       // MIE
+    assign status_r[2]     = 1'b0; // Reserved
     assign status_r[1]     = 1'b0;               // SIE 
     assign status_r[0]     = 1'b0;               // UIE 
 

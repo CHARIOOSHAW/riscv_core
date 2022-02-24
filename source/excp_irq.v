@@ -22,6 +22,8 @@
 `include "mcu_defines.v"
 
 module excp_irq(
+    //clk
+    input                       clk                 ,
 
     // dbg mode
     input                       dbg_mode            ,
@@ -51,27 +53,37 @@ module excp_irq(
 
     ////////////////////////////////////////////////////////////////////////////
     // The IRQ triggered Exception 
-    // The debug mode will mask off the interrupts
-    wire irq_mask                = dbg_mode | (~status_mie_r);                // Regular interrupt will be masked off because dbg mode or global irq shield.
-    wire wfi_irq_mask            = dbg_mode ;                                 // WFI interrupt is used to stop the sleep stage of core. 
-               
+    // The debug mode will mask off the interrupts   
     wire irq_req_raw             = (ext_irq_r & meie_r) |     
                                    (sft_irq_r & msie_r) |     
                                    (tmr_irq_r & mtie_r) ;     
-         
-    wire irq_req                 = (~irq_mask    ) & irq_req_raw ;            
-    wire wfi_irq_req             = (~wfi_irq_mask) & irq_req_raw ;            // INT can always end wfi if core is not in the dbg mode. 
+    
+    // mie_r expand 1 clk for pipe_flush
+    reg status_mie_re;
+    always@(posedge clk) begin
+        status_mie_re <= status_mie_r;
+    end
+    wire status_mie_w2_r = status_mie_re | status_mie_r;
+
+    wire irq_req                 = (~dbg_mode & status_mie_w2_r) & irq_req_raw ;
+
+
+    /////////////////////////////////////////////////////////////////////////////
+    // WFI 
+    wire wfi_irq_req             = (~dbg_mode) & irq_req_raw ;                // INT can always end wfi if core is not in the dbg mode. 
  
  
     assign irq_o_irq_req_active  = irq_i_wfi_flag_r ? wfi_irq_req : irq_req;  // This signal is used to quit wfi if core is sleeping. 
     assign irq_o_irq_req         = irq_req;                                   // This signal is used to control the irq handle process. to PC i_interrupt.
     assign irq_o_wfi_irq_req     = wfi_irq_req;
     
+    ////////////////////////////////////////////////////////////////////////////
+    // IRQ CAUSE
     assign irq_o_irq_cause[31]   =  1'b1;
     assign irq_o_irq_cause[30:4] =  27'b0;
-    assign irq_o_irq_cause[3:0]  =  (sft_irq_r & msie_r) ? 4'd3  :      // 3  Machine software interrupt
-                                    (tmr_irq_r & mtie_r) ? 4'd7  :      // 7  Machine timer interrupt
-                                    (ext_irq_r & meie_r) ? 4'd11 :      // 11 Machine external interrupt
-                                                           4'd0  ;      // INT UNVALID
+    assign irq_o_irq_cause[3:0]  =  (sft_irq_r & msie_r) ? 4'd3  :            // 3  Machine software interrupt
+                                    (tmr_irq_r & mtie_r) ? 4'd7  :            // 7  Machine timer interrupt
+                                    (ext_irq_r & meie_r) ? 4'd11 :            // 11 Machine external interrupt
+                                                           4'd0  ;            // INT UNVALID
 
 endmodule

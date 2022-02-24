@@ -31,7 +31,6 @@ module exu_excp_top(
     // input from exu_top and output to exu_top
     output                          excpirq_flush_req      ,
     output [`PC_SIZE-1:0          ] excpirq_flush_addr     ,  
-    output                          nonalu_excpirq_flush_req_raw,
     output                          commit_trap            ,
   
     /////////////////////////////////////////////////////////////////////////////
@@ -72,6 +71,7 @@ module exu_excp_top(
     input                           mtie_r                 ,
     input                           msie_r                 ,
     input                           meie_r                 ,
+    output                          excp_top_irq_req       , // to PC.v, fenced irq.
 
     ///////////////////////////////////////////////////////////////////////////////
     // core mode
@@ -117,21 +117,17 @@ module exu_excp_top(
     // irq and excp flush req    
     // irq gain the periority.
     // excp or irq is put forward, but valid remains to be examed. 
-    wire   excp_top_irq_req            ;
     wire   excp_top_alu_need_flush     ;
     wire   excp_top_ebreakm_flush_req  ;
-
-    wire   excp_top_irq_flush_req         =  excp_top_irq_req;                     
+                    
     wire   excp_top_alu_excp_flush_req    =  excp_top_alu_need_flush & (~excp_top_irq_req);
-    assign excpirq_flush_req              =  excp_top_irq_flush_req  | excp_top_alu_excp_flush_req;
-     
-    assign nonalu_excpirq_flush_req_raw   =  excp_top_irq_req  ;  // The flush is not triggered by alu.
+    assign excpirq_flush_req              =  excp_top_irq_req  | excp_top_alu_excp_flush_req;
  
-    wire   excpirq_taken_ena              =  excpirq_flush_req & excp_i_pc_vld_4irqexcp; // exam the valid.
-    assign commit_trap                    =  excpirq_taken_ena;  // when excp and irq happened, the cmt will be blocked and the result will be wasted.
+    wire   excpirq_taken_ena              =  excpirq_flush_req & excp_i_pc_vld_4irqexcp;             // exam the valid.
+    assign commit_trap                    =  excpirq_taken_ena;                                      // when excp and irq happened, the cmt will be blocked and the result will be wasted.
   
     wire   excp_taken_ena                 =  excp_top_alu_excp_flush_req  & excpirq_taken_ena; 
-    wire   irq_taken_ena                  =  excp_top_irq_flush_req       & excpirq_taken_ena;
+    wire   irq_taken_ena                  =  excp_top_irq_req  & excpirq_taken_ena;
     wire   breakm_taken_ena               =  excp_top_ebreakm_flush_req   & excp_i_pc_vld_4irqexcp;
 
     // 800 dbg entry address; 808 dbg trap address; mtvec non-dbg trap address.
@@ -147,6 +143,7 @@ module exu_excp_top(
     wire             excp_top_wfi_flag_r    ;
 
     excp_irq exu_excp_irq_unit (
+        .clk                              ( clk                                    ),
         .dbg_mode                         ( dbg_mode                               ),
                         
         .ext_irq_r                        ( ext_irq_r                              ),

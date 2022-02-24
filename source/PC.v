@@ -26,12 +26,13 @@ module PC(
 
     // PC related signals
     input                             pc_i_interrupt         , // interrupt happened
+    input                             pc_i_irq_req           , // fenced irq req for exu_excp
     input                             pc_i_excp              , // err or illegal happened
     input  [`PC_SIZE-1:0]             pc_i_mtvec             ,
     input                             pc_i_init_use          ,
 
-    input                             pc_i_alu_req_flush     , // jump/bxx/ret instr
-    input  [`PC_SIZE-1:0]             pc_i_alu_req_fulsh_pc  , 
+    input                             pc_i_bjp_req_flush     , // jump/bxx/ret instr
+    input  [`PC_SIZE-1:0]             pc_i_bjp_req_fulsh_pc  , 
           
     input                             pc_i_rv32              , // get the length of instr from exu.
 
@@ -61,20 +62,19 @@ module PC(
 
     // int ack
     wire   int_flag_r;
-    wire   interrupt_ack      =  (pc_i_interrupt & ~pc_i_alu_req_flush                                  ) |
-                                 (int_flag_r     & ~pc_i_alu_req_flush & pc_i_ifu_valid & pc_i_exu_ready) ;
-    assign pc_o_interrupt_ack =  interrupt_ack                                      ;
+    wire   interrupt_ack      =  (pc_i_interrupt & ~pc_i_bjp_req_flush                                  ) |
+                                 (int_flag_r     & ~pc_i_bjp_req_flush & pc_i_ifu_valid & pc_i_exu_ready) ;
+    assign pc_o_interrupt_ack =  interrupt_ack                                                            ;
     
     // pc_valid    
-    wire   pc_vld_4irqexcp    =   interrupt_ack | pc_i_excp                         ;
-    assign pc_o_vld_4irqexcp  =   pc_vld_4irqexcp                                   ;
+    assign pc_o_vld_4irqexcp    =   interrupt_ack | pc_i_excp                                             ;                              
 
     // int flag
     wire int_flag_set;
     wire int_flag_clr;
     wire int_flag_nxt;
 
-    assign int_flag_set = (pc_i_interrupt & pc_i_alu_req_flush) | (pc_i_interrupt & ~(pc_i_exu_ready & pc_i_ifu_valid));
+    assign int_flag_set = (pc_i_interrupt & pc_i_bjp_req_flush) | (pc_i_interrupt & ~(pc_i_exu_ready & pc_i_ifu_valid));
     assign int_flag_clr = interrupt_ack;
     assign int_flag_nxt = int_flag_clr? 1'b0: int_flag_set? 1'b1: int_flag_r;
 
@@ -89,11 +89,11 @@ module PC(
     // wbck epc
     // excp and int which is piority?
     wire [`PC_SIZE-1:0] PC_r;
-    assign pc_o_wbck_epc = (interrupt_ack & int_flag_r              )? PC_r     :
-                           (interrupt_ack & ~int_flag_r &  pc_i_rv32)? PC_r+'d4 :
-                           (interrupt_ack & ~int_flag_r & ~pc_i_rv32)? PC_r+'d2 :
-                            pc_i_excp                                ? PC_r     :
-                                                                       'd0      ; // UNVALID
+    assign pc_o_wbck_epc = (pc_i_irq_req & int_flag_r              )? PC_r     :
+                           (pc_i_irq_req & ~int_flag_r &  pc_i_rv32)? PC_r+'d4 :
+                           (pc_i_irq_req & ~int_flag_r & ~pc_i_rv32)? PC_r+'d2 :
+                            pc_i_excp                               ? PC_r     :
+                                                                      'd0      ; // UNVALID
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -101,25 +101,23 @@ module PC(
     wire [`PC_SIZE-1:0] PC_nxt;
 
     // Flush and PC
-    wire                need_flush =  interrupt_ack | pc_i_excp     | pc_i_alu_req_flush    ;
-    wire [`PC_SIZE-1:0] PC_flush   = (interrupt_ack | pc_i_excp)    ? pc_i_mtvec            : // Here need to be specific, dbg mode is not taken considered.
-                                      pc_i_alu_req_flush            ? pc_i_alu_req_fulsh_pc :
-                                                                      'd0                   ; // UNVALID
-    // wire                PC_stop    =  ~(pc_i_ifu_valid & pc_i_exu_ready); // PC will stop and wait for excution when meet multi-cycle instrs.
+    wire                need_flush =  pc_i_irq_req | pc_i_excp     | pc_i_bjp_req_flush    ;
+    wire [`PC_SIZE-1:0] PC_flush   = (pc_i_irq_req | pc_i_excp)    ? pc_i_mtvec            : // Here need to be specific, dbg mode is not taken considered.
+                                      pc_i_bjp_req_flush           ? pc_i_bjp_req_fulsh_pc :
+                                                                     'd0                   ; // UNVALID 
                                      
-    assign PC_nxt = need_flush      ?    PC_flush   :
-                    pc_i_init_use   ?    `PC_SIZE'd0:
-                    // PC_stop      ?    PC_r       :
-                    pc_i_rv32       ?    PC_r+'d4   :
-                    ~pc_i_rv32      ?    PC_r+'d2   :
-                    'd0;
+    assign PC_nxt = need_flush                      ?    PC_flush   :
+                    pc_i_init_use                   ?    `PC_SIZE'd0:
+                    pc_i_rv32                       ?    PC_r+'d4   :
+                    ~pc_i_rv32                      ?    PC_r+'d2   :
+                                                         'd0;
 
     sirv_gnrl_dfflr #(.DW(`PC_SIZE)) pcr (
-        .lden ( pc_i_ifu_valid & pc_i_exu_ready ),
-        .dnxt (PC_nxt   ),
-        .qout (PC_r     ),
-        .clk  (clk      ),
-        .rst_n(rst_n    )
+        .lden ( pc_i_ifu_valid & pc_i_exu_ready    ),
+        .dnxt ( PC_nxt   ),
+        .qout ( PC_r     ),
+        .clk  ( clk      ),
+        .rst_n( rst_n    )
     );  
 
     assign pc_o_pcr    = PC_r   ;

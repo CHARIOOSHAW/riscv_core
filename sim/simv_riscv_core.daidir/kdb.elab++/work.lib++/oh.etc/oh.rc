@@ -1,6 +1,6 @@
 @elabcom rc file Version 1.0
 [oh]
 invokeDir = /home/ICer/shaw/riscv_core/makefile
-hostCommand = -lib /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/work -saveLevel -elab /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/kdb -simflow -simdir /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/kdb_libs -top "excp_dbg excp_tmr_irq sim_core_\
-top" -Lf work +disable_message+C00380+C00381 +disable_message+C00388+C00389 -SNPS_ELABCOM -saveElab
+hostCommand = -lib /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/work -saveLevel -elab /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/kdb -simflow -simdir /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir/kdb_libs -top "excp_dbg dff_chain sim_core_top\
+" -Lf work +disable_message+C00380+C00381 +disable_message+C00388+C00389 -SNPS_ELABCOM -saveElab
 simType = VCS

@@ -53,6 +53,7 @@ module commit(
   
     // int fence status  
     input                            status_mie_r          ,
+    output                           commit_irq_req        ,
     input                            mtie_r                ,
     input                            msie_r                ,
     input                            meie_r                ,
@@ -92,19 +93,17 @@ module commit(
 
     // cmt output 
     output                           commit_trap           ,
-    output                           nonalu_flush_req      ,
-    // output                        nonflush_cmt_ena      ,
     output                           pipe_flush_req        ,
     output  [`PC_SIZE-1:0          ] pipe_flush_pc         ,  
     output                           core_wfi              ,
     output                           cmt_mret_ena          ,
+    output                           cmt_bjp_flush_req     ,
 
     input                            clk                   ,
     input                            rst_n
     );
 
     wire                 excpirq_flush_req           ;
-    wire                 nonalu_excpirq_flush_req_raw;
     wire [`PC_SIZE-1:0 ] excpirq_flush_addr          ;
 
     // cmt related enable
@@ -112,19 +111,15 @@ module commit(
 
     // commit signals
     assign pipe_flush_req        = excpirq_flush_req | cmt_i_bjp_need_flush; // pipeline need to be flushed because of irq/excp/jump-instrs.
+    assign pipe_flush_pc         = excpirq_flush_req ? excpirq_flush_addr : cmt_i_bjp_flush_PC;  
 
     assign cmt_commit_trap       = commit_trap;                              // irq or excp happened. Must stop and jump.
 
     assign cmt_instret_ena       = cmt_ena & (~cmt_i_bjp_need_flush);        // at the end of jump instr the IR is unvalid and the instret should stop counting.
 
-    // Generate the signal as the real-commit enable (non-flush)
-    // assign nonflush_cmt_ena      = cmt_ena & (~pipe_flush_req);           // wbck and run normally. Nothing happened :).
-
-    assign nonalu_flush_req      = cmt_ena & nonalu_excpirq_flush_req_raw;   // oops, there is an irq. result abandon.
-
     assign cmt_mret_ena          = cmt_ena & cmt_i_bjp_mret;                 // mret, ready to entry machine mode.
 
-    assign pipe_flush_pc         = excpirq_flush_req ? excpirq_flush_addr : cmt_i_bjp_flush_PC;  
+    assign cmt_bjp_flush_req     = cmt_i_bjp_need_flush;
 
 
     // excp unit
@@ -139,8 +134,8 @@ module commit(
                     
         .excpirq_flush_req            ( excpirq_flush_req               ),
         .excpirq_flush_addr           ( excpirq_flush_addr              ),
-        .nonalu_excpirq_flush_req_raw ( nonalu_excpirq_flush_req_raw    ),
         .commit_trap                  ( commit_trap                     ),
+        .excp_top_irq_req             ( commit_irq_req                  ), // to pc
  
         // wfi output 
         .core_wfi                     ( core_wfi                        ),     

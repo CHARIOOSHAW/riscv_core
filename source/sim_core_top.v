@@ -48,15 +48,17 @@ module sim_core_top;
     initial begin
         $display("Let's go!");
         sim_clk = 1'b0;
-        #0 sim_rst_n = 1'b0;
+        sim_rst_n = 1'b0;
+	sim_extenal_interrupt = 1'b0;
         #80 sim_rst_n = 1'b1;
-           sim_pc_init_use = 1'b0;      
-           sim_extenal_interrupt = 1'b0;
+            sim_pc_init_use = 1'b0;      
+	#205  sim_extenal_interrupt = 1'b1;
+	#50   sim_extenal_interrupt = 1'b0;
         $display("so we finished.");
     end
 
     initial begin
-	  #3000 $finish();
+	  #1000 $finish();
     end 
 
 

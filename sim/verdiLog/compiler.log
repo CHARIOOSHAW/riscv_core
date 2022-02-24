@@ -40,14 +40,13 @@ Command arguments:
         ~/shaw/riscv_core/source/mcu_defines.v
         ~/shaw/riscv_core/source/rst_syn_unit.v
         ~/shaw/riscv_core/source/dff_chain.v
-        ~/shaw/riscv_core/source/intagent.v
         ~/shaw/riscv_core/source/sim_core_top.v
     -top
     core_top
 
 Highest level modules:
 excp_dbg
-excp_tmr_irq
+dff_chain
 sim_core_top
 
 Total	0 error(s),   0 warning(s)

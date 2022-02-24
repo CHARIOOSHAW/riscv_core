@@ -2,7 +2,7 @@ Magic 271485
 Revision Verdi_O-2018.09-SP2
 
 ; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
-viewPort 0 27 3838 1066 100 65
+viewPort 0 27 3838 744 360 282
 
 ; File list:
 ; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
@@ -16,16 +16,16 @@ signalSpacing 5
 
 ; windowTimeUnit is used for zoom, cursor & marker
 ; waveform viewport range
-zoom 0.000000 3030.000000
-cursor 80.000000
+zoom 0.000000 1010.000000
+cursor 615.000000
 marker 0.000000
 
 ; user define markers
 ; userMarker time_pos marker_name color linestyle
 ; visible top row signal index
-top 54
+top 0
 ; marker line index
-markerPos 112
+markerPos 0
 
 ; event list
 ; addEvent event_name event_expression
@@ -46,120 +46,6 @@ curSTATUS ByChange
 
 
 addGroup "G1"
-activeDirFile "" "/home/ICer/shaw/riscv_core/sim/wave_core_top.fsdb"
-addSignal -h 15 /sim_core_top/CT/IFT/clk
-addSignal -h 15 -holdScope exu_ifu_i_flush_pc[31:0]
-addSignal -h 15 -holdScope exu_ifu_i_pipe_flush_req
-addSignal -h 15 -holdScope ifu_flash_pc[31:0]
-addSignal -h 15 -holdScope ifu_i_excp
-addSignal -h 15 -holdScope ifu_i_exu_ready
-addSignal -h 15 -holdScope ifu_i_interrupt
-addSignal -h 15 -holdScope ifu_i_mtvec[31:0]
-addSignal -h 15 -holdScope ifu_i_pc_init_use
-addSignal -h 15 -holdScope ifu_i_rv32
-addSignal -h 15 -holdScope ifu_ir_r[31:0]
-addSignal -h 15 -holdScope ifu_o_ifu_valid
-addSignal -h 15 -holdScope ifu_o_interrupt_ack
-addSignal -h 15 -holdScope ifu_o_vld_4irqexcp
-addSignal -h 15 -holdScope ifu_o_wbck_epc[31:0]
-addSignal -h 15 -holdScope ifu_pc_nxt[31:0]
-addSignal -h 15 -holdScope ifu_pc_r[31:0]
-addSignal -h 15 -holdScope itcm_ifu_ir[31:0]
-addSignal -h 15 -holdScope pc_ifu_pc_nxt[31:0]
-addSignal -h 15 -holdScope rst_n
-addSignal -h 15 /sim_core_top/CT/IFT/IFU/IR_nxt[31:0]
-addSignal -h 15 -holdScope IR_r[31:0]
-addSignal -h 15 -holdScope IR_res[15:0]
-addSignal -h 15 -holdScope IR_res_nxt[15:0]
-addSignal -h 15 -holdScope IR_res_state
-addSignal -h 15 -holdScope IR_res_state_nxt
-addSignal -h 15 -holdScope clk
-addSignal -h 15 -holdScope current_ir[15:0]
-addSignal -h 15 -holdScope exu_ifu_pipe_flush_req
-addSignal -h 15 -holdScope ifu_flash_o_pc[31:0]
-addSignal -h 15 -holdScope ifu_i_exu_ready
-addSignal -h 15 -holdScope ifu_o_ifu_valid
-addSignal -h 15 -holdScope ifu_o_ir_r[31:0]
-addSignal -h 15 -holdScope ir_length_16
-addSignal -h 15 -holdScope ir_length_32
-addSignal -h 15 -holdScope ir_length_a16
-addSignal -h 15 -holdScope ir_length_a32
-addSignal -h 15 -holdScope ir_length_encode[1:0]
-addSignal -h 15 -holdScope ir_length_m16
-addSignal -h 15 -holdScope ir_length_m32
-addSignal -h 15 -holdScope ir_state[1:0]
-addSignal -h 15 -holdScope ir_state_nxt[1:0]
-addSignal -h 15 -holdScope itcm_ifu_i_ir[31:0]
-addSignal -h 15 -holdScope pc_align
-addSignal -h 15 -holdScope pc_ifu_i_pc_nxt[31:0]
-addSignal -h 15 -holdScope rst_n
-addSignal -h 15 /sim_core_top/CT/IFT/IFU/IR_register/clk
-addSignal -h 15 -holdScope dnxt[31:0]
-addSignal -h 15 -holdScope lden
-addSignal -h 15 -holdScope qout[31:0]
-addSignal -h 15 -holdScope qout_r[31:0]
-addSignal -h 15 -holdScope rst_n
-addSignal -h 15 /sim_core_top/CT/IFT/IFU/IR_res_register/clk
-addSignal -h 15 -holdScope dnxt[15:0]
-addSignal -h 15 -holdScope lden
-addSignal -h 15 -holdScope qout[15:0]
-addSignal -h 15 -holdScope qout_r[15:0]
-addSignal -h 15 -holdScope rst_n
-addSignal -h 15 /sim_core_top/CT/IFT/IFU/IR_res_status_register/clk
-addSignal -h 15 -holdScope dnxt[0:0]
-addSignal -h 15 -holdScope lden
-addSignal -h 15 -holdScope qout[0:0]
-addSignal -h 15 -holdScope qout_r[0:0]
-addSignal -h 15 -holdScope rst_n
-addSignal -h 15 /sim_core_top/CT/IFT/IFU/ir_state_register/clk
-addSignal -h 15 -holdScope dnxt[1:0]
-addSignal -h 15 -holdScope lden
-addSignal -h 15 -holdScope qout[1:0]
-addSignal -h 15 -holdScope qout_r[1:0]
-addSignal -h 15 -holdScope rst_n
-addSignal -h 15 /sim_core_top/CT/IFT/PC_CONTROL/PC_flush[31:0]
-addSignal -h 15 -holdScope PC_nxt[31:0]
-addSignal -h 15 -holdScope PC_r[31:0]
-addSignal -h 15 -holdScope clk
-addSignal -h 15 -holdScope int_flag_clr
-addSignal -h 15 -holdScope int_flag_nxt
-addSignal -h 15 -holdScope int_flag_r
-addSignal -h 15 -holdScope int_flag_set
-addSignal -h 15 -holdScope interrupt_ack
-addSignal -h 15 -holdScope need_flush
-addSignal -h 15 -holdScope pc_i_alu_req_flush
-addSignal -h 15 -holdScope pc_i_alu_req_fulsh_pc[31:0]
-addSignal -h 15 -holdScope pc_i_excp
-addSignal -h 15 -holdScope pc_i_exu_ready
-addSignal -h 15 -holdScope pc_i_ifu_valid
-addSignal -h 15 -holdScope pc_i_init_use
-addSignal -h 15 -holdScope pc_i_interrupt
-addSignal -h 15 -holdScope pc_i_mtvec[31:0]
-addSignal -h 15 -holdScope pc_i_rv32
-addSignal -h 15 -holdScope pc_o_interrupt_ack
-addSignal -h 15 -holdScope pc_o_pcnxt[31:0]
-addSignal -h 15 -holdScope pc_o_pcr[31:0]
-addSignal -h 15 -holdScope pc_o_vld_4irqexcp
-addSignal -h 15 -holdScope pc_o_wbck_epc[31:0]
-addSignal -h 15 -holdScope pc_vld_4irqexcp
-addSignal -h 15 -holdScope rst_n
-addSignal -h 15 /sim_core_top/CT/IFT/PC_CONTROL/int_flag/clk
-addSignal -h 15 -holdScope dnxt[0:0]
-addSignal -h 15 -holdScope lden
-addSignal -h 15 -holdScope qout[0:0]
-addSignal -h 15 -holdScope qout_r[0:0]
-addSignal -h 15 -holdScope rst_n
-addSignal -h 15 /sim_core_top/CT/IFT/PC_CONTROL/pcr/clk
-addSignal -h 15 -holdScope dnxt[31:0]
-addSignal -h 15 -holdScope lden
-addSignal -h 15 -holdScope qout[31:0]
-addSignal -h 15 -holdScope qout_r[31:0]
-addSignal -h 15 -holdScope rst_n
-addSignal -h 15 /sim_core_top/CT/IFT/itcm/mem_t[31:0]
-addSignal -h 15 -holdScope pa[31:0]
-addSignal -h 15 -holdScope pa_true[31:0]
-addSignal -h 15 -holdScope pdataout[31:0]
-addGroup "G2"
 
 ; getSignalForm Scope Hierarchy Status
 ; active file of getSignalForm
@@ -168,14 +54,12 @@ activeDirFile "" "/home/ICer/shaw/riscv_core/sim/wave_core_top.fsdb"
 GETSIGNALFORM_SCOPE_HIERARCHY_BEGIN
 getSignalForm close
 
-"/excp_dbg"
+"/dff_chain"
 "/sim_core_top"
-"/sim_core_top/CT"
 
 SCOPE_LIST_BEGIN
-"/excp_dbg"
+"/dff_chain"
 "/sim_core_top/CT"
-"/sim_core_top/CT/IFT"
 SCOPE_LIST_END
 
 GETSIGNALFORM_SCOPE_HIERARCHY_END

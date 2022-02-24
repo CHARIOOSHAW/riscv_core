@@ -101,7 +101,7 @@ module ifu(
         5'b1_11_00 : ir_state_nxt = 2'b00;
 
         // Other conditions are all illegal.        
-        default : ir_state_nxt = 2'b11;
+        default : ir_state_nxt = 2'b10;
 
         endcase
 
@@ -174,7 +174,7 @@ module ifu(
 
     // res register is not controlled by ready and valid.
     sirv_gnrl_dfflr #(.DW(16)) IR_res_register (
-        .lden ( ~ifu_o_ifu_valid | ifu_i_exu_ready   ),
+        .lden ( ~ifu_o_ifu_valid ),
         .dnxt (IR_res_nxt   ),
         .qout (IR_res       ),
         .clk  (clk          ),

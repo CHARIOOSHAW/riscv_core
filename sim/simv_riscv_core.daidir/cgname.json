@@ -5,21 +5,45 @@
         "module",
         1
     ],
-    "commit": [
-        "commit",
-        "kWEBF",
+    "multi_counter": [
+        "multi_counter",
+        "y12fA",
         "module",
-        2
+        5
+    ],
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
+        "module",
+        9
+    ],
+    "wbck": [
+        "wbck",
+        "Da1cw",
+        "module",
+        6
     ],
     "decoder": [
         "decoder",
         "zf0bY",
         "module",
+        2
+    ],
+    "excp_dbg": [
+        "excp_dbg",
+        "S3FV3",
+        "module",
         3
     ],
-    "wbck": [
-        "wbck",
-        "Da1cw",
+    "ifu_top": [
+        "ifu_top",
+        "He9nS",
+        "module",
+        4
+    ],
+    "dff_chain": [
+        "dff_chain",
+        "cJNVE",
         "module",
         7
     ],
@@ -27,36 +51,6 @@
         "sim_core_top",
         "Jm6Rb",
         "module",
-        9
-    ],
-    "excp_tmr_irq": [
-        "excp_tmr_irq",
-        "EwNhp",
-        "module",
         8
-    ],
-    "excp_dbg": [
-        "excp_dbg",
-        "S3FV3",
-        "module",
-        4
-    ],
-    "ifu_top": [
-        "ifu_top",
-        "He9nS",
-        "module",
-        5
-    ],
-    "multi_counter": [
-        "multi_counter",
-        "y12fA",
-        "module",
-        6
-    ],
-    "...MASTER...": [
-        "SIM",
-        "amcQw",
-        "module",
-        10
     ]
 }

@@ -4,7 +4,7 @@ Command: vcs -R +lint=TFIPC-L -full64 -sverilog +v2k -timescale=1ns/1ns -debug_a
 -f /home/ICer/shaw/riscv_core/filelist/filelist.f -l /home/ICer/shaw/riscv_core/log/compile.log \
 
                          Chronologic VCS (TM)
-        Version O-2018.09-1_Full64 -- Tue Feb 22 15:35:40 2022
+        Version O-2018.09-1_Full64 -- Thu Feb 24 19:58:56 2022
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -190,35 +190,29 @@ Parsing included file '../source/mcu_defines.v'.
 Parsing included file '../source/config.v'.
 Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/dff_chain.v'.
-Parsing design file '/home/ICer/shaw/riscv_core/source/intagent.v'
-Parsing included file '../source/mcu_defines.v'.
-Parsing included file '../source/config.v'.
-Back to file '../source/mcu_defines.v'.
-Back to file '/home/ICer/shaw/riscv_core/source/intagent.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/sim_core_top.v'
 Top Level Modules:
        excp_dbg
-       excp_tmr_irq
+       dff_chain
        sim_core_top
 TimeScale is 1 ns / 1 ns
 
 Lint-[TFIPC-L] Too few instance port connections
-/home/ICer/shaw/riscv_core/source/exu_top.v, 248
+/home/ICer/shaw/riscv_core/source/exu_top.v, 250
 exu_top, "alu_top AU( .alu_i_rs1 (exu_rf_op1),  .alu_i_rs2 (exu_rf_op2),  .alu_i_imm (exu_dec_imm),  .alu_i_info (exu_dec_info),  .alu_i_pc_cycle (exu_pc_cycle_count),  .alu_i_pc_r (exu_i_pc),  .alu_agu_cmd_enable (exu_agu_cmd_enable),  .alu_agu_cmd_read (exu_agu_cmd_read),  .alu_agu_cmd_write (exu_agu_cmd_write),  .alu_agu_cmd_usign (exu_agu_cmd_usign),  .alu_agu_cmd_size (exu_agu_cmd_size),  .alu_agu_cmd_addr (exu_agu_cmd_addr),  .alu_agu_cmd_wdata (exu_agu_cmd_wdata),  .alu_agu_cmd_wmask (exu_agu_cmd_wmask),  .alu_agu_cmd_misalgn (exu_agu_cmd_misalgn),  .alu_memtop_wback_err (exu_memt_agu_wbck_err),  .alu_memtop_wback_data (exu_memt_agu_wbck_wdata),  .alu_ralu_cmt_ecall (exu_ralu_cmt_ecall),  .alu_ralu_cmt_ebreak (exu_ralu_cmt_ebreak),  .alu_ralu_cmt_wfi (exu_ ... "
   The above instance has fewer port connections than the module definition,
   output port 'alu_bjp_cmt_dret' is not connected.
 
 Starting vcs inline pass...
-8 modules and 0 UDP read.
-recompiling module commit
+7 modules and 0 UDP read.
 recompiling module decoder
 recompiling module excp_dbg
 recompiling module ifu_top
 recompiling module multi_counter
 recompiling module wbck
-recompiling module excp_tmr_irq
+recompiling module dff_chain
 recompiling module sim_core_top
-All of 8 modules done
+All of 7 modules done
 make[1]: Entering directory `/home/ICer/shaw/riscv_core/makefile/csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /home/ICer/shaw/riscv_core/sim/simv_riscv_core ]; then chmod -x /home/ICer/shaw/riscv_core/sim/simv_riscv_core; \
@@ -226,7 +220,7 @@ fi
 g++  -o /home/ICer/shaw/riscv_core/sim/simv_riscv_core    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv_riscv_core.daidir/ \
 -Wl,-rpath=./simv_riscv_core.daidir/ -Wl,-rpath='$ORIGIN'/simv_riscv_core.daidir//scsim.db.dir \
 -rdynamic  -Wl,-rpath=/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib -L/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib \
-objs/amcQw_d.o   _4068_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o \
+objs/amcQw_d.o   _107496_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o \
 rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lzerosoft_rt_stubs -lvirsim \
 -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcs_tls.o \
 -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive        _vcs_pli_stub_.o   /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcs_save_restore_new.o \
@@ -237,7 +231,7 @@ make[1]: Leaving directory `/home/ICer/shaw/riscv_core/makefile/csrc'
 Command: /home/ICer/shaw/riscv_core/sim/simv_riscv_core +lint=TFIPC-L +v2k +notimingchec +nospecify +vcs+flush+all -lca +define+FSDB -a /home/ICer/shaw/riscv_core/log/compile.log
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-1_Full64; Runtime version O-2018.09-1_Full64;  Feb 22 15:35 2022
+Compiler version O-2018.09-1_Full64; Runtime version O-2018.09-1_Full64;  Feb 24 19:58 2022
 read finished!!!
 Let's go!
 *Verdi* Loading libsscore_vcs201809.so
@@ -248,10 +242,10 @@ FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
 *Verdi* : End of traversing.
 Dump finished.
 so we finished.
-$finish called from file "/home/ICer/shaw/riscv_core/source/sim_core_top.v", line 59.
-$finish at simulation time                 3000
+$finish called from file "/home/ICer/shaw/riscv_core/source/sim_core_top.v", line 61.
+$finish at simulation time                 1000
            V C S   S i m u l a t i o n   R e p o r t 
-Time: 3000 ns
+Time: 1000 ns
 CPU Time:      0.190 seconds;       Data structure size:   0.1Mb
-Tue Feb 22 15:35:41 2022
-CPU time: .768 seconds to compile + .191 seconds to elab + .132 seconds to link + .207 seconds in simulation
+Thu Feb 24 19:58:57 2022
+CPU time: .753 seconds to compile + .196 seconds to elab + .133 seconds to link + .210 seconds in simulation

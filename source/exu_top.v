@@ -64,6 +64,8 @@ module exu_top(
     output [`PC_SIZE-1:0         ] exu_o_pipe_flush_pc  ,
     output [`PC_SIZE-1:0         ] exu_o_mtvec_r        ,
     output                         exu_o_excp           ,
+    output                         exu_o_bjp_flush_req  ,
+    output                         exu_o_pc_irq_req     ,
 
     // err
     output                         exu_o_unexpected_err ,
@@ -353,9 +355,8 @@ module exu_top(
     wire                        exu_cmt_csr_status_ena ;
     wire                        exu_cmt_csr_instret_ena;
     wire                        exu_cmt_csr_mret_ena   ;
-    wire                        exu_nonalu_flush_req   ;
 
-    assign exu_o_excp = exu_cmt_commit_trap & (~exu_nonalu_flush_req); 
+    assign exu_o_excp = exu_cmt_commit_trap & (~exu_o_pc_irq_req); 
 
     commit CMT (
         .cmt_i_ifu_valid        ( exu_i_ifu_valid                 ),
@@ -373,6 +374,7 @@ module exu_top(
         .pc_cmt_i_epc_r         ( pc_et_i_epc_r                   ), // pc to excp top
         .csr_mtvec_r            ( exu_csr_mtvec_r                 ),
         .status_mie_r           ( exu_status_mie_r                ),
+        .commit_irq_req         ( exu_o_pc_irq_req                ), // to pc, irq happened.
         .mtie_r                 ( exu_mtie_r                      ),
         .msie_r                 ( exu_msie_r                      ),
         .meie_r                 ( exu_meie_r                      ),
@@ -411,9 +413,9 @@ module exu_top(
         .cmt_instret_ena        ( exu_cmt_csr_instret_ena         ),
         .cmt_status_ena         ( exu_cmt_csr_status_ena          ),
         .cmt_mret_ena           ( exu_cmt_csr_mret_ena            ),
+        .cmt_bjp_flush_req      ( exu_o_bjp_flush_req             ),
 
         .commit_trap            ( exu_cmt_commit_trap             ),
-        .nonalu_flush_req       ( exu_nonalu_flush_req            ),
         .pipe_flush_req         ( exu_o_pipe_flush_req            ),
         .pipe_flush_pc          ( exu_o_pipe_flush_pc             ),
         .core_wfi               ( exu_o_core_wfi                  ),

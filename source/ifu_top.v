@@ -47,7 +47,9 @@ module ifu_top(
     // int and trap related vld and epc
     input  [`PC_SIZE-1:0          ] ifu_i_mtvec              , 
     input                           ifu_i_interrupt          ,
+    input                           ifu_i_irq_req            ,
     input                           ifu_i_excp               ,
+    input                           ifu_i_bjp_flush_req      ,
     output                          ifu_o_interrupt_ack      ,
     output                          ifu_o_vld_4irqexcp       ,
     output [`PC_SIZE-1:0          ] ifu_o_wbck_epc           ,
@@ -95,12 +97,13 @@ module ifu_top(
     //////////////////////////////////////////////////////////////////////////////
     PC PC_CONTROL (
         .pc_i_interrupt         ( ifu_i_interrupt           ),
+        .pc_i_irq_req           ( ifu_i_irq_req             ),
         .pc_i_excp              ( ifu_i_excp                ),
         .pc_i_mtvec             ( ifu_i_mtvec               ),
         .pc_i_init_use          ( ifu_i_pc_init_use         ),
                     
-        .pc_i_alu_req_flush     ( exu_ifu_i_pipe_flush_req  ),
-        .pc_i_alu_req_fulsh_pc  ( exu_ifu_i_flush_pc        ),
+        .pc_i_bjp_req_flush     ( ifu_i_bjp_flush_req       ),
+        .pc_i_bjp_req_fulsh_pc  ( exu_ifu_i_flush_pc        ),
             
         .pc_i_rv32              ( ifu_i_rv32                ),
                     

@@ -51,8 +51,17 @@ module lsu_ctrl(
     output                          lsu_o_ready        ,
     input                           lsu_i_valid        ,
     
+    `ifdef TEST_MODE
+      // test ports
+      output [1:0                 ] ls_nxt_state_t     ,
+      output [1:0                 ] ls_state_t         ,
+      output [`XLEN-1:0           ] lsu_expend_wmask_t ,
+    `endif 
+
     input                           clk                ,
     input                           rst_n              
+
+
     );
 
     wire [`XLEN-1:0 ] lsu_expend_wmask;
@@ -160,9 +169,12 @@ module lsu_ctrl(
     // to ram
     assign lsu_ram_valid    =  lsu_i_valid & (~ls_state[0]);                        // For ram, the valid signal is set when the instr is ld or st, and ram need to paticipate in.
 
-    
-    // to intagent.v
-    // load or store to mreg
 
+    `ifdef TEST_MODE
+        // test ports
+        assign ls_nxt_state_t      = ls_nxt_state      ;
+        assign ls_state_t          = ls_state          ;
+        assign lsu_expend_wmask_t  = lsu_expend_wmask  ;
+    `endif
 
 endmodule

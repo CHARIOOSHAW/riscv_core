@@ -1,3 +1,3 @@
 Command Line: /home/synopsys/verdi/Verdi_O-2018.09-SP2/platform/LINUXAMD64/bin/Novas -2001 -f /home/ICer/shaw/riscv_core/filelist/filelist.f -top core_top
 uname(Linux IC_EDA 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64)
-au time 57.196610 3.318351 1.856242 delta 901365760 901365760 total 1326448640 1326448640
+au time 332.919196 8.903085 8.221357 delta 905375744 905375744 total 1330458624 1330458624

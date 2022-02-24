@@ -59,6 +59,8 @@ module core_top(
     wire [`PC_SIZE-1:0] mtvec_r          ;
     wire                exu_ifu_excp     ;  
     wire                rst_n_syn        ;
+    wire                exu_bjp_flush_req;
+    wire                core_top_irq_req ;
 
     ifu_top IFT (
 
@@ -78,7 +80,9 @@ module core_top(
                                      
         .ifu_i_mtvec              ( mtvec_r                     ), 
         .ifu_i_interrupt          ( extenal_interrupt           ),
+        .ifu_i_irq_req            ( core_top_irq_req            ),
         .ifu_i_excp               ( exu_ifu_excp                ),
+        .ifu_i_bjp_flush_req      ( exu_bjp_flush_req           ),
         .ifu_o_interrupt_ack      ( ext_int_ack                 ),
         .ifu_o_vld_4irqexcp       ( pc_vld_4irqexcp             ),
         .ifu_o_wbck_epc           ( epc_r                       ),
@@ -123,6 +127,8 @@ module core_top(
         .exu_o_unexpected_err      ( core_unexcp_err            ),
         .exu_o_mtvec_r             ( mtvec_r                    ),
         .exu_o_excp                ( exu_ifu_excp               ),
+        .exu_o_bjp_flush_req       ( exu_bjp_flush_req          ),
+        .exu_o_pc_irq_req          ( core_top_irq_req           ),
 
         .exu_o_rv32                ( exu_ifu_rv32               ),
         
