@@ -1,3 +1,5 @@
+/home/ICer/shaw/riscv_core/makefile/config.v
+/home/ICer/shaw/riscv_core/makefile/mcu_defines.v
 /home/ICer/shaw/riscv_core/source/PC.v
 /home/ICer/shaw/riscv_core/source/agu.v
 /home/ICer/shaw/riscv_core/source/alu_top.v
@@ -8,7 +10,8 @@
 /home/ICer/shaw/riscv_core/source/csr.v
 /home/ICer/shaw/riscv_core/source/csr_ctrl.v
 /home/ICer/shaw/riscv_core/source/decoder.v
-/home/ICer/shaw/riscv_core/source/dff_chain.v
+/home/ICer/shaw/riscv_core/source/dff_chain2.v
+/home/ICer/shaw/riscv_core/source/dff_chain3.v
 /home/ICer/shaw/riscv_core/source/div.v
 /home/ICer/shaw/riscv_core/source/excp_aluexcp.v
 /home/ICer/shaw/riscv_core/source/excp_cmt_csr.v
@@ -19,6 +22,7 @@
 /home/ICer/shaw/riscv_core/source/exu_top.v
 /home/ICer/shaw/riscv_core/source/ifu.v
 /home/ICer/shaw/riscv_core/source/ifu_top.v
+/home/ICer/shaw/riscv_core/source/intagent.v
 /home/ICer/shaw/riscv_core/source/lsu_ctrl.v
 /home/ICer/shaw/riscv_core/source/mcu_defines.v
 /home/ICer/shaw/riscv_core/source/mem_top.v

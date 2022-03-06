@@ -32,7 +32,6 @@ module exu_top(
     // pc and instr related
     input [`XLEN-1:0             ] exu_i_instr          ,  
     input [`PC_SIZE-1:0          ] exu_i_pc             , 
-    input                          exu_i_pc_vld_4irqexcp,
     input [`XLEN-1:0             ] pc_et_i_epc_r        ,
     
     // ifu related
@@ -42,17 +41,31 @@ module exu_top(
     
     // cmt related
     input                          dbg_mode             ,
-    input                          dbg_ebreakm_r        ,
-
+ 
     input                          u_mode               , 
     input                          s_mode               , 
     input                          h_mode               , 
     input                          m_mode               ,
+    
+    // ita -> csr, mip field
+    input                          exu_i_ita_meip       ,
+    input                          exu_i_ita_msip       ,
+    input                          exu_i_ita_mtip       ,
+    
+    // ita -> cmt, irq indicators
+    input                          exu_i_ita_ext_irq    ,
+    input                          exu_i_ita_sft_irq    ,
+    input                          exu_i_ita_tmr_irq    ,
 
-    input                          ext_irq_r            ,
-    input                          sft_irq_r            ,
-    input                          tmr_irq_r            ,
-
+    // ita -> lsu
+    output                         exu_o_ita_wr         , 
+    output                         exu_o_ita_rd         ,
+    output [`XLEN-1:0            ] exu_o_ita_wdata      , 
+    output [`PC_SIZE-1:0         ] exu_o_ita_addr       ,
+    output                         exu_o_ita_valid      ,
+    input  [`XLEN-1:0            ] exu_i_ita_rdata      ,
+    input                          exu_i_ita_ready      ,
+    
     // wfi
     output                         exu_o_core_wfi       ,
 
@@ -226,10 +239,6 @@ module exu_top(
     wire [`XLEN-1:0             ] exu_memt_agu_wbck_wdata  ;
     wire                          exu_memt_agu_wbck_err    ;
   
-    wire                          exu_ralu_cmt_ecall       ;
-    wire                          exu_ralu_cmt_ebreak      ;
-    wire                          exu_ralu_cmt_wfi         ;
-
     wire                          exu_alu_bjp_cmt_bjp      ;
     wire                          exu_alu_bjp_cmt_mret     ;
     wire                          exu_alu_bjp_cmt_needflush;
@@ -270,9 +279,9 @@ module exu_top(
         .alu_memtop_wback_data  ( exu_memt_agu_wbck_wdata         ), // memtop to agu
                                         
         // ralu - cmt                               
-        .alu_ralu_cmt_ecall     ( exu_ralu_cmt_ecall              ),
-        .alu_ralu_cmt_ebreak    ( exu_ralu_cmt_ebreak             ),
-        .alu_ralu_cmt_wfi       ( exu_ralu_cmt_wfi                ),                               
+        .alu_ralu_cmt_ecall     (                                 ), // not use
+        .alu_ralu_cmt_ebreak    (                                 ), // not use
+        .alu_ralu_cmt_wfi       (                                 ), // not use                        
         .alu_i_csrepc           ( exu_csr_epc_r                   ),
         .alu_i_csrdpc           ( 32'hFFFF_FFFF                   ),
 
@@ -322,7 +331,15 @@ module exu_top(
 
         .lsu_o_wbck_wdata       ( exu_memt_agu_wbck_wdata         ),
         .lsu_o_wbck_err         ( exu_memt_agu_wbck_err           ),
-                                 
+
+        .memtop_o_ita_wr        ( exu_o_ita_wr                    ), 
+        .memtop_o_ita_rd        ( exu_o_ita_rd                    ), 
+        .memtop_o_ita_wdata     ( exu_o_ita_wdata                 ), 
+        .memtop_o_ita_addr      ( exu_o_ita_addr                  ), 
+        .memtop_o_ita_valid     ( exu_o_ita_valid                 ), 
+        .memtop_i_ita_rdata     ( exu_i_ita_rdata                 ),         
+        .memtop_i_ita_ready     ( exu_i_ita_ready                 ),
+
         .clk                    ( clk                             ),
         .rst_n                  ( rst_n                           )
     );
@@ -345,7 +362,7 @@ module exu_top(
     assign exu_o_mtvec_r = exu_csr_mtvec_r;
 
     // cmt to scr
-    wire [`ADDR_SIZE-1:0      ] exu_cmt_agu_badaddr = exu_rf_op1 + exu_dec_imm; // try to gate it
+    wire [`ADDR_SIZE-1:0      ] exu_agu_cmt_badaddr = exu_rf_op1 + exu_dec_imm; // try to gate it
     wire [`ADDR_SIZE-1:0      ] exu_cmt_csr_badaddr    ;     
     wire                        exu_cmt_csr_badaddr_ena;
     wire [`PC_SIZE-1:0        ] exu_cmt_csr_epc        ;
@@ -364,7 +381,6 @@ module exu_top(
 
         .cmt_i_pc               ( exu_i_pc                        ),
         .cmt_i_instr            ( exu_i_instr                     ),
-        .cmt_i_pc_vld_4irqexcp  ( exu_i_pc_vld_4irqexcp           ),
         .cmt_i_wfi_halt_ack     ( 1'b1                            ),
 
         .cmt_i_bjp_need_flush   ( exu_alu_bjp_cmt_needflush       ),
@@ -373,6 +389,7 @@ module exu_top(
 
         .pc_cmt_i_epc_r         ( pc_et_i_epc_r                   ), // pc to excp top
         .csr_mtvec_r            ( exu_csr_mtvec_r                 ),
+
         .status_mie_r           ( exu_status_mie_r                ),
         .commit_irq_req         ( exu_o_pc_irq_req                ), // to pc, irq happened.
         .mtie_r                 ( exu_mtie_r                      ),
@@ -385,15 +402,13 @@ module exu_top(
         .m_mode                 ( m_mode                          ),
 
         .dbg_mode               ( dbg_mode                        ),
-        .dbg_ebreakm_r          ( dbg_ebreakm_r                   ),
 
-        .ext_irq_r              ( ext_irq_r                       ),
-        .sft_irq_r              ( sft_irq_r                       ),
-        .tmr_irq_r              ( tmr_irq_r                       ),
+        .cmt_i_ita_ext_irq      ( exu_i_ita_ext_irq               ),
+        .cmt_i_ita_sft_irq      ( exu_i_ita_sft_irq               ),
+        .cmt_i_ita_tmr_irq      ( exu_i_ita_tmr_irq               ),
 
-        .alu_cmt_i_wfi          ( exu_ralu_cmt_ecall              ),
-        .alu_cmt_i_ecall        ( exu_ralu_cmt_ebreak             ),
-        .alu_cmt_i_ebreak       ( exu_ralu_cmt_wfi                ),
+        .alu_cmt_i_wfi          ( 1'b0                            ), // not use now
+        .alu_cmt_i_ecall        ( 1'b0                            ), // not use now   
         .alu_cmt_i_ifu_misalgn  ( exu_dec_misalgn                 ),
         .alu_cmt_i_ifu_buserr   ( exu_dec_buserr                  ),
         .alu_cmt_i_ifu_ilegl    ( exu_dec_ilegl                   ),
@@ -403,7 +418,7 @@ module exu_top(
         .alu_cmt_i_buserr       ( 1'b0                            ),
         .alu_cmt_i_alu_err      ( exu_alu_err                     ),
 
-        .cmt_i_badaddr          ( exu_cmt_agu_badaddr             ),
+        .cmt_i_badaddr          ( exu_agu_cmt_badaddr             ),
         .cmt_badaddr            ( exu_cmt_csr_badaddr             ),
         .cmt_badaddr_ena        ( exu_cmt_csr_badaddr_ena         ),
         .cmt_epc                ( exu_cmt_csr_epc                 ),
@@ -415,7 +430,7 @@ module exu_top(
         .cmt_mret_ena           ( exu_cmt_csr_mret_ena            ),
         .cmt_bjp_flush_req      ( exu_o_bjp_flush_req             ),
 
-        .commit_trap            ( exu_cmt_commit_trap             ),
+        .cmt_commit_trap        ( exu_cmt_commit_trap             ),
         .pipe_flush_req         ( exu_o_pipe_flush_req            ),
         .pipe_flush_pc          ( exu_o_pipe_flush_pc             ),
         .core_wfi               ( exu_o_core_wfi                  ),
@@ -459,9 +474,9 @@ module exu_top(
         .read_csr_dat           ( exu_alu_csr_cmd_rdata           ),
         .wbck_csr_dat           ( exu_alu_csr_cmd_wdata           ),
                                                     
-        .ext_irq_r              ( ext_irq_r                       ),
-        .sft_irq_r              ( sft_irq_r                       ),
-        .tmr_irq_r              ( tmr_irq_r                       ),
+        .csr_i_ita_meip         ( exu_i_ita_meip                  ),
+        .csr_i_ita_msip         ( exu_i_ita_msip                  ),
+        .csr_i_ita_mtip         ( exu_i_ita_mtip                  ),
 
         .u_mode                 ( u_mode                          ),
         .s_mode                 ( s_mode                          ),

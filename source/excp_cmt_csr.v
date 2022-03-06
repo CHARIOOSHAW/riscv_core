@@ -25,7 +25,6 @@ module excp_cmt_csr(
 
     // excp_cmt input 
     input                   dbg_mode                         , // from dbg unit  
-    input                   excp_top_vld_4irqexcp            ,
 
     input                   excpirq_flush_req                , // from excp top 
     input                   excpcmt_i_excp_taken_ena         ,
@@ -83,8 +82,7 @@ module excp_cmt_csr(
 
     // PC data for mepc and mdpc
     assign excpcmt_o_epc_ena        = (~dbg_mode) 
-                                    & (excpcmt_i_excp_taken_ena | excpcmt_i_irq_taken_ena) 
-                                    & excp_top_vld_4irqexcp;                                             // irq should wait for valid, ready and jump. excp only wait for ready.
+                                    & (excpcmt_i_excp_taken_ena | excpcmt_i_irq_taken_ena);              // irq should wait for valid, ready and jump. excp only wait for ready.
     assign excpcmt_o_epc            = excpcmt_i_epc ;                                                    // alu_excp_i_epc is offered by PC unit
 
 

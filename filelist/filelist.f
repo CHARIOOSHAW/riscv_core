@@ -34,8 +34,11 @@
 ~/shaw/riscv_core/source/config.v
 ~/shaw/riscv_core/source/mcu_defines.v
 ~/shaw/riscv_core/source/rst_syn_unit.v
-~/shaw/riscv_core/source/dff_chain.v
+~/shaw/riscv_core/source/dff_chain2.v
+~/shaw/riscv_core/source/dff_chain3.v
+~/shaw/riscv_core/source/intagent.v
 ~/shaw/riscv_core/source/sim_core_top.v
+
 
 
 

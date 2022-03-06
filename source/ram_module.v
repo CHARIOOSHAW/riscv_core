@@ -11,7 +11,8 @@ module ram_db (
     input              clk     , // clk
     input              cs      , // ram select signal
     input              rd      ,
-
+    
+    input              valid   ,
     output             ready
 
 );
@@ -40,6 +41,6 @@ module ram_db (
         end
     end
     
-    assign ready = (mem_count == 2'b11) ?1'b1 :1'b0;
+    assign ready = (mem_count == 2'b11) & valid;
     
-    endmodule
+endmodule

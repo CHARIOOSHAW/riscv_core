@@ -25,13 +25,12 @@ module exu_excp_top(
     /////////////////////////////////////////////////////////////////////////////
     // input from PC unit which generate epc and pc_vld.
     input [`PC_SIZE-1:0           ] excp_top_i_epc         , // from PC
-    input                           excp_i_pc_vld_4irqexcp ,
 
     ////////////////////////////////////////////////////////////////////////////
     // input from exu_top and output to exu_top
     output                          excpirq_flush_req      ,
     output [`PC_SIZE-1:0          ] excpirq_flush_addr     ,  
-    output                          commit_trap            ,
+    output                          excp_top_o_commit_trap ,
   
     /////////////////////////////////////////////////////////////////////////////
     // illegal related information for ifu or decoder
@@ -55,7 +54,6 @@ module exu_excp_top(
     input                           alu_excp_i_misalgn     ,
     input                           alu_excp_i_buserr      ,
     input                           alu_excp_i_ecall       ,
-    input                           alu_excp_i_ebreak      ,
     input                           alu_excp_i_ifu_misalgn ,
     input                           alu_excp_i_ifu_buserr  ,
     input                           alu_excp_i_ifu_ilegl   ,
@@ -63,15 +61,15 @@ module exu_excp_top(
 
     //////////////////////////////////////////////////////////////////////////////
     // irq unit related input 
-    input                           ext_irq_r              ,
-    input                           sft_irq_r              ,
-    input                           tmr_irq_r              , 
+    input                           exu_excp_ext_irq       ,
+    input                           exu_excp_sft_irq       ,
+    input                           exu_excp_tmr_irq       , 
+    output                          excp_top_irq_req       , // to PC.v, fenced irq.
 
     input                           status_mie_r           ,
     input                           mtie_r                 ,
     input                           msie_r                 ,
     input                           meie_r                 ,
-    output                          excp_top_irq_req       , // to PC.v, fenced irq.
 
     ///////////////////////////////////////////////////////////////////////////////
     // core mode
@@ -94,8 +92,6 @@ module exu_excp_top(
     ///////////////////////////////////////////////////////////////////////////////
     // dbg state signal
     input                           dbg_mode               ,
-    input                           dbg_ebreakm_r          ,
-    
 
     input                           clk                    ,
     input                           rst_n
@@ -106,33 +102,16 @@ module exu_excp_top(
     // Generally, the excp can be further improved. One direction is the excution of excp should wait for 
     // the finish of multi-cycle instrs. To improve the excution speed, we can kill the multi-cycle instrs
     // as long as we detect excp and set ready.
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
-    // excp top signals 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // dbg entry flush req and dbg ready signals
-    wire   excp_top_alu_excp_i_ready4dbg  = excp_i_pc_vld_4irqexcp;
-
     // irq and excp flush req    
     // irq gain the periority.
-    // excp or irq is put forward, but valid remains to be examed. 
-    wire   excp_top_alu_need_flush     ;
-    wire   excp_top_ebreakm_flush_req  ;
-                    
-    wire   excp_top_alu_excp_flush_req    =  excp_top_alu_need_flush & (~excp_top_irq_req);
-    assign excpirq_flush_req              =  excp_top_irq_req  | excp_top_alu_excp_flush_req;
- 
-    wire   excpirq_taken_ena              =  excpirq_flush_req & excp_i_pc_vld_4irqexcp;             // exam the valid.
-    assign commit_trap                    =  excpirq_taken_ena;                                      // when excp and irq happened, the cmt will be blocked and the result will be wasted.
-  
-    wire   excp_taken_ena                 =  excp_top_alu_excp_flush_req  & excpirq_taken_ena; 
-    wire   irq_taken_ena                  =  excp_top_irq_req  & excpirq_taken_ena;
-    wire   breakm_taken_ena               =  excp_top_ebreakm_flush_req   & excp_i_pc_vld_4irqexcp;
-
-    // 800 dbg entry address; 808 dbg trap address; mtvec non-dbg trap address.
-    assign excpirq_flush_addr             =  breakm_taken_ena? `PC_SIZE'h800: (excp_top_alu_excp_flush_req & dbg_mode)? `PC_SIZE'h808 : csr_mtvec_r;
+    wire   excp_top_alu_need_flush;
+    wire   excp_taken_ena                 =  excp_top_alu_need_flush & (~excp_top_irq_req); 
+    wire   irq_taken_ena                  =  excp_top_irq_req;
     
+    assign excpirq_flush_req              =  irq_taken_ena | excp_taken_ena;
+    assign excpirq_flush_addr             =  csr_mtvec_r;                                            // only mtvec now. It should be expanded if dbg mode is avaliable.
+    assign excp_top_o_commit_trap         =  excpirq_flush_req;                                      // when excp and irq happened, the cmt will be blocked and the result will be wasted.
+
 
     ///////////////////////////////////////////////////////////////////////////////////////
     // U1 : excp_irq
@@ -146,9 +125,9 @@ module exu_excp_top(
         .clk                              ( clk                                    ),
         .dbg_mode                         ( dbg_mode                               ),
                         
-        .ext_irq_r                        ( ext_irq_r                              ),
-        .sft_irq_r                        ( sft_irq_r                              ),
-        .tmr_irq_r                        ( tmr_irq_r                              ),
+        .ext_irq                          ( exu_excp_ext_irq                       ),
+        .sft_irq                          ( exu_excp_sft_irq                       ),
+        .tmr_irq                          ( exu_excp_tmr_irq                       ),
                         
         .status_mie_r                     ( status_mie_r                           ),
         .meie_r                           ( mtie_r                                 ),
@@ -190,15 +169,14 @@ module exu_excp_top(
     wire             aluexcp_flush_req_ifu_misalgn          ;
     wire             aluexcp_flush_req_ifu_buserr           ;
     wire             aluexcp_flush_req_ifu_ilegl            ;
-    wire             aluexcp_flush_req_ebreak               ;
 
     excp_aluexcp exu_excp_aluexcp_unit (
-        .dbg_ebreakm_r                    ( dbg_ebreakm_r                          ), // get from dbg unit through input 
+        .dbg_ebreakm_r                    ( 1'b0                                   ), // not use now. get from dbg unit through input 
         .dbg_mode                         ( dbg_mode                               ),
                                     
-        .alu_excp_flush_req               ( excp_top_alu_excp_flush_req            ), // flush req from exu_excp top
+        .alu_excp_flush_req               ( excp_taken_ena                         ), // excp flush req from exu_excp top
         .aluexcp_i_alu_err                ( alu_excp_i_alu_err                     ),
-        .aluexcp_i_ebreak                 ( alu_excp_i_ebreak                      ),
+        .aluexcp_i_ebreak                 ( 1'b0                                   ), // not use now
         .aluexcp_i_misalgn                ( alu_excp_i_misalgn                     ),
         .aluexcp_i_buserr                 ( alu_excp_i_buserr                      ),
         .aluexcp_i_ecall                  ( alu_excp_i_ecall                       ),
@@ -213,7 +191,7 @@ module exu_excp_top(
         .h_mode                           ( h_mode                                 ),
         .m_mode                           ( m_mode                                 ),
 
-        .aluexcp_o_ebreakm_flush_req      ( excp_top_ebreakm_flush_req             ), // ebreakm will be handled with dbg
+        .aluexcp_o_ebreakm_flush_req      (                                        ), // not use now, ebreakm will be handled with dbg
         .aluexcp_o_need_flush4excp        ( excp_top_alu_need_flush                ), // flush indicator to exu_excp top
 
         .aluexcp_o_flush_by_alu_agu       ( excp_top_flush_by_alu_agu              ), 
@@ -222,7 +200,7 @@ module exu_excp_top(
         .aluexcp_flush_req_ifu_misalgn    ( aluexcp_flush_req_ifu_misalgn          ),
         .aluexcp_flush_req_ifu_buserr     ( aluexcp_flush_req_ifu_buserr           ),
         .aluexcp_flush_req_ifu_ilegl      ( aluexcp_flush_req_ifu_ilegl            ),
-        .aluexcp_flush_req_ebreak         ( aluexcp_flush_req_ebreak               )
+        .aluexcp_flush_req_ebreak         (                                        )  // not use now
     );
 
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -231,14 +209,13 @@ module exu_excp_top(
     ///////////////////////////////////////////////////////////////////////////////////////
     excp_cmt_csr exu_excp_cmt_csr_unit (
         .dbg_mode                        ( dbg_mode                                ),
-        .excp_top_vld_4irqexcp           ( excp_i_pc_vld_4irqexcp                  ),
-                                         
+
         .excpirq_flush_req               ( excpirq_flush_req                       ), // get from exu_excp top
         .excpcmt_i_excp_taken_ena        ( excp_taken_ena                          ),
         .excpcmt_i_irq_taken_ena         ( irq_taken_ena                           ),
                                          
         .excpcmt_i_flush_by_alu_agu      ( excp_top_flush_by_alu_agu               ),
-        .excpcmt_i_flush_req_ebreak      ( aluexcp_flush_req_ebreak                ), // from aluexcp
+        .excpcmt_i_flush_req_ebreak      ( 1'b0                                    ), // not use now.
         .excpcmt_i_flush_req_ifu_misalgn ( aluexcp_flush_req_ifu_misalgn           ),
         .excpcmt_i_flush_req_ifu_buserr  ( aluexcp_flush_req_ifu_buserr            ),
         .excpcmt_i_flush_req_ifu_ilegl   ( aluexcp_flush_req_ifu_ilegl             ),

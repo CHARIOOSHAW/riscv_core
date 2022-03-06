@@ -1,37 +1,37 @@
 {
+    "excp_dbg": [
+        "excp_dbg",
+        "S3FV3",
+        "module",
+        4
+    ],
     "std": [
         "std",
         "reYIK",
         "module",
         1
     ],
-    "multi_counter": [
-        "multi_counter",
-        "y12fA",
-        "module",
-        5
-    ],
-    "...MASTER...": [
-        "SIM",
-        "amcQw",
+    "intagent": [
+        "intagent",
+        "Nvknd",
         "module",
         9
     ],
-    "wbck": [
-        "wbck",
-        "Da1cw",
+    "csr": [
+        "csr",
+        "cNThd",
         "module",
-        6
+        2
+    ],
+    "sim_core_top": [
+        "sim_core_top",
+        "Jm6Rb",
+        "module",
+        10
     ],
     "decoder": [
         "decoder",
         "zf0bY",
-        "module",
-        2
-    ],
-    "excp_dbg": [
-        "excp_dbg",
-        "S3FV3",
         "module",
         3
     ],
@@ -39,18 +39,30 @@
         "ifu_top",
         "He9nS",
         "module",
-        4
+        5
     ],
-    "dff_chain": [
-        "dff_chain",
-        "cJNVE",
+    "sirv_gnrl_dffr": [
+        "sirv_gnrl_dffr",
+        "Wnd0S",
         "module",
         7
     ],
-    "sim_core_top": [
-        "sim_core_top",
-        "Jm6Rb",
+    "wbck": [
+        "wbck",
+        "Da1cw",
         "module",
         8
+    ],
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
+        "module",
+        11
+    ],
+    "multi_counter": [
+        "multi_counter",
+        "y12fA",
+        "module",
+        6
     ]
 }

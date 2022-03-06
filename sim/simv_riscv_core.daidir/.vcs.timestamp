@@ -1,12 +1,9 @@
-4        
-0 mcu_defines.v
-0 /home/synopsys/vcs-mx/O-2018.09-1/etc/systemverilog/mcu_defines.v
-0 config.v
-0 /home/synopsys/vcs-mx/O-2018.09-1/etc/systemverilog/config.v
-48
+0 
+49
 +define+FSDB
 +incdir+../source
 +itf+/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcsdp_lite.tab
++lint=PCWM
 +lint=TFIPC-L
 +nospecify
 +notimingchec
@@ -64,7 +61,7 @@ XDG_RUNTIME_DIR=/run/user/1000
 XDG_MENU_PREFIX=gnome-
 XDG_DATA_DIRS=/home/ICer/.local/share/flatpak/exports/share/:/var/lib/flatpak/exports/share/:/usr/local/share/:/usr/share/
 XDG_CURRENT_DESKTOP=GNOME-Classic:GNOME
-XAUTHORITY=/run/gdm/auth-for-ICer-iqv6yd/database
+XAUTHORITY=/run/gdm/auth-for-ICer-HVF3ZG/database
 WINDOWPATH=1
 VTE_VERSION=5204
 VMR_MODE_FLAG=64
@@ -83,10 +80,10 @@ USERNAME=ICer
 UNAME=/bin/uname
 TOOL_HOME=/home/synopsys/vcs-mx/O-2018.09-1/linux64
 SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
-SSH_AGENT_PID=3084
+SSH_AGENT_PID=9937
 SPYGLASS_HOME=/home/synopsys/SpyGlass-L2016.06/SPYGLASS_HOME/
 SNPS_VERDI_INTERNAL_LP_XML_NEW_FLOW=1
-SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/3097,unix/unix:/tmp/.ICE-unix/3097
+SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/9950,unix/unix:/tmp/.ICE-unix/9950
 SCRNAME=vcs
 SCRIPT_NAME=vcs
 SCL_HOME=/home/synopsys/scl/2018.06
@@ -116,8 +113,8 @@ IMSETTINGS_INTEGRATE_DESKTOP=yes
 ICC2_HOME=/home/synopsys/icc2/O-2018.06-SP1
 HOSTTYPE=x86_64-linux
 GROUP=ICer
-GNOME_TERMINAL_SERVICE=:1.105
-GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/e5015f3d_1f0c_42f4_ba2d_c53c36131671
+GNOME_TERMINAL_SERVICE=:1.188
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/65ab038c_8c23_45ce_9198_11b8e089475a
 GNOME_SHELL_SESSION_MODE=classic
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
 GDM_LANG=zh_CN.UTF-8
@@ -126,52 +123,54 @@ DVE_HOME=/home/synopsys/vcs-mx/O-2018.09-1
 DESKTOP_SESSION=gnome-classic
 DC_HOME=/home/synopsys/syn/O-2018.06-SP1
 DBUS_STARTER_BUS_TYPE=session
-DBUS_STARTER_ADDRESS=unix:abstract=/tmp/dbus-uBFV6zU5TE,guid=4fc291e56e51201a2e83e27f6214eff8
-DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-uBFV6zU5TE,guid=4fc291e56e51201a2e83e27f6214eff8
+DBUS_STARTER_ADDRESS=unix:abstract=/tmp/dbus-674QNOeQvP,guid=daa9b8eb8764d567c7e7bc11621f0c7a
+DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-674QNOeQvP,guid=daa9b8eb8764d567c7e7bc11621f0c7a
 COLORTERM=truecolor
 0
-43
-1645067347 ../source/config.v
-1645067347 ../source/mcu_defines.v
-1645686857 /home/ICer/shaw/riscv_core/source/sim_core_top.v
-1645351070 /home/ICer/shaw/riscv_core/source/dff_chain.v
+45
+1646549796 config.v
+1646549796 mcu_defines.v
+1646314652 /home/ICer/shaw/riscv_core/source/sim_core_top.v
+1646550605 /home/ICer/shaw/riscv_core/source/intagent.v
+1646229691 /home/ICer/shaw/riscv_core/source/dff_chain3.v
+1646229691 /home/ICer/shaw/riscv_core/source/dff_chain2.v
 1645067347 /home/ICer/shaw/riscv_core/source/rst_syn_unit.v
-1645067347 /home/ICer/shaw/riscv_core/source/mcu_defines.v
+1645963100 /home/ICer/shaw/riscv_core/source/mcu_defines.v
 1645067347 /home/ICer/shaw/riscv_core/source/config.v
 1645067347 /home/ICer/shaw/riscv_core/source/wbck.v
 1645067347 /home/ICer/shaw/riscv_core/source/sirv_gnrl_dffr.v
 1645067347 /home/ICer/shaw/riscv_core/source/sirv_gnrl_dfflr.v
 1645067347 /home/ICer/shaw/riscv_core/source/sirv_gnrl_dffl.v
-1645067347 /home/ICer/shaw/riscv_core/source/ram_module.v
+1646037444 /home/ICer/shaw/riscv_core/source/ram_module.v
 1645067347 /home/ICer/shaw/riscv_core/source/regfile.v
 1645067347 /home/ICer/shaw/riscv_core/source/ralu.v
-1645692992 /home/ICer/shaw/riscv_core/source/PC.v
+1646230544 /home/ICer/shaw/riscv_core/source/PC.v
 1645067347 /home/ICer/shaw/riscv_core/source/otp4k8.v
 1645067347 /home/ICer/shaw/riscv_core/source/multi_counter.v
 1645067347 /home/ICer/shaw/riscv_core/source/muldiv_top.v
 1645067347 /home/ICer/shaw/riscv_core/source/mul.v
 1645067347 /home/ICer/shaw/riscv_core/source/micro_adder_unit.v
-1645067347 /home/ICer/shaw/riscv_core/source/mem_top.v
-1645067347 /home/ICer/shaw/riscv_core/source/lsu_ctrl.v
-1645692856 /home/ICer/shaw/riscv_core/source/ifu_top.v
+1646039973 /home/ICer/shaw/riscv_core/source/mem_top.v
+1646315297 /home/ICer/shaw/riscv_core/source/lsu_ctrl.v
+1646293001 /home/ICer/shaw/riscv_core/source/ifu_top.v
 1645532839 /home/ICer/shaw/riscv_core/source/ifu.v
-1645703576 /home/ICer/shaw/riscv_core/source/exu_top.v
-1645703928 /home/ICer/shaw/riscv_core/source/exu_excp_top.v
-1645067347 /home/ICer/shaw/riscv_core/source/excp_wfi.v
-1645689800 /home/ICer/shaw/riscv_core/source/excp_irq.v
+1646312070 /home/ICer/shaw/riscv_core/source/exu_top.v
+1646309317 /home/ICer/shaw/riscv_core/source/exu_excp_top.v
+1646297175 /home/ICer/shaw/riscv_core/source/excp_wfi.v
+1646297175 /home/ICer/shaw/riscv_core/source/excp_irq.v
 1645067347 /home/ICer/shaw/riscv_core/source/excp_dbg.v
-1645067347 /home/ICer/shaw/riscv_core/source/excp_cmt_csr.v
-1645067347 /home/ICer/shaw/riscv_core/source/excp_aluexcp.v
+1646297175 /home/ICer/shaw/riscv_core/source/excp_cmt_csr.v
+1646297175 /home/ICer/shaw/riscv_core/source/excp_aluexcp.v
 1645067347 /home/ICer/shaw/riscv_core/source/div.v
 1645067347 /home/ICer/shaw/riscv_core/source/decoder.v
 1645067347 /home/ICer/shaw/riscv_core/source/csr_ctrl.v
-1645067347 /home/ICer/shaw/riscv_core/source/csr.v
-1645692669 /home/ICer/shaw/riscv_core/source/core_top.v
-1645703407 /home/ICer/shaw/riscv_core/source/commit.v
+1646040380 /home/ICer/shaw/riscv_core/source/csr.v
+1646550851 /home/ICer/shaw/riscv_core/source/core_top.v
+1646311262 /home/ICer/shaw/riscv_core/source/commit.v
 1645067347 /home/ICer/shaw/riscv_core/source/bjp.v
 1645067347 /home/ICer/shaw/riscv_core/source/alu_top.v
 1645067347 /home/ICer/shaw/riscv_core/source/agu.v
-1645530526 /home/ICer/shaw/riscv_core/filelist/filelist.f
+1646313444 /home/ICer/shaw/riscv_core/filelist/filelist.f
 1550753332 /home/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/verdi.tab
 1539400757 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcsdp_lite.tab
 4
@@ -179,5 +178,5 @@ COLORTERM=truecolor
 1539401183 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/liberrorinf.so
 1539401125 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libsnpsmalloc.so
 1539401175 /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/libvfs.so
-1645703937 /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir
+1646550876 /home/ICer/shaw/riscv_core/sim/simv_riscv_core.daidir
 -1 partitionlib

@@ -38,23 +38,19 @@ module mem_top(
     // send to agu interface  
     output [`XLEN-1:0             ] lsu_o_wbck_wdata      ,
     output                          lsu_o_wbck_err        ,
-    
+
+    // send to ita
+    output                          memtop_o_ita_wr       ,    
+    output                          memtop_o_ita_rd       , 
+    output [`XLEN-1:0             ] memtop_o_ita_wdata    , 
+    output [`PC_SIZE-1:0          ] memtop_o_ita_addr     ,
+    output                          memtop_o_ita_valid    ,
+    input  [`XLEN-1:0             ] memtop_i_ita_rdata    , 
+    input                           memtop_i_ita_ready    ,
+
     // valid & ready
     output                          memtop_o_ready        ,
     input                           memtop_i_valid        , // from agu
-
-    `ifdef TEST_MODE
-      // test ports        
-      output [`XLEN-1:0           ] mem_data_t            ,
-      output                        lsu_ram_wr_t          ,
-      output                        lsu_ram_rd_t          ,
-      output [`XLEN-1:0           ] lsu_ram_wdata_t       ,
-      output [`XLEN-1:0           ] lsu_ram_addr_t        ,
-      output [`XLEN-1:0           ] ram_lsu_rdata_t       , 
-      output [1:0                 ] ls_nxt_state_t        ,    
-      output [1:0                 ] ls_state_t            ,        
-      output [`XLEN-1:0           ] lsu_expend_wmask_t    ,
-    `endif 
 
     // clk and rst_n  
     input                           clk                   ,
@@ -95,18 +91,20 @@ module mem_top(
         .ram_lsu_rdata       (      ram_lsu_rdata           ),
         .lsu_ram_valid       (      lsu_ram_valid           ),
         .ram_lsu_ready       (      ram_lsu_ready           ),
+
+        .lsu_ita_wr          (      memtop_o_ita_wr         ),
+        .lsu_ita_rd          (      memtop_o_ita_rd         ), 
+        .lsu_ita_wdata       (      memtop_o_ita_wdata      ), 
+        .lsu_ita_addr        (      memtop_o_ita_addr       ), 
+        .lsu_ita_valid       (      memtop_o_ita_valid      ), 
+        .ita_lsu_rdata       (      memtop_i_ita_rdata      ), 
+        .ita_lsu_ready       (      memtop_i_ita_ready      ),
  
         .lsu_o_wbck_wdata    (      lsu_o_wbck_wdata        ),
         .lsu_o_wbck_err      (      lsu_o_wbck_err          ),
  
         .lsu_o_ready         (      memtop_o_ready          ),
         .lsu_i_valid         (      memtop_i_valid          ),
- 
-        `ifdef TEST_MODE 
-         .ls_nxt_state_t     (      ls_nxt_state_t          ),
-         .ls_state_t         (      ls_state_t              ),
-         .lsu_expend_wmask_t (      lsu_expend_wmask_t      ),
-        `endif  
  
         .clk                 (      clk                     ),
         .rst_n               (      rst_n                   )
@@ -124,22 +122,11 @@ module mem_top(
         .wr                  (      lsu_ram_wr              ),
         .rd                  (      lsu_ram_rd              ),
         .cs                  (      lsu_ram_cs              ),
- 
-        `ifdef TEST_MODE 
-         .rd_data_t          (      mem_data_t              ),
-        `endif  
         
+        .valid               (      lsu_ram_valid           ),
         .ready               (      ram_lsu_ready           ),
         .clk                 (      clk                     )
     );
 
-    `ifdef TEST_MODE
-        // test port
-        assign lsu_ram_wr_t    = lsu_ram_wr    ;
-        assign lsu_ram_rd_t    = lsu_ram_rd    ;
-        assign lsu_ram_wdata_t = lsu_ram_wdata ;
-        assign lsu_ram_addr_t  = lsu_ram_addr  ;
-        assign ram_lsu_rdata_t = ram_lsu_rdata ;
-    `endif 
-
+   
 endmodule

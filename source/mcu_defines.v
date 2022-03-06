@@ -170,6 +170,14 @@
     // IFU defines
     `define IR_RES_LEN                   16         
 
+    // INT defines 
+    // The addr of int related registers
+    `define MSIP_ADDR                    32'h1000_0000
+    `define MTIME_ADDR                   32'h1000_0004
+    `define MTIMEH_ADDR                  32'h1000_0008
+    `define MTIMECMP_ADDR                32'h1000_000c
+    `define MTIMECMPH_ADDR               32'h1000_0010
+
 
 
 

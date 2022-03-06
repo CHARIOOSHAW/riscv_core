@@ -29,7 +29,6 @@ module commit(
 
     input  [`PC_SIZE-1:0           ] cmt_i_pc              ,  
     input  [`INSTR_SIZE-1:0        ] cmt_i_instr           ,  
-    input                            cmt_i_pc_vld_4irqexcp ,
     input                            cmt_i_wfi_halt_ack    , // from GC
 
     // bjp inputs
@@ -49,8 +48,7 @@ module commit(
   
     // dbg status input  
     input                            dbg_mode              ,
-    input                            dbg_ebreakm_r         ,
-  
+
     // int fence status  
     input                            status_mie_r          ,
     output                           commit_irq_req        ,
@@ -60,14 +58,13 @@ module commit(
   
 
     // int input signals
-    input                            ext_irq_r             ,
-    input                            sft_irq_r             ,
-    input                            tmr_irq_r             ,
+    input                            cmt_i_ita_ext_irq     ,
+    input                            cmt_i_ita_sft_irq     ,
+    input                            cmt_i_ita_tmr_irq     ,
 
     // ALU exception
     input                            alu_cmt_i_wfi         ,
     input                            alu_cmt_i_ecall       ,
-    input                            alu_cmt_i_ebreak      ,
     input                            alu_cmt_i_ifu_misalgn ,
     input                            alu_cmt_i_ifu_buserr  ,
     input                            alu_cmt_i_ifu_ilegl   ,
@@ -92,7 +89,7 @@ module commit(
     output                           cmt_status_ena        ,
 
     // cmt output 
-    output                           commit_trap           ,
+    output                           cmt_commit_trap       ,
     output                           pipe_flush_req        ,
     output  [`PC_SIZE-1:0          ] pipe_flush_pc         ,  
     output                           core_wfi              ,
@@ -113,9 +110,7 @@ module commit(
     assign pipe_flush_req        = excpirq_flush_req | cmt_i_bjp_need_flush; // pipeline need to be flushed because of irq/excp/jump-instrs.
     assign pipe_flush_pc         = excpirq_flush_req ? excpirq_flush_addr : cmt_i_bjp_flush_PC;  
 
-    assign cmt_commit_trap       = commit_trap;                              // irq or excp happened. Must stop and jump.
-
-    assign cmt_instret_ena       = cmt_ena & (~cmt_i_bjp_need_flush);        // at the end of jump instr the IR is unvalid and the instret should stop counting.
+    assign cmt_instret_ena       = cmt_ena & (~excpirq_flush_req);           // stop counting when meet excp and irq flush.
 
     assign cmt_mret_ena          = cmt_ena & cmt_i_bjp_mret;                 // mret, ready to entry machine mode.
 
@@ -126,7 +121,6 @@ module commit(
     exu_excp_top u_exu_excp(
 
         .excp_top_i_epc               ( pc_cmt_i_epc_r                  ),
-        .excp_i_pc_vld_4irqexcp       ( cmt_i_pc_vld_4irqexcp           ), // top vld
           
         .excp_top_i_badaddr           ( cmt_i_badaddr                   ), // illegal ld or store address
         .excp_top_i_pc                ( cmt_i_pc                        ),
@@ -134,9 +128,8 @@ module commit(
                     
         .excpirq_flush_req            ( excpirq_flush_req               ),
         .excpirq_flush_addr           ( excpirq_flush_addr              ),
-        .commit_trap                  ( commit_trap                     ),
-        .excp_top_irq_req             ( commit_irq_req                  ), // to pc
- 
+        .excp_top_o_commit_trap       ( cmt_commit_trap                 ),
+
         // wfi output 
         .core_wfi                     ( core_wfi                        ),     
         .wfi_halt_ack                 ( cmt_i_wfi_halt_ack              ),      
@@ -148,16 +141,16 @@ module commit(
         .alu_excp_i_misalgn           ( alu_cmt_i_misalgn               ),
         .alu_excp_i_buserr            ( alu_cmt_i_buserr                ),
         .alu_excp_i_ecall             ( alu_cmt_i_ecall                 ),
-        .alu_excp_i_ebreak            ( alu_cmt_i_ebreak                ),
         .alu_excp_i_ifu_misalgn       ( alu_cmt_i_ifu_misalgn           ),
         .alu_excp_i_ifu_buserr        ( alu_cmt_i_ifu_buserr            ),
         .alu_excp_i_ifu_ilegl         ( alu_cmt_i_ifu_ilegl             ),
         .alu_excp_i_alu_err           ( alu_cmt_i_alu_err               ),
               
         // int input signals
-        .ext_irq_r                    ( ext_irq_r                       ),
-        .sft_irq_r                    ( sft_irq_r                       ),
-        .tmr_irq_r                    ( tmr_irq_r                       ),
+        .exu_excp_ext_irq             ( cmt_i_ita_ext_irq               ),
+        .exu_excp_sft_irq             ( cmt_i_ita_sft_irq               ),
+        .exu_excp_tmr_irq             ( cmt_i_ita_tmr_irq               ),
+        .excp_top_irq_req             ( commit_irq_req                  ), // to pc
 
         // int fence status
         .status_mie_r                 ( status_mie_r                    ),
@@ -183,8 +176,6 @@ module commit(
               
         // dbg status
         .dbg_mode                     ( dbg_mode                        ),
-        .dbg_ebreakm_r                ( dbg_ebreakm_r                   ),
-
 
         .clk                          ( clk                             ),
         .rst_n                        ( rst_n                           )

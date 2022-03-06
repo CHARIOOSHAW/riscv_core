@@ -32,10 +32,10 @@ module csr(
     output [`XLEN-1:0        ] read_csr_dat    , // read data bus
     input  [`XLEN-1:0        ] wbck_csr_dat    , // write data bus
     
-    // interrupt request       
-    input                      ext_irq_r       ,
-    input                      sft_irq_r       ,
-    input                      tmr_irq_r       ,
+    // input from intagent, the int indicates.
+    input                      csr_i_ita_meip  ,
+    input                      csr_i_ita_msip  ,
+    input                      csr_i_ita_mtip  ,
 
     // private mode
     input                      u_mode          ,
@@ -173,7 +173,7 @@ module csr(
     //////////////////////////
     // Implement XS field
     //
-    //  See Priv SPEC:
+    // See Priv SPEC:
     //    XS field is read-only
     //    The XS field represents a summary of all extensions' status
     // But in E200 we implement XS exactly same as FS to make it usable by software to 
@@ -195,20 +195,20 @@ module csr(
     // Pack to the full mstatus register
     //
     wire [`XLEN-1:0] status_r;
-    assign status_r[31]    = status_sd_r;                        //SD
-    assign status_r[30:23] = 8'b0; // Reserved
+    assign status_r[31]    = status_sd_r;        // SD
+    assign status_r[30:23] = 8'b0;               // Reserved
     assign status_r[22:17] = 6'b0;               // TSR--MPRV
-    assign status_r[16:15] = status_xs_r;                        // XS
-    assign status_r[14:13] = status_fs_r;                        // FS
+    assign status_r[16:15] = status_xs_r;        // XS
+    assign status_r[14:13] = status_fs_r;        // FS
     assign status_r[12:11] = 2'b11;              // MPP 
-    assign status_r[10:9]  = 2'b0; // Reserved
+    assign status_r[10:9]  = 2'b0;               // Reserved
     assign status_r[8]     = 1'b0;               // SPP
-    assign status_r[7]     = status_mpie_r;                      // MPIE
-    assign status_r[6]     = 1'b0; // Reserved
+    assign status_r[7]     = status_mpie_r;      // MPIE
+    assign status_r[6]     = 1'b0;               // Reserved
     assign status_r[5]     = 1'b0;               // SPIE 
     assign status_r[4]     = 1'b0;               // UPIE 
-    assign status_r[3]     = status_mie_r;                       // MIE
-    assign status_r[2]     = 1'b0; // Reserved
+    assign status_r[3]     = status_mie_r;       // MIE
+    assign status_r[2]     = 1'b0;               // Reserved
     assign status_r[1]     = 1'b0;               // SIE 
     assign status_r[0]     = 1'b0;               // UIE 
 
@@ -239,29 +239,30 @@ module csr(
     assign mtie_r = csr_mie[ 7];
     assign msie_r = csr_mie[ 3];
 
-
+    
     // 3 MIP
     // 0x344 MRW mip Machine interrupt pending
+    wire csr_mtip_r;
+    wire csr_meip_r;
+    wire csr_msip_r;
+
     wire sel_mip = (csr_idx == 12'h344);
     wire rd_mip  = sel_mip & csr_rd_en; // The MxIP is read-only
 
-    wire meip_r;
-    wire msip_r;
-    wire mtip_r;
-    sirv_gnrl_dffr #(1) meip_dffr (ext_irq_r, meip_r, clk, rst_n); // CG is cancelled. mip is workinng all the time.
-    sirv_gnrl_dffr #(1) msip_dffr (sft_irq_r, msip_r, clk, rst_n); // irq_r is sent from the csr_ctrl.
-    sirv_gnrl_dffr #(1) mtip_dffr (tmr_irq_r, mtip_r, clk, rst_n);
-
     wire [`XLEN-1:0]  mip_r  ;
     assign mip_r[31:12] =  20'b0  ;
-    assign mip_r[11]    =  meip_r ;
+    assign mip_r[11]    =  csr_meip_r ;
     assign mip_r[10:8]  =  3'b0   ;
-    assign mip_r[7]     =  mtip_r ;
+    assign mip_r[7]     =  csr_mtip_r ;
     assign mip_r[6:4]   =  3'b0   ;
-    assign mip_r[3]     =  msip_r ;
+    assign mip_r[3]     =  csr_msip_r ;
     assign mip_r[2:0]   =  3'b0   ;
 
     wire [`XLEN-1:0] csr_mip = mip_r;
+
+    sirv_gnrl_dfflr #(1) mtip_dfflr (1'b1, csr_i_ita_mtip, csr_mtip_r, clk, rst_n);
+    sirv_gnrl_dfflr #(1) meip_dfflr (1'b1, csr_i_ita_meip, csr_meip_r, clk, rst_n);
+    sirv_gnrl_dfflr #(1) msip_dfflr (1'b1, csr_i_ita_msip, csr_msip_r, clk, rst_n);
 
 
     // 4 MTVEC
@@ -492,8 +493,8 @@ module csr(
 
     /////////////////////////////////////////////////////////////////////
     //  Generate the Read path
-    //Currently we only support the M mode to simplify the implementation and 
-    //      reduce the gatecount because we are a privite core
+    //  Currently we only support the M mode to simplify the implementation and 
+    //  reduce the gatecount because we are a privite core
     assign read_csr_dat = `XLEN'b0 
                    | ({`XLEN{rd_mstatus    }} & csr_mstatus    )
                    | ({`XLEN{rd_mie        }} & csr_mie        )
@@ -515,7 +516,7 @@ module csr(
                    ;
 
     wire [12:0] sel_indicator = {sel_mstatus, sel_mie, sel_mip, sel_mtvec, sel_mscratch, sel_mcycle, sel_mcycleh, sel_minstret, sel_minstreth, sel_mepc, sel_mcause, sel_mbadaddr, sel_misa};
-    assign csr_o_access_ilgl  = 1'b0; // csr_ena & (~(|sel_indicator)); it always failed here and report ilgl, why? loop here?
+    assign csr_o_access_ilgl  = 1'b0; 
                                         
 endmodule
 

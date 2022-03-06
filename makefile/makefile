@@ -19,6 +19,7 @@ VPD_NAME   = +vpdfiles+$(OUTPUT).vpd
 #compile command
 VCS = vcs -R \
 			   	+lint=TFIPC-L\
+					+lint=PCWM \
           -full64 \
           -sverilog +v2k -timescale=1ns/1ns \
 					-debug_access \

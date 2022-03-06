@@ -35,7 +35,8 @@ module ifu_top(
 
     // flush req from exu
     input                           exu_ifu_i_pipe_flush_req ,
-    input  [`PC_SIZE-1:0          ] exu_ifu_i_flush_pc       ,
+    input                           ifu_i_bjp_flush_req      ,
+    input  [`PC_SIZE-1:0          ] ifu_i_bjp_flush_pc       ,
 
     // pc output from ifu
     output [`PC_SIZE-1:0          ] ifu_pc_nxt               ,
@@ -46,12 +47,9 @@ module ifu_top(
    
     // int and trap related vld and epc
     input  [`PC_SIZE-1:0          ] ifu_i_mtvec              , 
-    input                           ifu_i_interrupt          ,
-    input                           ifu_i_irq_req            ,
+    input                           ifu_i_irq_req            , // exu_excp -> pc
+    input                           ifu_i_int_pending_flag   , // ita -> pc
     input                           ifu_i_excp               ,
-    input                           ifu_i_bjp_flush_req      ,
-    output                          ifu_o_interrupt_ack      ,
-    output                          ifu_o_vld_4irqexcp       ,
     output [`PC_SIZE-1:0          ] ifu_o_wbck_epc           ,
                  
     input                           clk                      ,
@@ -96,14 +94,15 @@ module ifu_top(
     // Description: PC is used to control the reading of instr from tcm.
     //////////////////////////////////////////////////////////////////////////////
     PC PC_CONTROL (
-        .pc_i_interrupt         ( ifu_i_interrupt           ),
-        .pc_i_irq_req           ( ifu_i_irq_req             ),
+        .pc_i_irq_req           ( ifu_i_irq_req             ),  // exu -> pc
+        .pc_i_int_pending_flag  ( ifu_i_int_pending_flag    ),  // ita -> pc
+
         .pc_i_excp              ( ifu_i_excp                ),
         .pc_i_mtvec             ( ifu_i_mtvec               ),
         .pc_i_init_use          ( ifu_i_pc_init_use         ),
                     
         .pc_i_bjp_req_flush     ( ifu_i_bjp_flush_req       ),
-        .pc_i_bjp_req_fulsh_pc  ( exu_ifu_i_flush_pc        ),
+        .pc_i_bjp_req_fulsh_pc  ( ifu_i_bjp_flush_pc        ),
             
         .pc_i_rv32              ( ifu_i_rv32                ),
                     
@@ -111,11 +110,7 @@ module ifu_top(
         .pc_i_exu_ready         ( ifu_i_exu_ready           ),
                     
         .pc_o_pcnxt             ( pc_ifu_pc_nxt             ),
-        .pc_o_pcr               ( ifu_pc_r                  ),
-                    
-        .pc_o_interrupt_ack     ( ifu_o_interrupt_ack       ),
-        .pc_o_vld_4irqexcp      ( ifu_o_vld_4irqexcp        ),
-                    
+        .pc_o_pcr               ( ifu_pc_r                  ),                          
         .pc_o_wbck_epc          ( ifu_o_wbck_epc            ),
                             
         .clk                    ( clk                       ),
