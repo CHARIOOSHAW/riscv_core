@@ -121,43 +121,93 @@ wvSelectSignal -win $_nWave2 {( "G1" 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 \
 wvSetPosition -win $_nWave2 {("G1" 99)}
 wvGetSignalClose -win $_nWave2
 wvZoomAll -win $_nWave2
-wvScrollUp -win $_nWave2 21
-wvScrollUp -win $_nWave2 8
-wvSelectSignal -win $_nWave2 {( "G1" 30 )} 
-wvScrollUp -win $_nWave2 23
-wvSelectSignal -win $_nWave2 {( "G1" 4 )} 
-wvSelectSignal -win $_nWave2 {( "G1" 6 )} 
-wvSelectSignal -win $_nWave2 {( "G1" 9 )} 
-wvSelectSignal -win $_nWave2 {( "G1" 8 )} 
-wvSelectSignal -win $_nWave2 {( "G1" 8 )} 
-wvShowFilterTextField -win $_nWave2 -on
-srcHBSelect "core_top.EXT" -win $_nTrace1
-srcHBSelect "core_top.EXT" -win $_nTrace1
-srcHBSelect "core_top.IFT" -win $_nTrace1
-srcSetScope -win $_nTrace1 "core_top.IFT" -delim "."
-srcHBSelect "core_top.IFT" -win $_nTrace1
 srcDeselectAll -win $_nTrace1
-srcSelect -signal "ifu_i_int_pending_flag" -line 51 -pos 1 -win $_nTrace1
-srcAction -pos 50 3 11 -win $_nTrace1 -name "ifu_i_int_pending_flag" -ctrlKey off
-srcTraceLoad "core_top.ita.ita_o_int_pending_flag" -win $_nTrace1
-srcDeselectAll -win $_nTrace1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
-wvScrollDown -win $_nWave2 1
+wvSetCursor -win $_nWave2 214.351522 -snap {("G1" 52)}
+wvSetCursor -win $_nWave2 271.124212 -snap {("G1" 59)}
+wvSetCursor -win $_nWave2 156.748012 -snap {("G1" 50)}
+wvSetCursor -win $_nWave2 232.075679 -snap {("G1" 49)}
+wvSetCursor -win $_nWave2 244.261036 -snap {("G1" 49)}
+wvSetCursor -win $_nWave2 254.230875 -snap {("G1" 50)}
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 0
 debExit

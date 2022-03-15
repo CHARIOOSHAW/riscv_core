@@ -326,6 +326,8 @@ module exu_top(
         .memtop_i_cmd_wmask     ( exu_agu_cmd_wmask               ),
         .memtop_i_cmd_misalgn   ( exu_agu_cmd_misalgn             ),
 
+        .memtop_i_commit_trap   ( exu_cmt_commit_trap             ),
+
         .memtop_o_ready         ( memtop_o_ready                  ),
         .memtop_i_valid         ( memtop_i_valid                  ),
 
@@ -362,16 +364,16 @@ module exu_top(
     assign exu_o_mtvec_r = exu_csr_mtvec_r;
 
     // cmt to scr
-    wire [`ADDR_SIZE-1:0      ] exu_agu_cmt_badaddr = exu_rf_op1 + exu_dec_imm; // try to gate it
-    wire [`ADDR_SIZE-1:0      ] exu_cmt_csr_badaddr    ;     
-    wire                        exu_cmt_csr_badaddr_ena;
-    wire [`PC_SIZE-1:0        ] exu_cmt_csr_epc        ;
-    wire                        exu_cmt_csr_epc_ena    ;
-    wire [`XLEN-1:0           ] exu_cmt_csr_cause      ;
-    wire                        exu_cmt_csr_cause_ena  ;
-    wire                        exu_cmt_csr_status_ena ;
-    wire                        exu_cmt_csr_instret_ena;
-    wire                        exu_cmt_csr_mret_ena   ;
+    wire [`ADDR_SIZE-1:0      ] exu_agu_cmt_badaddr = exu_rf_op1 + exu_dec_imm ; // try to gate it
+    wire [`ADDR_SIZE-1:0      ] exu_cmt_csr_badaddr     ;     
+    wire                        exu_cmt_csr_badaddr_ena ;
+    wire [`PC_SIZE-1:0        ] exu_cmt_csr_epc         ;
+    wire                        exu_cmt_csr_epc_ena     ;
+    wire [`XLEN-1:0           ] exu_cmt_csr_cause       ;
+    wire                        exu_cmt_csr_cause_ena   ;
+    wire                        exu_cmt_csr_status_ena  ;
+    wire                        exu_cmt_csr_instret_ena ;
+    wire                        exu_cmt_csr_mret_ena    ;
 
     assign exu_o_excp = exu_cmt_commit_trap & (~exu_o_pc_irq_req); 
 

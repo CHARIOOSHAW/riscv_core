@@ -1,5 +1,3 @@
-/home/ICer/shaw/riscv_core/makefile/config.v
-/home/ICer/shaw/riscv_core/makefile/mcu_defines.v
 /home/ICer/shaw/riscv_core/source/PC.v
 /home/ICer/shaw/riscv_core/source/agu.v
 /home/ICer/shaw/riscv_core/source/alu_top.v

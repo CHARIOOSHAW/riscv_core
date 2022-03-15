@@ -46,9 +46,12 @@ Command arguments:
     -top
     core_top
 
+
+*Warning* symbol exu_cmt_commit_trap duplicated
+"~/shaw/riscv_core/source/exu_top.v", 355: 
 Highest level modules:
 excp_dbg
 sirv_gnrl_dffr
 sim_core_top
 
-Total	0 error(s),   0 warning(s)
+Total	0 error(s),   1 warning(s)

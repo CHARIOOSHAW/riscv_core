@@ -4,7 +4,7 @@ Command: vcs -R +lint=TFIPC-L +lint=PCWM -full64 -sverilog +v2k -timescale=1ns/1
 -f /home/ICer/shaw/riscv_core/filelist/filelist.f -l /home/ICer/shaw/riscv_core/log/compile.log \
 
                          Chronologic VCS (TM)
-        Version O-2018.09-1_Full64 -- Sun Mar  6 15:14:35 2022
+        Version O-2018.09-1_Full64 -- Tue Mar 15 11:16:22 2022
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -24,181 +24,188 @@ Warning-[DEBUG_DEP] Option will be deprecated
   '-debug_acc+all -debug_region+cell+encrypt' instead.
 
 Parsing design file '/home/ICer/shaw/riscv_core/source/agu.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/agu.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/alu_top.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/alu_top.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/bjp.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/bjp.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/commit.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/commit.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/core_top.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/core_top.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/csr.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/csr.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/csr_ctrl.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/csr_ctrl.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/decoder.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/decoder.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/div.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/div.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/excp_aluexcp.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/excp_aluexcp.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/excp_cmt_csr.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/excp_cmt_csr.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/excp_dbg.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/excp_dbg.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/excp_irq.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/excp_irq.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/excp_wfi.v'
 Parsing design file '/home/ICer/shaw/riscv_core/source/exu_excp_top.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/exu_excp_top.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/exu_top.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/exu_top.v'.
+
+Warning-[IPDW] Identifier previously declared
+/home/ICer/shaw/riscv_core/source/exu_top.v, 355
+  Second declaration for identifier 'exu_cmt_commit_trap' ignored
+  Identifier 'exu_cmt_commit_trap' previously declared as wire. 
+  [/home/ICer/shaw/riscv_core/source/exu_top.v, 329]
+
 Parsing design file '/home/ICer/shaw/riscv_core/source/ifu.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/ifu.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/ifu_top.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/ifu_top.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/lsu_ctrl.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/lsu_ctrl.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/mem_top.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/mem_top.v'.
-Parsing included file 'config.v'.
+Parsing included file '../source/config.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/mem_top.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/micro_adder_unit.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/micro_adder_unit.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/mul.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/mul.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/muldiv_top.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/muldiv_top.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/multi_counter.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/multi_counter.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/otp4k8.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/otp4k8.v'.
-Parsing included file 'config.v'.
+Parsing included file '../source/config.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/otp4k8.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/PC.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/PC.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/ralu.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/ralu.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/regfile.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/regfile.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/ram_module.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/ram_module.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/sirv_gnrl_dffl.v'
 Parsing design file '/home/ICer/shaw/riscv_core/source/sirv_gnrl_dfflr.v'
 Parsing design file '/home/ICer/shaw/riscv_core/source/sirv_gnrl_dffr.v'
 Parsing design file '/home/ICer/shaw/riscv_core/source/wbck.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/wbck.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/config.v'
 Parsing design file '/home/ICer/shaw/riscv_core/source/mcu_defines.v'
-Parsing included file 'config.v'.
+Parsing included file '../source/config.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/mcu_defines.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/rst_syn_unit.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/rst_syn_unit.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/dff_chain2.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/dff_chain2.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/dff_chain3.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/dff_chain3.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/intagent.v'
-Parsing included file 'mcu_defines.v'.
-Parsing included file 'config.v'.
-Back to file 'mcu_defines.v'.
+Parsing included file '../source/mcu_defines.v'.
+Parsing included file '../source/config.v'.
+Back to file '../source/mcu_defines.v'.
 Back to file '/home/ICer/shaw/riscv_core/source/intagent.v'.
 Parsing design file '/home/ICer/shaw/riscv_core/source/sim_core_top.v'
 Top Level Modules:
@@ -232,7 +239,7 @@ fi
 g++  -o /home/ICer/shaw/riscv_core/sim/simv_riscv_core    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv_riscv_core.daidir/ \
 -Wl,-rpath=./simv_riscv_core.daidir/ -Wl,-rpath='$ORIGIN'/simv_riscv_core.daidir//scsim.db.dir \
 -rdynamic  -Wl,-rpath=/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib -L/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib \
-objs/amcQw_d.o   _56424_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o \
+objs/amcQw_d.o   _7094_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o \
 rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lzerosoft_rt_stubs -lvirsim \
 -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcs_tls.o \
 -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive        _vcs_pli_stub_.o   /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcs_save_restore_new.o \
@@ -243,7 +250,7 @@ make[1]: Leaving directory `/home/ICer/shaw/riscv_core/makefile/csrc'
 Command: /home/ICer/shaw/riscv_core/sim/simv_riscv_core +lint=TFIPC-L +lint=PCWM +v2k +notimingchec +nospecify +vcs+flush+all -lca +define+FSDB -a /home/ICer/shaw/riscv_core/log/compile.log
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-1_Full64; Runtime version O-2018.09-1_Full64;  Mar  6 15:14 2022
+Compiler version O-2018.09-1_Full64; Runtime version O-2018.09-1_Full64;  Mar 15 11:16 2022
 read finished!!!
 Let's go!
 *Verdi* Loading libsscore_vcs201809.so
@@ -258,6 +265,6 @@ $finish called from file "/home/ICer/shaw/riscv_core/source/sim_core_top.v", lin
 $finish at simulation time                 1000
            V C S   S i m u l a t i o n   R e p o r t 
 Time: 1000 ns
-CPU Time:      0.200 seconds;       Data structure size:   0.1Mb
-Sun Mar  6 15:14:36 2022
-CPU time: .821 seconds to compile + .198 seconds to elab + .133 seconds to link + .217 seconds in simulation
+CPU Time:      0.190 seconds;       Data structure size:   0.1Mb
+Tue Mar 15 11:16:23 2022
+CPU time: .785 seconds to compile + .204 seconds to elab + .130 seconds to link + .211 seconds in simulation

@@ -33,6 +33,9 @@ module lsu_ctrl(
     input  [`XLEN/8-1:0           ] agu_i_cmd_wmask    ,
     input                           agu_i_cmd_misalgn  ,
 
+    // cmt to lsu, mem read/write blocked when excp or irq.
+    input                           lsu_i_commit_trap  ,
+
     // data path for ram
     output                          lsu_ram_wr         ,
     output                          lsu_ram_rd         ,
@@ -85,9 +88,9 @@ module lsu_ctrl(
     wire [1:0]                     ls_nxt_state ;
     wire                           shift_enable ; // FSM state shift enable
     
-    assign shift_enable = ((lsu_i_valid&mem_ready) & (ls_state == 2'b00)) | // ls_state = read ram 1 st, wait for ready.
-                          ((lsu_i_valid&mem_ready) & (ls_state == 2'b10)) | // ls_state = write ram 2 nd, wait for ready.
-                          ((ls_state == 2'b01));                            // ls_state = write rf 2 nd, no wait.
+    assign shift_enable =  ((lsu_i_valid&mem_ready) & (ls_state == 2'b00)) |  // ls_state = read ram 1 st, wait for ready.
+                           ((lsu_i_valid&mem_ready) & (ls_state == 2'b10)) |  // ls_state = write ram 2 nd, wait for ready.
+                           ((ls_state == 2'b01));                            // ls_state = write rf 2 nd, no wait.
 
     sirv_gnrl_dfflr #(.DW(2)) lsu_dff (
         .lden(shift_enable             ) ,
@@ -100,11 +103,14 @@ module lsu_ctrl(
     assign ls_nxt_state  =  (agu_i_cmd_enable & ~lsu_o_wbck_err & agu_i_cmd_write & (ls_state == 2'b00))? 2'b10:
                             (agu_i_cmd_enable & ~lsu_o_wbck_err & agu_i_cmd_read  & (ls_state == 2'b00))? 2'b01:
                             2'b00;
-
-    assign lsu_ram_wr      =  ((ls_state == 2'b10)&(~lsu_ita_enable))? 1'b1: 1'b0;
-    assign lsu_ram_rd      =  ((ls_state == 2'b00)&(~lsu_ita_enable))? 1'b1: 1'b0; // ram excute reading when the state is IDLE and stay silence when state is READ.
-    assign lsu_ita_wr      =  ((ls_state == 2'b10)&(lsu_ita_enable))? 1'b1: 1'b0;
-    assign lsu_ita_rd      =  ((ls_state == 2'b00)&(lsu_ita_enable))? 1'b1: 1'b0;
+    
+    // read or write mem when excp or irq is not allowed.
+    // read will be blocked by wbck.
+    // write will be blocked by wr_ena. 
+    assign lsu_ram_wr      =  (~lsu_i_commit_trap)&((ls_state == 2'b10)&(~lsu_ita_enable))? 1'b1: 1'b0;
+    assign lsu_ram_rd      =  ((ls_state == 2'b00)&(~lsu_ita_enable))? 1'b1: 1'b0;                       // ram excute reading when the state is IDLE and stay silence when state is READ.
+    assign lsu_ita_wr      =  (~lsu_i_commit_trap)&((ls_state == 2'b10)&( lsu_ita_enable))? 1'b1: 1'b0;
+    assign lsu_ita_rd      =  (lsu_ita_enable)? 1'b1: 1'b0;                                              // The reading procedure of ita is logical. 
  
     // address to Ram or ita
     assign lsu_ram_addr    =  {2'b00, agu_i_cmd_addr[`PC_SIZE-1:2]};

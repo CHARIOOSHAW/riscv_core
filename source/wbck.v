@@ -39,7 +39,7 @@ module wbck(
 
     //////////////////////////////////////////////////////////////
     // The Final arbitrated Write-Back Interface
-    wire   wbck_ready4alu      = alu_wbck_i_ready & alu_wbck_i_valid & (~cmt_wbck_irqexcp) ;// There is no other behavior for our core.
+    wire   wbck_ready4alu      = alu_wbck_i_ready & alu_wbck_i_valid & (~cmt_wbck_irqexcp) ;
   
     wire [`XLEN-1:0       ]  wbck_i_wdat_req     = {32{wbck_ready4alu}} & wbck_i_wdat  ;
     wire [`RFIDX_WIDTH-1:0]  wbck_i_rdidx_req    = {32{wbck_ready4alu}} & wbck_i_rdidx ;

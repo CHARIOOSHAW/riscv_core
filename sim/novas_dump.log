@@ -212,7 +212,7 @@ XDG_MENU_PREFIX=gnome-
 TERM=xterm-256color
 HOST=IC_EDA
 MAKEFLAGS=
-GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/65ab038c_8c23_45ce_9198_11b8e089475a
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/2e7fb25e_eb04_4bf0_87cc_e6e43d04d5d2
 LC_NUMERIC=zh_CN.UTF-8
 VCS_LOG_FILE=/home/ICer/shaw/riscv_core/log/compile.log
 QTDIR=/usr/lib/qt-3.3
@@ -253,12 +253,12 @@ GDM_LANG=zh_CN.UTF-8
 KDEDIRS=/usr
 VCS_ARCH_OVERRIDE=linux
 LC_MEASUREMENT=zh_CN.UTF-8
-TURBO_LOG_DIR=/tmp/vcs_20220306071435_55638
+TURBO_LOG_DIR=/tmp/vcs_20220315031622_6308
 VMR_MODE_FLAG=64
 GDMSESSION=gnome-classic
 LM_LICENSE_FILE=27000@IC_EDA
 VCS_ARG_ADDED_FOR_TMP=1
-SNPS_VCS_TMPDIR=/tmp/vcs_20220306071435_55638
+SNPS_VCS_TMPDIR=/tmp/vcs_20220315031622_6308
 DBUS_STARTER_BUS_TYPE=session
 HOME=/home/ICer
 XDG_SEAT=seat0
@@ -310,8 +310,8 @@ argv[8]=+define+FSDB
 argv[9]=-a
 argv[10]=/home/ICer/shaw/riscv_core/log/compile.log
 311 profile - 100
-          CPU/Mem usage: 0.030 sys,  0.130 user,  253.38M mem
-312 Sun Mar  6 15:14:36 2022
+          CPU/Mem usage: 0.010 sys,  0.140 user,  253.38M mem
+312 Tue Mar 15 11:16:23 2022
 313 pliAppInit
 314 [pliEnvSetDefaultValueWithLCA] start
 315 [pliEnvSetDefaultValueWithLCA] end
@@ -336,35 +336,35 @@ argv[10]=/home/ICer/shaw/riscv_core/log/compile.log
 334 *Verdi* : Begin traversing the scopes, layer (0).
 335 *Verdi* : End of traversing.
 336 pliAppHDL_DumpVarComplete traverse var: profile - 
-          CPU/Mem usage: 0.040 sys,  0.150 user,  349.96M mem
-                   incr: 0.000 sys,  0.010 user,  9.02M mem
-                   accu: 0.000 sys,  0.010 user,  9.02M mem
-              accu incr: 0.000 sys,  0.010 user,  9.02M mem
+          CPU/Mem usage: 0.030 sys,  0.160 user,  349.96M mem
+                   incr: 0.010 sys,  0.020 user,  9.02M mem
+                   accu: 0.010 sys,  0.020 user,  9.02M mem
+              accu incr: 0.010 sys,  0.020 user,  9.02M mem
 
-          Count usage: 1812 var,  1163 idcode,  193 callback
-                 incr: 1812 var,  1163 idcode,  193 callback
-                 accu: 1812 var,  1163 idcode,  193 callback
-            accu incr: 1812 var,  1163 idcode,  193 callback
-337 Sun Mar  6 15:14:36 2022
+          Count usage: 1814 var,  1163 idcode,  193 callback
+                 incr: 1814 var,  1163 idcode,  193 callback
+                 accu: 1814 var,  1163 idcode,  193 callback
+            accu incr: 1814 var,  1163 idcode,  193 callback
+337 Tue Mar 15 11:16:23 2022
 338 pliAppHDL_DumpVarComplete: profile - 
-          CPU/Mem usage: 0.040 sys,  0.150 user,  351.01M mem
+          CPU/Mem usage: 0.030 sys,  0.160 user,  351.01M mem
                    incr: 0.000 sys,  0.000 user,  1.05M mem
-                   accu: 0.000 sys,  0.010 user,  10.08M mem
+                   accu: 0.010 sys,  0.020 user,  10.08M mem
               accu incr: 0.000 sys,  0.000 user,  1.05M mem
 
-          Count usage: 1812 var,  1163 idcode,  193 callback
+          Count usage: 1814 var,  1163 idcode,  193 callback
                  incr: 0 var,  0 idcode,  0 callback
-                 accu: 1812 var,  1163 idcode,  193 callback
+                 accu: 1814 var,  1163 idcode,  193 callback
             accu incr: 0 var,  0 idcode,  0 callback
-339 Sun Mar  6 15:14:36 2022
+339 Tue Mar 15 11:16:23 2022
 340 End of simulation at 1000
-341 Sun Mar  6 15:14:36 2022
+341 Tue Mar 15 11:16:23 2022
 342 Begin FSDB profile info:
-343 FSDB Writer : bc1(327) bcn(736) mtf/stf(0/0)
-FSDB Writer elapsed time : flush(0.003083) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
+343 FSDB Writer : bc1(327) bcn(601) mtf/stf(0/0)
+FSDB Writer elapsed time : flush(0.004450) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
 FSDB Writer cpu time : MT Compression : 0
 344 End FSDB profile info
 345 Parallel profile    -  Flush:3 Expand:0 ProduceWait:0 ConsumerWait:0 BlockUsed:0
-346                        ProduceTime:0.206246197 ConsumerTime:0.000000000 Buffer:64MB
+346                        ProduceTime:0.199714138 ConsumerTime:0.000000000 Buffer:64MB
 347 SimExit
 348 Sim process exit

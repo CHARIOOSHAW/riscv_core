@@ -34,6 +34,9 @@ module mem_top(
     input  [`XLEN-1:0             ] memtop_i_cmd_wdata    ,
     input  [`XLEN/8-1:0           ] memtop_i_cmd_wmask    ,
     input                           memtop_i_cmd_misalgn  ,
+
+    // cmt -> lsu
+    input                           memtop_i_commit_trap  ,
   
     // send to agu interface  
     output [`XLEN-1:0             ] lsu_o_wbck_wdata      ,
@@ -83,6 +86,8 @@ module mem_top(
         .agu_i_cmd_wdata     (      memtop_i_cmd_wdata      ),
         .agu_i_cmd_wmask     (      memtop_i_cmd_wmask      ),
         .agu_i_cmd_misalgn   (      memtop_i_cmd_misalgn    ),
+
+        .lsu_i_commit_trap   (      memtop_i_commit_trap    ),
  
         .lsu_ram_wr          (      lsu_ram_wr              ),
         .lsu_ram_rd          (      lsu_ram_rd              ),

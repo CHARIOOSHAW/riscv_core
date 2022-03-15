@@ -1,21 +1,9 @@
 {
-    "excp_dbg": [
-        "excp_dbg",
-        "S3FV3",
-        "module",
-        4
-    ],
     "std": [
         "std",
         "reYIK",
         "module",
         1
-    ],
-    "intagent": [
-        "intagent",
-        "Nvknd",
-        "module",
-        9
     ],
     "csr": [
         "csr",
@@ -23,17 +11,11 @@
         "module",
         2
     ],
-    "sim_core_top": [
-        "sim_core_top",
-        "Jm6Rb",
+    "excp_dbg": [
+        "excp_dbg",
+        "S3FV3",
         "module",
-        10
-    ],
-    "decoder": [
-        "decoder",
-        "zf0bY",
-        "module",
-        3
+        4
     ],
     "ifu_top": [
         "ifu_top",
@@ -41,11 +23,17 @@
         "module",
         5
     ],
-    "sirv_gnrl_dffr": [
-        "sirv_gnrl_dffr",
-        "Wnd0S",
+    "decoder": [
+        "decoder",
+        "zf0bY",
         "module",
-        7
+        3
+    ],
+    "multi_counter": [
+        "multi_counter",
+        "y12fA",
+        "module",
+        6
     ],
     "wbck": [
         "wbck",
@@ -53,16 +41,28 @@
         "module",
         8
     ],
+    "intagent": [
+        "intagent",
+        "Nvknd",
+        "module",
+        9
+    ],
+    "sirv_gnrl_dffr": [
+        "sirv_gnrl_dffr",
+        "Wnd0S",
+        "module",
+        7
+    ],
+    "sim_core_top": [
+        "sim_core_top",
+        "Jm6Rb",
+        "module",
+        10
+    ],
     "...MASTER...": [
         "SIM",
         "amcQw",
         "module",
         11
-    ],
-    "multi_counter": [
-        "multi_counter",
-        "y12fA",
-        "module",
-        6
     ]
 }
