@@ -51,8 +51,8 @@ wvAddSignal -win $_nWave2 -group {"G1" \
 {/sim_core_top/CT/IFT/IFU/ir_length_encode\[1:0\]} \
 {/sim_core_top/CT/IFT/IFU/ir_length_m16} \
 {/sim_core_top/CT/IFT/IFU/ir_length_m32} \
-{/sim_core_top/CT/IFT/IFU/ir_state\[1:0\]} \
-{/sim_core_top/CT/IFT/IFU/ir_state_nxt\[1:0\]} \
+{/sim_core_top/CT/IFT/IFU/ir_state} \
+{/sim_core_top/CT/IFT/IFU/ir_state_nxt} \
 {/sim_core_top/CT/IFT/IFU/itcm_ifu_i_ir\[31:0\]} \
 {/sim_core_top/CT/IFT/IFU/pc_align} \
 {/sim_core_top/CT/IFT/IFU/pc_ifu_i_pc_nxt\[31:0\]} \
@@ -76,10 +76,10 @@ wvAddSignal -win $_nWave2 -group {"G1" \
 {/sim_core_top/CT/IFT/IFU/IR_res_status_register/qout_r\[0:0\]} \
 {/sim_core_top/CT/IFT/IFU/IR_res_status_register/rst_n} \
 {/sim_core_top/CT/IFT/IFU/ir_state_register/clk} \
-{/sim_core_top/CT/IFT/IFU/ir_state_register/dnxt\[1:0\]} \
+{/sim_core_top/CT/IFT/IFU/ir_state_register/dnxt\[0:0\]} \
 {/sim_core_top/CT/IFT/IFU/ir_state_register/lden} \
-{/sim_core_top/CT/IFT/IFU/ir_state_register/qout\[1:0\]} \
-{/sim_core_top/CT/IFT/IFU/ir_state_register/qout_r\[1:0\]} \
+{/sim_core_top/CT/IFT/IFU/ir_state_register/qout\[0:0\]} \
+{/sim_core_top/CT/IFT/IFU/ir_state_register/qout_r\[0:0\]} \
 {/sim_core_top/CT/IFT/IFU/ir_state_register/rst_n} \
 {/sim_core_top/CT/IFT/PC_CONTROL/PC_flush\[31:0\]} \
 {/sim_core_top/CT/IFT/PC_CONTROL/PC_nxt\[31:0\]} \
@@ -121,13 +121,69 @@ wvSelectSignal -win $_nWave2 {( "G1" 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 \
 wvSetPosition -win $_nWave2 {("G1" 99)}
 wvGetSignalClose -win $_nWave2
 wvZoomAll -win $_nWave2
-srcDeselectAll -win $_nTrace1
-wvSetCursor -win $_nWave2 214.351522 -snap {("G1" 52)}
-wvSetCursor -win $_nWave2 271.124212 -snap {("G1" 59)}
-wvSetCursor -win $_nWave2 156.748012 -snap {("G1" 50)}
-wvSetCursor -win $_nWave2 232.075679 -snap {("G1" 49)}
-wvSetCursor -win $_nWave2 244.261036 -snap {("G1" 49)}
-wvSetCursor -win $_nWave2 254.230875 -snap {("G1" 50)}
+wvSelectSignal -win $_nWave2 {( "G1" 76 )} 
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
 wvScrollDown -win $_nWave2 0
 wvScrollDown -win $_nWave2 0
 wvScrollDown -win $_nWave2 0
@@ -141,6 +197,66 @@ wvScrollDown -win $_nWave2 0
 wvScrollDown -win $_nWave2 0
 wvScrollDown -win $_nWave2 0
 wvScrollDown -win $_nWave2 0
+wvSetCursor -win $_nWave2 160.710961 -snap {("G1" 5)}
+wvSelectSignal -win $_nWave2 {( "G1" 17 )} 
+wvSetCursor -win $_nWave2 201.852738 -snap {("G1" 17)}
+wvSetCursor -win $_nWave2 212.544091 -snap {("G1" 19)}
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollDown -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
+wvScrollUp -win $_nWave2 1
 wvScrollDown -win $_nWave2 0
 wvScrollDown -win $_nWave2 0
 wvScrollDown -win $_nWave2 0
@@ -150,64 +266,65 @@ wvScrollDown -win $_nWave2 0
 wvScrollDown -win $_nWave2 0
 wvScrollDown -win $_nWave2 0
 wvScrollDown -win $_nWave2 0
+wvSelectSignal -win $_nWave2 {( "G1" 3 )} 
+wvSelectSignal -win $_nWave2 {( "G1" 10 )} 
+wvSelectSignal -win $_nWave2 {( "G1" 21 )} 
+wvScrollDown -win $_nWave2 17
+wvSelectSignal -win $_nWave2 {( "G1" 43 )} 
+wvScrollUp -win $_nWave2 4
+wvSelectSignal -win $_nWave2 {( "G1" 29 )} 
+wvSelectSignal -win $_nWave2 {( "G1" 34 )} 
+wvSelectSignal -win $_nWave2 {( "G1" 33 )} 
+wvScrollUp -win $_nWave2 11
+wvScrollDown -win $_nWave2 60
+wvScrollUp -win $_nWave2 6
+wvScrollUp -win $_nWave2 31
+wvScrollUp -win $_nWave2 18
+wvScrollUp -win $_nWave2 6
 wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollUp -win $_nWave2 1
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
-wvScrollDown -win $_nWave2 0
+wvScrollDown -win $_nWave2 7
+wvScrollDown -win $_nWave2 3
+wvSetCursor -win $_nWave2 115.038954 -snap {("G1" 34)}
+wvSetCursor -win $_nWave2 115.038954 -snap {("G1" 33)}
+wvSetCursor -win $_nWave2 135.566352 -snap {("G1" 33)}
+wvSelectSignal -win $_nWave2 {( "G1" 30 )} 
+wvSelectSignal -win $_nWave2 {( "G1" 28 )} 
+wvSelectSignal -win $_nWave2 {( "G1" 13 )} 
+wvScrollUp -win $_nWave2 3
+wvScrollDown -win $_nWave2 41
+wvSelectSignal -win $_nWave2 {( "G1" 57 )} 
+wvSelectSignal -win $_nWave2 {( "G1" 52 )} 
+wvClearAll -win $_nWave2
+wvGetSignalOpen -win $_nWave2
+wvGetSignalSetScope -win $_nWave2 "/excp_dbg"
+wvGetSignalSetScope -win $_nWave2 "/sim_core_top"
+wvGetSignalSetScope -win $_nWave2 "/sim_core_top/CT"
+wvGetSignalSetScope -win $_nWave2 "/sim_core_top/CT/IFT"
+wvGetSignalSetScope -win $_nWave2 "/sim_core_top/CT/IFT"
+wvGetSignalSetScope -win $_nWave2 "/sim_core_top/CT/IFT/IFU"
+wvSetPosition -win $_nWave2 {("G1" 2)}
+wvSetPosition -win $_nWave2 {("G1" 2)}
+wvAddSignal -win $_nWave2 -clear
+wvAddSignal -win $_nWave2 -group {"G1" \
+{/sim_core_top/CT/IFT/ifu_pc_r\[31:0\]} \
+{/sim_core_top/CT/IFT/IFU/IR_r\[31:0\]} \
+}
+wvAddSignal -win $_nWave2 -group {"G2" \
+}
+wvSelectSignal -win $_nWave2 {( "G1" 2 )} 
+wvSetPosition -win $_nWave2 {("G1" 2)}
+wvGetSignalClose -win $_nWave2
+wvZoomAll -win $_nWave2
+wvSetCursor -win $_nWave2 133.803419 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 144.354226 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 137.640076 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 145.313390 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 124.211776 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 152.027540 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 150.109212 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 145.792972 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 196.149098 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 206.699905 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 164.976258 -snap {("G1" 2)}
+wvSetCursor -win $_nWave2 170.251662 -snap {("G1" 2)}
 debExit

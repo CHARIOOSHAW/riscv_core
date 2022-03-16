@@ -312,7 +312,8 @@ module exu_top(
     // Connect : AU -> MEMT
     //           MEMT -> CMT
     ////////////////////////////////////////////////////////////////////////////
-    assign memtop_i_valid = exu_agu_cmd_enable; // valid is set when the instr is ld or st. 
+    assign memtop_i_valid = exu_agu_cmd_enable; // valid is set when the instr is ld or st.
+    wire                        exu_cmt_commit_trap    ;
 
     mem_top MEMT (
 
@@ -352,7 +353,6 @@ module exu_top(
     // Connect : AU  -> CMT
     //           CMT -> WBCK
     ////////////////////////////////////////////////////////////////////////////
-    wire                        exu_cmt_commit_trap    ;
     
     // csr to cmt
     wire                        exu_status_mie_r       ;

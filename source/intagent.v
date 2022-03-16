@@ -47,10 +47,15 @@ module intagent(
     
     // int arbitration
     input                            ita_i_bjp_req_flush    ,
-    output                           ita_o_int_pending_flag , 
+    output                           ita_o_int_pending_flag ,
 
     // external int
     input                            ita_i_external_int     ,
+
+    // valid and ready signals
+    // int is avaliable when ready and valid is set.(An instr finished.)
+    // input                            ita_i_exu_ir_ready     ,
+    // input                            ita_i_ifu_ir_valid     ,
 
     input                            clk_mtime              ,  // A stable clk for time counting.
     input                            clk                    ,  // CPU internal clk

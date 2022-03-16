@@ -19,15 +19,15 @@ Console = FALSE
 powerDumped = 0
 [hb]
 postSimFile = /home/ICer/shaw/riscv_core/sim/wave_core_top.fsdb
-syncTime = 255
-viewport = 0 27 3838 1677 0 0 189 3836
+syncTime = 175
+viewport = 0 27 2554 1152 0 0 189 2552
 activeNode = "core_top"
 activeScope = "core_top"
 activeFile = "~/shaw/riscv_core/source/core_top.v"
 interactiveMode = False
 viewType = Source
 simulatorMode = False
-sourceBeginLine = 42
+sourceBeginLine = 24
 baMode = False
 srcLineNum = True
 AutoWrap = True
@@ -45,6 +45,7 @@ traceIncTopPort = False
 leadingZero = False
 signalPane = False
 Scope1 = "core_top"
+multipleSelection = 1 24 2 0 0
 sdfCheckUndef = FALSE
 simFlow = FALSE
 [hb.design]
@@ -53,13 +54,13 @@ invokeDir = /home/ICer/shaw/riscv_core/makefile
 [hb.sourceTab.1]
 scope = core_top
 File = /home/ICer/shaw/riscv_core/source/core_top.v
-Line = 43
+Line = 25
 [nMemoryManager]
 WaveformFile = /home/ICer/shaw/riscv_core/sim/wave_core_top.fsdb
 UserActionNum = 0
 nMemWindowNum = 0
 [wave.0]
-viewPort = 0 27 3838 1245 100 65
+viewPort = 0 27 2554 909 276 146
 primaryWindow = TRUE
 SessionFile = /home/ICer/shaw/riscv_core/makefile/verdiLog/novas_autosave.ses.wave.0
 displayGrid = FALSE
