@@ -23,10 +23,7 @@
 
 
 module core_top(
-
-    // pc initial
-    input                                 pc_init_use       ,
-
+    
     // external irq and core state
     input                                 external_interrupt ,
     output                                core_wfi          , 
@@ -64,7 +61,6 @@ module core_top(
 
     ifu_top IFT (
 
-        .ifu_i_pc_init_use        ( pc_init_use                 ), 
         .ifu_i_rv32               ( exu_ifu_rv32                ),
                              
         .ifu_o_ifu_valid          ( ifu_valid                   ),

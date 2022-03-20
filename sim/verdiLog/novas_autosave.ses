@@ -19,8 +19,8 @@ Console = FALSE
 powerDumped = 0
 [hb]
 postSimFile = /home/ICer/shaw/riscv_core/sim/wave_core_top.fsdb
-syncTime = 175
-viewport = 0 27 2554 1152 0 0 189 2552
+syncTime = 255
+viewport = 0 27 3838 1677 0 0 716 3836
 activeNode = "core_top"
 activeScope = "core_top"
 activeFile = "~/shaw/riscv_core/source/core_top.v"
@@ -60,7 +60,7 @@ WaveformFile = /home/ICer/shaw/riscv_core/sim/wave_core_top.fsdb
 UserActionNum = 0
 nMemWindowNum = 0
 [wave.0]
-viewPort = 0 27 2554 909 276 146
+viewPort = 0 27 3838 744 218 65
 primaryWindow = TRUE
 SessionFile = /home/ICer/shaw/riscv_core/makefile/verdiLog/novas_autosave.ses.wave.0
 displayGrid = FALSE

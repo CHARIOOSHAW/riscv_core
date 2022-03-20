@@ -15,6 +15,7 @@ This project is intended to design a low-power CPU based on RISC-V architecture 
 2022.03.06  v1.4  完成intagent的设计与接入，修正intagent bug中；  
 2020.03.15  v1.5  intagent功能通过测试，bug基本修复;  
 2020.03.16  v1.6  修正了ifu对于jump和branch指令的行为，当前版本基于可异步读itcm，jump和branch指令开销1-2时钟周期;  
+2020.03.20  v1.7  调整了flash模块的行为，加入了时钟信号，将原有的itcm替换为同步读itcm，重写了ifu模块，是否支持intagent还有待确认；  
 
 # 目前在做
 DM模块  

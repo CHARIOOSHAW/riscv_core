@@ -32,7 +32,7 @@ module sim_core_top;
     wire sim_clk_aon           ;
      
     core_top CT(
-        .pc_init_use        ( sim_pc_init_use       ),
+
         .external_interrupt ( sim_external_interrupt ),
         .core_wfi           ( sim_core_wfi          ),  
         .core_unexcp_err    ( sim_core_unexcp_err   ), 
@@ -50,8 +50,7 @@ module sim_core_top;
         sim_clk = 1'b0;
         sim_rst_n = 1'b0;
 	      sim_external_interrupt = 1'b0;
-        #80 sim_rst_n = 1'b1;
-            sim_pc_init_use = 1'b0;      
+        #80 sim_rst_n = 1'b1;  
 //	#205  sim_external_interrupt = 1'b1;
 //	#50   sim_external_interrupt = 1'b0;
         $display("so we finished.");

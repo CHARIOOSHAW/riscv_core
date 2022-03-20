@@ -2,7 +2,7 @@ Magic 271485
 Revision Verdi_O-2018.09-SP2
 
 ; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
-viewPort 0 27 2554 909 276 146
+viewPort 0 27 3838 744 218 65
 
 ; File list:
 ; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
@@ -16,8 +16,8 @@ signalSpacing 5
 
 ; windowTimeUnit is used for zoom, cursor & marker
 ; waveform viewport range
-zoom 0.000000 1010.000000
-cursor 175.000000
+zoom 0.000000 977.463827
+cursor 255.000000
 marker 0.000000
 
 ; user define markers
@@ -25,7 +25,7 @@ marker 0.000000
 ; visible top row signal index
 top 0
 ; marker line index
-markerPos 2
+markerPos 26
 
 ; event list
 ; addEvent event_name event_expression
@@ -47,8 +47,32 @@ curSTATUS ByChange
 
 addGroup "G1"
 activeDirFile "" "/home/ICer/shaw/riscv_core/sim/wave_core_top.fsdb"
-addSignal -h 15 /sim_core_top/CT/IFT/ifu_pc_r[31:0]
-addSignal -h 15 /sim_core_top/CT/IFT/IFU/IR_r[31:0]
+addSignal -h 15 /sim_core_top/CT/IFT/IFU/clk
+addSignal -h 15 -holdScope exu_ifu_pipe_flush_req
+addSignal -h 15 -holdScope ifu_flash_o_enable
+addSignal -h 15 -holdScope ifu_flash_o_pc[31:0]
+addSignal -h 15 -holdScope ifu_i_exu_ready
+addSignal -h 15 -holdScope ifu_ir_curr[15:0]
+addSignal -h 15 -holdScope ifu_ir_info[1:0]
+addSignal -h 15 -holdScope ifu_ir_nxt[31:0]
+addSignal -h 15 -holdScope ifu_ir_nxt_rv32
+addSignal -h 15 -holdScope ifu_ir_reg[31:0]
+addSignal -h 15 -holdScope ifu_ir_res[15:0]
+addSignal -h 15 -holdScope ifu_ir_res_nxt[15:0]
+addSignal -h 15 -holdScope ifu_ir_res_state
+addSignal -h 15 -holdScope ifu_ir_res_state_nxt
+addSignal -h 15 -holdScope ifu_ir_state[1:0]
+addSignal -h 15 -holdScope ifu_ir_state_nxt[1:0]
+addSignal -h 15 -holdScope ifu_o_ifu_valid
+addSignal -h 15 -holdScope ifu_o_ir_r[31:0]
+addSignal -h 15 -holdScope ifu_o_pc_init_use
+addSignal -h 15 -holdScope ifu_pc_flash[31:0]
+addSignal -h 15 -holdScope ifu_pc_init_use_r
+addSignal -h 15 -holdScope ifu_pc_nxt_align
+addSignal -h 15 -holdScope ifu_valid
+addSignal -h 15 -holdScope itcm_ifu_i_ir[31:0]
+addSignal -h 15 -holdScope pc_ifu_i_pc_nxt[31:0]
+addSignal -h 15 -holdScope rst_n
 addGroup "G2"
 
 ; getSignalForm Scope Hierarchy Status
@@ -59,6 +83,7 @@ GETSIGNALFORM_SCOPE_HIERARCHY_BEGIN
 getSignalForm close
 
 "/excp_dbg"
+"/excp_dbg/step_req_dfflr"
 "/sim_core_top"
 "/sim_core_top/CT"
 "/sim_core_top/CT/IFT"
@@ -66,8 +91,6 @@ getSignalForm close
 SCOPE_LIST_BEGIN
 "/excp_dbg"
 "/sim_core_top/CT/IFT"
-"/sim_core_top"
-"/sim_core_top/CT"
 "/sim_core_top/CT/IFT/IFU"
 SCOPE_LIST_END
 

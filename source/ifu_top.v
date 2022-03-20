@@ -23,9 +23,6 @@
 
 module ifu_top(
 
-    // pc initial use    
-    input                           ifu_i_pc_init_use        , 
-
     // instr length
     input                           ifu_i_rv32               ,
    
@@ -65,6 +62,7 @@ module ifu_top(
     wire [`XLEN-1:0               ] itcm_ifu_ir    ;
     wire [`PC_SIZE-1:0            ] pc_ifu_pc_nxt  ; 
     wire [`PC_SIZE-1:0            ] ifu_flash_pc   ;
+    wire                            ifu_flash_enable;
 
     assign ifu_pc_nxt = pc_ifu_pc_nxt;
 
@@ -76,7 +74,9 @@ module ifu_top(
                            
         // IFU raw PC.                           
         .pc_ifu_i_pc_nxt        ( pc_ifu_pc_nxt             ),
+        .ifu_o_pc_init_use      ( ifu_pc_init_use           ),
         .ifu_flash_o_pc         ( ifu_flash_pc              ),
+        .ifu_flash_o_enable     ( ifu_flash_enable          ),
                            
         // EXU req pipe-flush.                           
         .exu_ifu_pipe_flush_req ( exu_ifu_i_pipe_flush_req  ),
@@ -99,7 +99,7 @@ module ifu_top(
 
         .pc_i_excp              ( ifu_i_excp                ),
         .pc_i_mtvec             ( ifu_i_mtvec               ),
-        .pc_i_init_use          ( ifu_i_pc_init_use         ),
+        .pc_i_init_use          ( ifu_pc_init_use           ),
                     
         .pc_i_bjp_req_flush     ( ifu_i_bjp_flush_req       ),
         .pc_i_bjp_req_fulsh_pc  ( ifu_i_bjp_flush_pc        ),
@@ -124,7 +124,11 @@ module ifu_top(
 
     otp4k8 itcm(
         .pdataout               ( itcm_ifu_ir               ),
-        .pa                     ( ifu_flash_pc              )
+        .pa                     ( ifu_flash_pc              ),
+
+        .flash_i_ifu_enable     ( ifu_flash_enable          ),
+
+        .clk                    ( clk                       )
     );
 
 endmodule

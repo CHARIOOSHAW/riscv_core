@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: Chario Shaw
@@ -23,18 +22,20 @@
 module ifu(
 
     // ir related interface
-    input      [`XLEN-1:0                  ] itcm_ifu_i_ir          , // The extracted data from itcm, 32-bits always. 
-    output     [`XLEN-1:0                  ] ifu_o_ir_r             ,
+    input      [`XLEN-1:0                  ] itcm_ifu_i_ir          , // The extracted data from itcm, 32-bits always. flash -> ifu
+    output     [`XLEN-1:0                  ] ifu_o_ir_r             , // ifu -> exu
 
     // PC control for flash    
-    input      [`PC_SIZE-1:0               ] pc_ifu_i_pc_nxt        , // The PC from pc controller which has to be handled when misalign.
-    output reg [`PC_SIZE-1:0               ] ifu_flash_o_pc         , // PC sent to flash 
+    input      [`PC_SIZE-1:0               ] pc_ifu_i_pc_nxt        , // The PC_nxt from pc_controller. pc -> ifu
+    output                                   ifu_o_pc_init_use      ,
+    output     [`PC_SIZE-1:0               ] ifu_flash_o_pc         , // PC sent to flash. ifu -> flash
+    output                                   ifu_flash_o_enable     ,
  
     // jump and excpirq
-    input                                    exu_ifu_pipe_flush_req ,
+    input                                    exu_ifu_pipe_flush_req , // exu -> ifu
 
     // handshake signals
-    output reg                               ifu_o_ifu_valid        ,
+    output                                   ifu_o_ifu_valid        ,
     input                                    ifu_i_exu_ready        ,
 
     input                                    clk                    ,
@@ -42,198 +43,290 @@ module ifu(
 
     );
 
-    wire [15:0    ] current_ir;
-    wire pc_align      = ~(|pc_ifu_i_pc_nxt[1:0])? 1'b1: 1'b0; // The PC stay at the boundry of 32-bit. Align.
-    wire ir_length_32  = (~(current_ir[4:2]   == 3'b111)) & (current_ir[1:0] == 2'b11); 
-    wire ir_length_16  = (~(current_ir[1:0]   == 2'b11)); 
-         
-    wire ir_length_a32 = pc_align  & ir_length_32;         // This is an align 32-bit instr.
-    wire ir_length_a16 = pc_align  & ir_length_16;         // This is an align 16-bit instr.
-    wire ir_length_m32 = ~pc_align & ir_length_32;         // This is an misalign 32-bit instr.
-    wire ir_length_m16 = ~pc_align & ir_length_16;         // This is an misalign 16-bit instr.
+    // global signals
+    wire [1 :0         ] ifu_ir_info         ; // ir_info[1]: 32-bit instr if set(get from ir_curr); ir_info[0]: pc align if set(get from pc to flash).   
+    reg  [(`XLEN/2)-1:0] ifu_ir_curr         ; // To get the necessary info, the lower 16 bits of instr is enough.
 
-    // The first bit is used to show the status of align;  1:align 0:misalign
-    // The second bit is used to show the length of instr. 1:16 bit 0:32 bit
-    wire [1:0] ir_length_encode = ({2{ir_length_a32 &  pc_align}} & 2'b10 )|
-                                  ({2{ir_length_m32 & ~pc_align}} & 2'b00 )|
-                                  ({2{ir_length_a16 &  pc_align}} & 2'b11 )|
-                                  ({2{ir_length_m16 & ~pc_align}} & 2'b01 );
+    //////////////////////////////////////////////////////////////////////////////////////
+    // P1: main_state
+    // Describe: main state control the current state of ifu.
+    //           2'b00: INIT, the first cycle get of reset state.
+    //           2'b01: NORMAL, no flush req is put forward.
+    //           2'b10: FLUSH1, flush req happened, new instr is taken out at this state if instr is not 32m.
+    //           2'b11: FLUSH2, new instr is ready at this state if instr is 32m.
+    //////////////////////////////////////////////////////////////////////////////////////
+    reg  [1:0] ifu_ir_state    ;
+    reg  [1:0] ifu_ir_state_nxt;
 
+    always@(posedge clk or negedge rst_n) begin: main_state
+        if (~rst_n) begin:state_reset 
+            ifu_ir_state <= 2'b00;
+        end
+        else begin:state_shift
+            ifu_ir_state <= ifu_ir_state_nxt;
+        end
+    end
 
-    // -------------------------------------------------------------------------------------------------------------
-    // 1. main state controller
-    // make an extra cycle when meet jump instrs.
-    // make two extra cycles when meet misalign jump to 32-bits instr.
-    reg   ir_state_nxt;  
-    wire  ir_state;
+    always@(*) begin:ir_state_nxt
+        case({exu_ifu_pipe_flush_req, ifu_ir_state, ifu_ir_info})
+            5'b0_00_01: ifu_ir_state_nxt = 2'b01;             // INIT always goes to NORMAL. The very first instr is set to 16'h0000.
 
-    // Here is the most difficult logic:
-    // 1. pc_nxt is uploaded by pc controller and it will be remained unchange during the jump instr excuting procedure.
-    // 2. ifu give internal address to itcm to take instr out with 1-2 cycles which is decided by pc_nxt and ir_state.
-    // 3. ir should be ready at the end of 0 or 1 state when meet jump and other flush. 1'b1 indicates 1 extra cycle for 32m instrs.
-    always @(*) begin:main_s
-        case({exu_ifu_pipe_flush_req, ir_state, ir_length_encode})
+            5'b0_01_00: ifu_ir_state_nxt = 2'b01;             // If there is no flush req, NORMAL goes to NORMAL.
+            5'b0_01_01: ifu_ir_state_nxt = 2'b01;
+            5'b0_01_10: ifu_ir_state_nxt = 2'b01;
+            5'b0_01_11: ifu_ir_state_nxt = 2'b01;
 
-            // If there is no flush req, state is always 1'b0.
-            // If there is no flush req, state can not be other situation except for 1'b0.
-            4'b0_0_00 : ir_state_nxt = 1'b0;
-            4'b0_0_01 : ir_state_nxt = 1'b0;
-            4'b0_0_10 : ir_state_nxt = 1'b0;
-            4'b0_0_11 : ir_state_nxt = 1'b0;
+            5'b1_01_00: ifu_ir_state_nxt = 2'b10;             // If there is flush req, always goes to FLUSH1.
+            5'b1_01_01: ifu_ir_state_nxt = 2'b10;
+            5'b1_01_10: ifu_ir_state_nxt = 2'b10; 
+            5'b1_01_11: ifu_ir_state_nxt = 2'b10; 
 
-            // If there is flush req:
-            4'b1_0_00 : ir_state_nxt = 1'b1;
-            4'b1_0_01 : ir_state_nxt = 1'b0;
-            4'b1_0_10 : ir_state_nxt = 1'b0;
-            4'b1_0_11 : ir_state_nxt = 1'b0;
+            5'b1_10_00: ifu_ir_state_nxt = 2'b01;
+            5'b1_10_01: ifu_ir_state_nxt = 2'b01;
+            5'b1_10_10: ifu_ir_state_nxt = 2'b11;             // If 32m flush req, goes to FLUSH2.
+            5'b1_10_11: ifu_ir_state_nxt = 2'b01;             
 
-            // The state 1'b1 should always jump to 1'b0 and tell ram read the PC[31:2] + 32'd4.
-            4'b1_1_00 : ir_state_nxt = 1'b0;
+            5'b1_11_10: ifu_ir_state_nxt = 2'b01;             // FLUSH2 goes to NORMAL.
 
-            // Other conditions are all illegal.        
-            default : ir_state_nxt   = 1'b0;
+            default   : ifu_ir_state_nxt = 2'b01;             // OTHER CONDITIONS ARE ILLEGAL!!
         endcase
     end
 
-    // The state only changed when ready and valid are both set.
-    sirv_gnrl_dfflr #(.DW(1)) ir_state_register (
-        .lden ( 1'b1        ),
-        .dnxt (ir_state_nxt ),
-        .qout (ir_state     ),
-        .clk  (clk          ),
-        .rst_n(rst_n        )
-    );
 
+    /////////////////////////////////////////////////////////////////////////////////////
+    // P2: ir_res_state
+    // Describe: ir_res_state indicates the status of the register which is used to 
+    //           store the unused part flash_o_instr.
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+    reg        ifu_ir_res_state;
+    reg        ifu_ir_res_state_nxt;
+
+    always@(posedge clk or negedge rst_n) begin: res_state
+        if (~rst_n) begin:res_state_reset
+            ifu_ir_res_state <= 1'b0;
+        end
+        else begin:res_state_shift
+            ifu_ir_res_state <= ifu_ir_res_state_nxt;
+        end
+    end
+
+    always@(*) begin:ir_res_state_nxt
+        case({exu_ifu_pipe_flush_req, ifu_ir_state, ifu_ir_info})
+            5'b0_00_01: ifu_ir_res_state_nxt = 1'b0;            // The very first instr is set to 16'h0000. ir_res clear.
+
+            5'b0_01_00: ifu_ir_res_state_nxt = 1'b0;            // 16m, res clear.
+            5'b0_01_01: ifu_ir_res_state_nxt = 1'b1;            // 16a, res full.
+            5'b0_01_10: ifu_ir_res_state_nxt = 1'b1;            // 32m, res full.
+            5'b0_01_11: ifu_ir_res_state_nxt = 1'b0;            // 32a, res clear.
+
+            5'b1_01_00: ifu_ir_res_state_nxt = 1'b0;            // If there is flush req, res clear at the first state.
+            5'b1_01_01: ifu_ir_res_state_nxt = 1'b0;
+            5'b1_01_10: ifu_ir_res_state_nxt = 1'b0; 
+            5'b1_01_11: ifu_ir_res_state_nxt = 1'b0; 
+
+            5'b1_10_00: ifu_ir_res_state_nxt = 1'b0;            // instr out, res clear.
+            5'b1_10_01: ifu_ir_res_state_nxt = 1'b1;            // instr out, res full.
+            5'b1_10_10: ifu_ir_res_state_nxt = 1'b1;            // no instr output, save to 16 bits to res first.
+            5'b1_10_11: ifu_ir_res_state_nxt = 1'b0;            // instr out, res clear.
+
+            5'b1_11_10: ifu_ir_res_state_nxt = 1'b1;            // instr out, res full.
+
+            default   : ifu_ir_res_state_nxt = 1'b0;            // OTHER CONDITIONS ARE ILLEGAL!!
+        endcase
+    end
+
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    // P3: ir_res_reg
+    // Describe: ir_res_reg is used to store the unused part of instr.
+    ////////////////////////////////////////////////////////////////////////////////////
+    reg [(`XLEN/2)-1:0 ] ifu_ir_res    ;
+    reg [(`XLEN/2)-1:0 ] ifu_ir_res_nxt;
+
+    always@(posedge clk or negedge rst_n) begin:res_reg
+        if(~rst_n) begin:res_reset
+            ifu_ir_res <= 16'h0000;
+        end
+        else begin:res_update
+            ifu_ir_res <= ifu_ir_res_nxt;
+        end
+    end
+
+    always@(*) begin: ir_res_nxt
+        case(ifu_ir_res_state_nxt)
+            // ir_res always take the higher 16 bits of itcm input.
+            1'b1: ifu_ir_res_nxt = itcm_ifu_i_ir[`XLEN-1:`XLEN/2];
+
+            // ir_res keeps unchanged if ir_res is not avaliable.
+            1'b0: ifu_ir_res_nxt = ifu_ir_res                    ;
+        endcase
+    end
     
-    //------------------------------------------------------------------------------------------------------------------------
-    // 2. generate flash addr
-    // PC controller is used to control the pc in a two-step instr-reading procedure.
-    wire IR_res_state    ;
-    always @(*) begin: pc_o_controller
-        case({exu_ifu_pipe_flush_req, ir_state, IR_res_state})
-            3'b001   : ifu_flash_o_pc = {pc_ifu_i_pc_nxt[`PC_SIZE-1:2], 2'b00} + `PC_SIZE'd4;    // Normally, read next 32 bits when ir_res is avaliable.
-            3'b000   : ifu_flash_o_pc = {pc_ifu_i_pc_nxt[`PC_SIZE-1:2], 2'b00};                  // read the current 32 bits when ir_res is unavaliable.
 
-            3'b100   : ifu_flash_o_pc = {pc_ifu_i_pc_nxt[`PC_SIZE-1:2], 2'b00};                  // read the current 32 bits when flush and state is 0.
-            3'b101   : ifu_flash_o_pc = {pc_ifu_i_pc_nxt[`PC_SIZE-1:2], 2'b00};                  
+    ///////////////////////////////////////////////////////////////////////////////////
+    // P5: ir_curr and ir_info
+    // Describe: significant part of ifu.
+    //           ir_curr is the instr wait for launch which is related to pc_nxt and pc_flash.
+    //           ----------------------\  /--------------\  /------------------------
+    //                                  \/                \/
+    //                ir in exu         /\  ir in ifu     /\  ir from itcm next cycle
+    //           ----------------------/  \--------------/  \------------------------
+    //                pc_r                   pc_nxt            pc_flash
+    ///////////////////////////////////////////////////////////////////////////////////
+    wire   ifu_pc_nxt_align;                       // pc_nxt_align tells the begining of instr.
+    assign ifu_pc_nxt_align = ~pc_ifu_i_pc_nxt[1]; // pc_nxt[1:0] should be 10 or 00. 00 means align.
 
-            3'b111   : ifu_flash_o_pc = {pc_ifu_i_pc_nxt[`PC_SIZE-1:2], 2'b00} + `PC_SIZE'd4;    // read the next 32 bits when flush and state is 1. Under this situation, ir_res_state can't be 0.
-            default    : ifu_flash_o_pc = `PC_SIZE'd0;    
-        endcase
+    always@(*) begin:ir_curr
+        if (ifu_ir_res_state) begin: ir_curr_from_res
+            ifu_ir_curr = ifu_ir_res;
+        end
+        else if (ifu_pc_nxt_align) begin: ir_curr_from_low16
+            ifu_ir_curr = itcm_ifu_i_ir[(`XLEN/2)-1:0];
+        end
+        else begin:ir_curr_from_high16
+            ifu_ir_curr = itcm_ifu_i_ir[`XLEN-1:(`XLEN/2)];
+        end
     end
-
-
-    //------------------------------------------------------------------------------------------------------------------------
-    // 3. ir_res
-    // res will fail when misalign-reading 16bits instr.
-    // res will fail when reading any instr(32).
-    // Generate IR register
-    wire [`IR_RES_LEN-1:0 ] IR_res;
-    wire [`XLEN-1:0       ] IR_r  ;
-    reg  [`XLEN-1:0       ] IR_nxt;
-    reg  [`IR_RES_LEN-1:0 ] IR_res_nxt;
-
-    always @(*) begin: ir_res_reg
-        case(ir_length_encode)
-            2'b00 : IR_res_nxt =  itcm_ifu_i_ir[31:16];           // 32m, save the unused 16 bits, 00 always intends to read the upper 16 bits.    // ok
-            2'b01 : IR_res_nxt =  `IR_RES_LEN'd0      ;           // 16m, empty the res register.                                                  // ok no jump m16
-            2'b10 : IR_res_nxt =  `IR_RES_LEN'd0      ;           // 32a, the res register is still empty, the instrs all used.                    // ok no jump a32
-            2'b11 : IR_res_nxt =  itcm_ifu_i_ir[31:16];           // 16a, save the unused 16 bits.                                                 // ok
-        endcase
-    end
-
-    // res register is not controlled by ready and valid.
-    sirv_gnrl_dfflr #(.DW(16)) IR_res_register (
-        .lden ( 1'b1        ),
-        .dnxt (IR_res_nxt   ),
-        .qout (IR_res       ),
-        .clk  (clk          ),
-        .rst_n(rst_n        )
-    );
-
     
-    //-----------------------------------------------------------------------------------------------------------------------------------
-    // 4. ir_res_state
-    // build another dff for ir_res_state register to show its status.
-    reg  IR_res_state_nxt;
+    wire ifu_ir_nxt_rv32 = (~(ifu_ir_curr[4:2] == 3'b111)) & (ifu_ir_curr[1:0] == 2'b11); // decode the length of ir_nxt from ir_curr. only 16-bit and 32-bit instr is supported.
 
-    always@(*) begin: IR_res_state_reg
-        case(ir_length_encode)
-            2'b00   : IR_res_state_nxt =  1'b1      ;          // 32m, save the unused 16 bits, 00 always intends to read the upper 16 bits.
-            2'b01   : IR_res_state_nxt =  1'b0      ;          // 16m, empty the res register.
-            2'b10   : IR_res_state_nxt =  1'b0      ;          // 32a, the res register is still empty, the instrs all used.
-            2'b11   : IR_res_state_nxt =  1'b1      ;          // 16a, save the unused 16 bits.
+    assign ifu_ir_info[1] = ifu_ir_nxt_rv32;
+    assign ifu_ir_info[0] = ifu_pc_nxt_align;
+
+
+    //////////////////////////////////////////////////////////////////////////////////
+    // P6: pc_flash
+    // Describe: pc_flash is the pc for itcm access which is predicted from pc_nxt and ir_nxt.
+    //////////////////////////////////////////////////////////////////////////////////
+    reg [`PC_SIZE-1:0] ifu_pc_flash;
+    always@(*) begin:pc_flash
+        if (ifu_ir_state == 2'b00) begin:init_pc
+            ifu_pc_flash = `PC_SIZE'h0000_0000;
+        end
+        else if (exu_ifu_pipe_flush_req & (ifu_ir_state == 2'b01)) begin:norm2flush
+            ifu_pc_flash = pc_ifu_i_pc_nxt;
+        end
+        else if (ifu_ir_state == 2'b10) begin:flush1
+            ifu_pc_flash = pc_ifu_i_pc_nxt + `PC_SIZE'h0000_0004;                   // always try to take the next instr in itcm
+        end
+        else if (ifu_ir_state == 2'b11) begin:flush2
+            ifu_pc_flash = pc_ifu_i_pc_nxt + `PC_SIZE'h0000_0008;
+        end
+        else begin:norm
+            case(ifu_ir_info)
+                2'b00: ifu_pc_flash = pc_ifu_i_pc_nxt + `PC_SIZE'h0000_0004;        // 16m
+                2'b01: ifu_pc_flash = pc_ifu_i_pc_nxt + `PC_SIZE'h0000_0004;        // 16a
+                2'b10: ifu_pc_flash = pc_ifu_i_pc_nxt + `PC_SIZE'h0000_0008;        // 32m
+                2'b11: ifu_pc_flash = pc_ifu_i_pc_nxt + `PC_SIZE'h0000_0004;        // 32a
+            endcase
+        end
+    end
+
+    assign ifu_flash_o_enable = exu_ifu_pipe_flush_req | (ifu_i_exu_ready & ifu_o_ifu_valid);
+    assign ifu_flash_o_pc     = ifu_pc_flash;
+
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // P7: ir_reg
+    // Describe: ir_reg is used to store ir_r. ir_r is related to pc_r.
+    /////////////////////////////////////////////////////////////////////////////////
+    reg [`XLEN-1:0] ifu_ir_nxt;
+    reg [`XLEN-1:0] ifu_ir_reg;
+
+    always@(posedge clk or negedge rst_n) begin:ir_reg
+        if (~rst_n) begin:ir_reset
+            ifu_ir_reg <= `XLEN'h0000_0000;
+        end
+        else if (ifu_i_exu_ready & ifu_o_ifu_valid) begin:ir_update
+            ifu_ir_reg <= ifu_ir_nxt;  // ir update when exu and ifu are both ready.       
+        end
+    end
+
+    always@(*) begin:ir_reg_nxt
+        case({exu_ifu_pipe_flush_req, ifu_ir_state, ifu_ir_info})
+            5'b0_00_01: ifu_ir_nxt = `XLEN'h0000_0000;        // First cycle, both itcm_i_ir and ir_res are unavaliable.
+
+            5'b0_01_00: ifu_ir_nxt = {16'h0000           , ifu_ir_res         };   // 16m, take the data inside ir_res.
+            5'b0_01_01: ifu_ir_nxt = {16'h0000           , itcm_ifu_i_ir[15:0]};   // 16a, take the lower 16 bits of itcm_i_ir.
+            5'b0_01_10: ifu_ir_nxt = {itcm_ifu_i_ir[15:0], ifu_ir_res         };   // 32m, combine the data inside ir_res and lower 16 bits of itcm_i_ir.
+            5'b0_01_11: ifu_ir_nxt = itcm_ifu_i_ir                             ;   // 32a, just take itcm_i_ir.
+
+            5'b1_01_00: ifu_ir_nxt = 32'h0000_0000                             ;   // at this state, ir is useless.
+            5'b1_01_01: ifu_ir_nxt = 32'h0000_0000                             ;   // at this state, ir is useless.
+            5'b1_01_10: ifu_ir_nxt = 32'h0000_0000                             ;   // at this state, ir is useless.
+            5'b1_01_11: ifu_ir_nxt = 32'h0000_0000                             ;   // at this state, ir is useless.
+
+            5'b1_10_00: ifu_ir_nxt = {16'h0000           , itcm_ifu_i_ir[31:16]};  // 16m
+            5'b1_10_01: ifu_ir_nxt = {16'h0000           , itcm_ifu_i_ir[15:0 ]};  // 16a
+            5'b1_10_10: ifu_ir_nxt = 32'h0000_0000                              ;  // 32m, instr not ready yet.
+            5'b1_10_11: ifu_ir_nxt = itcm_ifu_i_ir                              ;  // 32a
+
+            5'b1_11_10: ifu_ir_nxt = {itcm_ifu_i_ir[15:0], ifu_ir_res          };  // 32m, instr ready.
+
+            default:    ifu_ir_nxt = 32'h0000_0000                             ;   // OTHER CONDITIONS ARE ILLEGAL.
         endcase
     end
 
-    // res_status register is not controlled by ready and valid.
-    sirv_gnrl_dfflr #(.DW(1)) IR_res_status_register (
-        .lden ( 1'b1              ),
-        .dnxt (IR_res_state_nxt   ),
-        .qout (IR_res_state       ),
-        .clk  (clk                ),
-        .rst_n(rst_n              )
-    );
+    assign ifu_o_ir_r = ifu_ir_reg;
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////
+    // P8: valid
+    // Describe: ifu_valid indicate ifu have organized the correct instr.
+    ////////////////////////////////////////////////////////////////////////////////
+    reg ifu_valid;
 
+    always@(*) begin:ifu_ir_valid
+        if (ifu_ir_state == 2'b00) begin:state_init
+            ifu_valid = 1'b1;
+        end
+        else begin: other_state
+            case({exu_ifu_pipe_flush_req, ifu_ir_state, ifu_ir_info})
+                
+                // If no flush req, ifu always valid.
+                5'b0_01_00: ifu_valid = 1'b1;
+                5'b0_01_01: ifu_valid = 1'b1;
+                5'b0_01_10: ifu_valid = 1'b1;
+                5'b0_01_11: ifu_valid = 1'b1;
 
-    //-----------------------------------------------------------------------------------------------------------
-    // 5. ir_reg
-    // Generate correct IR
-    always@(*) begin:IR_controller
+                // If flush req, ifu always unvalid at 01.
+                5'b1_01_00: ifu_valid = 1'b0;
+                5'b1_01_01: ifu_valid = 1'b0;
+                5'b1_01_10: ifu_valid = 1'b0;
+                5'b1_01_11: ifu_valid = 1'b0;
 
-        case({exu_ifu_pipe_flush_req, ir_state, ir_length_encode})                            // ir_length_encode: MSB, 0: misalign 1: align; LSB, 0: 32bit 1:16bit.
+                // If flush req, ifu valid at 10 except 32m.
+                5'b1_10_00: ifu_valid = 1'b1;
+                5'b1_10_01: ifu_valid = 1'b1;
+                5'b1_10_10: ifu_valid = 1'b0;
+                5'b1_10_11: ifu_valid = 1'b1;
 
-            4'b0_0_00 : IR_nxt  =  {itcm_ifu_i_ir[15:0], IR_res             }      ;          // 32m, combine the ir_res register and the itcm_ir.
-            4'b0_0_01 : IR_nxt  =  {16'd0              , IR_res             }      ;          // 16m, take out the res register.
-            4'b0_0_10 : IR_nxt  =  itcm_ifu_i_ir                                   ;          // 32a, the instrs all used.
-            4'b0_0_11 : IR_nxt  =  {16'd0              , itcm_ifu_i_ir[15:0]}      ;          // 16a, save the unused 16 bits.
-            
-            4'b1_0_00 : IR_nxt  =  32'h0000_0000                                   ;          // This condition is very special. // instr will not changed at this state.
-            4'b1_0_01 : IR_nxt  =  {16'd0              , itcm_ifu_i_ir[31:16]}     ;          // take higher 16 bits.
-            4'b1_0_10 : IR_nxt  =  itcm_ifu_i_ir                                   ;          // take 32 bits.
-            4'b1_0_11 : IR_nxt  =  {16'd0              , itcm_ifu_i_ir[15: 0]}     ;          // take lower 16 bits and save the reserve part.
-
-            // Third, tell ram read the PC[31:2] + 32'd4.
-            4'b1_1_00 : IR_nxt  =  {itcm_ifu_i_ir[15:0], IR_res             }      ;          // Save the unused part.
-
-            // Other conditions are all illegal.        
-            default    : IR_nxt  =  32'hdead_ffff                                   ;
-
-        endcase
+                // If no flush req, ifu always valid
+                5'b1_11_10: ifu_valid = 1'b1;
+                
+                // Other conditions are illegal.
+                default: ifu_valid = 1'b1; 
+            endcase
+        end
     end
 
-    sirv_gnrl_dfflr #(.DW(32)) IR_register (
-        .lden ( ifu_o_ifu_valid & ifu_i_exu_ready ), // IR can change when both valid and ready are set.
-        .dnxt (IR_nxt       ),
-        .qout (IR_r         ),
-        .clk  (clk          ),
-        .rst_n(rst_n        )
-    );
-
-    assign ifu_o_ir_r = IR_r;
+    assign ifu_o_ifu_valid = ifu_valid; 
 
 
-    // make an auxiliary signal to measure the length of instr
-    // If the ir_res is valid, use it first.
-    // Then, use itcm_ir according to pc.
-    assign current_ir = ({16{IR_res_state }} &  IR_res)                            |               
-                        ({16{(~IR_res_state  &  pc_align)}} & itcm_ifu_i_ir[15:0 ])|
-                        ({16{(~IR_res_state  & ~pc_align)}} & itcm_ifu_i_ir[31:16]) ;
+    /////////////////////////////////////////////////////////////////////////////////////
+    // P9: INIT_USE
+    // Describe: the first cycle after the rst_n was pull up.
+    ////////////////////////////////////////////////////////////////////////////////////
+    reg ifu_pc_init_use_r;
 
-    // --------------------------------------------------------------------------------------------------
-    // 6. ifu_valid
-    // output valid
-    always @(*) begin: ifu_valid
-        if (~rst_n)
-            ifu_o_ifu_valid = 1'b0;
-        else if (~exu_ifu_pipe_flush_req & ~ir_state)
-            ifu_o_ifu_valid = 1'b1;                                                                 // If there is no flush, ir will be ready at state 0;
-        else if (exu_ifu_pipe_flush_req & ~ir_state & (|ir_length_encode))
-            ifu_o_ifu_valid = 1'b1;                                                                 // If there is flush, ir will be ready at state 0 if ir_length_encode is not 00. 
-        else if (exu_ifu_pipe_flush_req & ir_state  & (~(|ir_length_encode)))
-            ifu_o_ifu_valid = 1'b1;                                                                 // If there is flush, ir will be ready at state 1 if ir_length_encode is 00. 
+    always@(posedge clk or negedge rst_n) begin
+        if(~rst_n)
+            ifu_pc_init_use_r <= 1'b1;
         else
-            ifu_o_ifu_valid = 1'b0;                                                                 // ifu is not valid under other conditions.
+            ifu_pc_init_use_r <= 1'b0;
     end
 
+    assign ifu_o_pc_init_use = ifu_pc_init_use_r;
+    
 endmodule
