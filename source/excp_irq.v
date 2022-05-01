@@ -60,14 +60,7 @@ module excp_irq(
                                    (tmr_irq   & mtie_r) ;     
     
     // mie_r expand 1 clk for pipe_flush
-    reg status_mie_re;
-    always@(posedge clk) begin
-        status_mie_re <= status_mie_r;
-    end
-    wire status_mie_w2_r = status_mie_re | status_mie_r;
-
-    wire irq_req         = (~dbg_mode & status_mie_w2_r) & irq_req_raw ;
-
+    wire irq_req         = (~dbg_mode & status_mie_r) & irq_req_raw ;
 
     /////////////////////////////////////////////////////////////////////////////
     // WFI 

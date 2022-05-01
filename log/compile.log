@@ -4,7 +4,7 @@ Command: vcs -R +lint=TFIPC-L +lint=PCWM -full64 -sverilog +v2k -timescale=1ns/1
 -f /home/ICer/shaw/riscv_core/filelist/filelist.f -l /home/ICer/shaw/riscv_core/log/compile.log \
 
                          Chronologic VCS (TM)
-        Version O-2018.09-1_Full64 -- Sun Mar 20 19:53:37 2022
+        Version O-2018.09-1_Full64 -- Sun May  1 15:27:19 2022
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -214,8 +214,7 @@ exu_top, "alu_top AU( .alu_i_rs1 (exu_rf_op1),  .alu_i_rs2 (exu_rf_op2),  .alu_i
   output port 'alu_bjp_cmt_dret' is not connected.
 
 Starting vcs inline pass...
-9 modules and 0 UDP read.
-recompiling module csr
+8 modules and 0 UDP read.
 recompiling module decoder
 recompiling module excp_dbg
 recompiling module ifu_top
@@ -224,7 +223,7 @@ recompiling module sirv_gnrl_dffr
 recompiling module wbck
 recompiling module intagent
 recompiling module sim_core_top
-All of 9 modules done
+All of 8 modules done
 make[1]: Entering directory `/home/ICer/shaw/riscv_core/makefile/csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /home/ICer/shaw/riscv_core/sim/simv_riscv_core ]; then chmod -x /home/ICer/shaw/riscv_core/sim/simv_riscv_core; \
@@ -232,7 +231,7 @@ fi
 g++  -o /home/ICer/shaw/riscv_core/sim/simv_riscv_core    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv_riscv_core.daidir/ \
 -Wl,-rpath=./simv_riscv_core.daidir/ -Wl,-rpath='$ORIGIN'/simv_riscv_core.daidir//scsim.db.dir \
 -rdynamic  -Wl,-rpath=/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib -L/home/synopsys/vcs-mx/O-2018.09-1/linux64/lib \
-objs/amcQw_d.o   _52320_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o \
+objs/amcQw_d.o   _28375_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o \
 rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lzerosoft_rt_stubs -lvirsim \
 -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcs_tls.o \
 -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive        _vcs_pli_stub_.o   /home/synopsys/vcs-mx/O-2018.09-1/linux64/lib/vcs_save_restore_new.o \
@@ -243,7 +242,7 @@ make[1]: Leaving directory `/home/ICer/shaw/riscv_core/makefile/csrc'
 Command: /home/ICer/shaw/riscv_core/sim/simv_riscv_core +lint=TFIPC-L +lint=PCWM +v2k +notimingchec +nospecify +vcs+flush+all -lca +define+FSDB -a /home/ICer/shaw/riscv_core/log/compile.log
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-1_Full64; Runtime version O-2018.09-1_Full64;  Mar 20 19:53 2022
+Compiler version O-2018.09-1_Full64; Runtime version O-2018.09-1_Full64;  May  1 15:27 2022
 read finished!!!
 Let's go!
 *Verdi* Loading libsscore_vcs201809.so
@@ -258,6 +257,6 @@ $finish called from file "/home/ICer/shaw/riscv_core/source/sim_core_top.v", lin
 $finish at simulation time                 1000
            V C S   S i m u l a t i o n   R e p o r t 
 Time: 1000 ns
-CPU Time:      0.190 seconds;       Data structure size:   0.1Mb
-Sun Mar 20 19:53:39 2022
-CPU time: .779 seconds to compile + .192 seconds to elab + .130 seconds to link + .212 seconds in simulation
+CPU Time:      0.990 seconds;       Data structure size:   0.1Mb
+Sun May  1 15:27:22 2022
+CPU time: 2.741 seconds to compile + .300 seconds to elab + .164 seconds to link + 1.014 seconds in simulation

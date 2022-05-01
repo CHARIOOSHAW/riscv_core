@@ -241,7 +241,7 @@ module intagent(
     always@(posedge clk or negedge rst_n) begin:ext_int_flag
         if (~rst_n)
             extirq_pending_flag <= 1'b0;
-        else if (extirq_pending_flag & width_count & ~ita_i_bjp_req_flush)           // add a counter
+        else if (extirq_pending_flag &  ~ita_i_bjp_req_flush)           // add a counter
             extirq_pending_flag <= 1'b0;
         else if (ita_ext_flag_set)
             extirq_pending_flag <= 1'b1;
@@ -249,16 +249,6 @@ module intagent(
             extirq_pending_flag <= extirq_pending_flag;
     end
     
-    // expand external int signal use count
-    always@(posedge clk or negedge rst_n) begin
-        if (~rst_n)
-            width_count <= 1'b0;
-        else if (extirq_pending_flag & ~ita_i_bjp_req_flush)
-            width_count <= 1'b1;
-        else
-            width_count <= 1'b0;
-    end
-
     // output pending flag
     assign ita_o_int_pending_flag = extirq_pending_flag;
 

@@ -59,10 +59,13 @@ module ifu_top(
     // Description: ifu controls the inter-connection between itcm and pc. It also 
     //              outputs the valid signal which is important for the whole system.
     //////////////////////////////////////////////////////////////////////////////
-    wire [`XLEN-1:0               ] itcm_ifu_ir    ;
-    wire [`PC_SIZE-1:0            ] pc_ifu_pc_nxt  ; 
-    wire [`PC_SIZE-1:0            ] ifu_flash_pc   ;
-    wire                            ifu_flash_enable;
+    wire [`XLEN-1:0               ] itcm_ifu_ir       ;
+    wire [`PC_SIZE-1:0            ] pc_ifu_pc_nxt     ; 
+    wire [`PC_SIZE-1:0            ] ifu_flash_pc      ;
+    wire                            ifu_flash_enable  ;
+
+    wire                            ifu_pc_init_use   ;
+    wire                            ifu_pc_first_instr;
 
     assign ifu_pc_nxt = pc_ifu_pc_nxt;
 
@@ -75,6 +78,7 @@ module ifu_top(
         // IFU raw PC.                           
         .pc_ifu_i_pc_nxt        ( pc_ifu_pc_nxt             ),
         .ifu_o_pc_init_use      ( ifu_pc_init_use           ),
+        .ifu_o_pc_first_instr   ( ifu_pc_first_instr        ),
         .ifu_flash_o_pc         ( ifu_flash_pc              ),
         .ifu_flash_o_enable     ( ifu_flash_enable          ),
                            
@@ -100,6 +104,7 @@ module ifu_top(
         .pc_i_excp              ( ifu_i_excp                ),
         .pc_i_mtvec             ( ifu_i_mtvec               ),
         .pc_i_init_use          ( ifu_pc_init_use           ),
+        .pc_i_first_instr       ( ifu_pc_first_instr        ),
                     
         .pc_i_bjp_req_flush     ( ifu_i_bjp_flush_req       ),
         .pc_i_bjp_req_fulsh_pc  ( ifu_i_bjp_flush_pc        ),

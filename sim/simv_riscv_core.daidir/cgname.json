@@ -5,33 +5,21 @@
         "module",
         1
     ],
-    "sirv_gnrl_dffr": [
-        "sirv_gnrl_dffr",
-        "Wnd0S",
-        "module",
-        7
-    ],
-    "csr": [
-        "csr",
-        "cNThd",
+    "decoder": [
+        "decoder",
+        "zf0bY",
         "module",
         2
+    ],
+    "intagent": [
+        "intagent",
+        "Nvknd",
+        "module",
+        8
     ],
     "excp_dbg": [
         "excp_dbg",
         "S3FV3",
-        "module",
-        4
-    ],
-    "multi_counter": [
-        "multi_counter",
-        "y12fA",
-        "module",
-        6
-    ],
-    "decoder": [
-        "decoder",
-        "zf0bY",
         "module",
         3
     ],
@@ -39,30 +27,36 @@
         "ifu_top",
         "He9nS",
         "module",
+        4
+    ],
+    "sirv_gnrl_dffr": [
+        "sirv_gnrl_dffr",
+        "Wnd0S",
+        "module",
+        6
+    ],
+    "multi_counter": [
+        "multi_counter",
+        "y12fA",
+        "module",
         5
-    ],
-    "wbck": [
-        "wbck",
-        "Da1cw",
-        "module",
-        8
-    ],
-    "intagent": [
-        "intagent",
-        "Nvknd",
-        "module",
-        9
-    ],
-    "sim_core_top": [
-        "sim_core_top",
-        "Jm6Rb",
-        "module",
-        10
     ],
     "...MASTER...": [
         "SIM",
         "amcQw",
         "module",
-        11
+        10
+    ],
+    "wbck": [
+        "wbck",
+        "Da1cw",
+        "module",
+        7
+    ],
+    "sim_core_top": [
+        "sim_core_top",
+        "Jm6Rb",
+        "module",
+        9
     ]
 }

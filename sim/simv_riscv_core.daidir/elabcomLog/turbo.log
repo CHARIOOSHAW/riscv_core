@@ -4,4 +4,4 @@ uname(Linux IC_EDA 3.10.0-1160.59.1.el7.x86_64 #1 SMP Wed Feb 23 16:47:03 UTC 20
 [INFO] error/warning message 'C00381' has been suppressed.
 [INFO] error/warning message 'C00388' has been suppressed.
 [INFO] error/warning message 'C00389' has been suppressed.
-au time 0.042222 0.018378 0.016754 delta 97095680 97095680 total 188723200 188723200
+au time 0.373883 0.045528 0.303784 delta 97095680 97095680 total 188723200 188723200

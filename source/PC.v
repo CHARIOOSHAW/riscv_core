@@ -30,7 +30,9 @@ module PC(
 
     input                             pc_i_excp              , // err or illegal happened
     input  [`PC_SIZE-1:0]             pc_i_mtvec             ,
-    input                             pc_i_init_use          ,
+    
+    input                             pc_i_init_use          , // ifu -> pc
+    input                             pc_i_first_instr       ,
 
     input                             pc_i_bjp_req_flush     , // jump/bxx/ret instr
     input  [`PC_SIZE-1:0]             pc_i_bjp_req_fulsh_pc  , 
@@ -49,14 +51,12 @@ module PC(
     );
  
     // wbck epc
-    // excp and int which is piority?
     wire [`PC_SIZE-1:0] PC_r;
-    assign pc_o_wbck_epc = (pc_i_irq_req &  pc_i_int_pending_flag             )? PC_r     :
-                           (pc_i_irq_req & ~pc_i_int_pending_flag &  pc_i_rv32)? PC_r+'d4 :
-                           (pc_i_irq_req & ~pc_i_int_pending_flag & ~pc_i_rv32)? PC_r+'d2 :
-                            pc_i_excp                                          ? PC_r     :
-                                                                                 'd0      ; // UNVALID
-
+    assign pc_o_wbck_epc   = (pc_i_irq_req &  pc_i_int_pending_flag             )? PC_r             :
+                             (pc_i_irq_req & ~pc_i_int_pending_flag &  pc_i_rv32)? PC_r+`PC_SIZE'd4 :
+                             (pc_i_irq_req & ~pc_i_int_pending_flag & ~pc_i_rv32)? PC_r+`PC_SIZE'd2 :
+                             (~pc_i_irq_req & pc_i_excp                         )? PC_r             :
+                                                                                   `PC_SIZE'd0      ; // UNVALID
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // Basic PC control and calculation.
@@ -70,9 +70,10 @@ module PC(
                                      
     assign PC_nxt = need_flush                      ?    PC_flush   :
                     pc_i_init_use                   ?    `PC_SIZE'd0:
+                    pc_i_first_instr                ?    `PC_SIZE'd0:
                     pc_i_rv32                       ?    PC_r+'d4   :
-                    ~pc_i_rv32                      ?    PC_r+'d2   :
-                                                         'd0;
+                                                         PC_r+'d2   ;
+
 
     sirv_gnrl_dfflr #(.DW(`PC_SIZE)) pcr (
         .lden ( pc_i_ifu_valid & pc_i_exu_ready    ),

@@ -2,7 +2,7 @@
 //ram.v
 `include "mcu_defines.v"
 
-module ram_db (
+module ram_module (
 
     input      [31:0]  DB_w    , // ram data bus
     output reg [31:0]  DB_r    ,

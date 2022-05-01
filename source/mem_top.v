@@ -119,7 +119,7 @@ module mem_top(
     // ram unit
     wire lsu_ram_cs = lsu_ram_valid & (~lsu_o_wbck_err); // only read or write when the instr is legal.
 
-    ram_db exu_ram_unit (
+    ram_module exu_ram_unit (
         .DB_r                (      ram_lsu_rdata           ),
         .DB_w                (      lsu_ram_wdata           ),
         .address             (      lsu_ram_addr            ),

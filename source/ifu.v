@@ -27,7 +27,8 @@ module ifu(
 
     // PC control for flash    
     input      [`PC_SIZE-1:0               ] pc_ifu_i_pc_nxt        , // The PC_nxt from pc_controller. pc -> ifu
-    output                                   ifu_o_pc_init_use      ,
+    output                                   ifu_o_pc_init_use      , // ifu -> pc
+    output                                   ifu_o_pc_first_instr   ,
     output     [`PC_SIZE-1:0               ] ifu_flash_o_pc         , // PC sent to flash. ifu -> flash
     output                                   ifu_flash_o_enable     ,
  
@@ -46,6 +47,7 @@ module ifu(
     // global signals
     wire [1 :0         ] ifu_ir_info         ; // ir_info[1]: 32-bit instr if set(get from ir_curr); ir_info[0]: pc align if set(get from pc to flash).   
     reg  [(`XLEN/2)-1:0] ifu_ir_curr         ; // To get the necessary info, the lower 16 bits of instr is enough.
+    wire                 ac_pipe_flush_req   ;
 
     //////////////////////////////////////////////////////////////////////////////////////
     // P1: main_state
@@ -68,7 +70,7 @@ module ifu(
     end
 
     always@(*) begin:ir_state_nxt
-        case({exu_ifu_pipe_flush_req, ifu_ir_state, ifu_ir_info})
+        case({ac_pipe_flush_req, ifu_ir_state, ifu_ir_info})
             5'b0_00_01: ifu_ir_state_nxt = 2'b01;             // INIT always goes to NORMAL. The very first instr is set to 16'h0000.
 
             5'b0_01_00: ifu_ir_state_nxt = 2'b01;             // If there is no flush req, NORMAL goes to NORMAL.
@@ -112,7 +114,7 @@ module ifu(
     end
 
     always@(*) begin:ir_res_state_nxt
-        case({exu_ifu_pipe_flush_req, ifu_ir_state, ifu_ir_info})
+        case({ac_pipe_flush_req, ifu_ir_state, ifu_ir_info})
             5'b0_00_01: ifu_ir_res_state_nxt = 1'b0;            // The very first instr is set to 16'h0000. ir_res clear.
 
             5'b0_01_00: ifu_ir_res_state_nxt = 1'b0;            // 16m, res clear.
@@ -204,7 +206,7 @@ module ifu(
         if (ifu_ir_state == 2'b00) begin:init_pc
             ifu_pc_flash = `PC_SIZE'h0000_0000;
         end
-        else if (exu_ifu_pipe_flush_req & (ifu_ir_state == 2'b01)) begin:norm2flush
+        else if (ac_pipe_flush_req & (ifu_ir_state == 2'b01)) begin:norm2flush
             ifu_pc_flash = pc_ifu_i_pc_nxt;
         end
         else if (ifu_ir_state == 2'b10) begin:flush1
@@ -223,7 +225,7 @@ module ifu(
         end
     end
 
-    assign ifu_flash_o_enable = exu_ifu_pipe_flush_req | (ifu_i_exu_ready & ifu_o_ifu_valid);
+    assign ifu_flash_o_enable = ac_pipe_flush_req | (ifu_i_exu_ready & ifu_o_ifu_valid);
     assign ifu_flash_o_pc     = ifu_pc_flash;
 
 
@@ -244,7 +246,7 @@ module ifu(
     end
 
     always@(*) begin:ir_reg_nxt
-        case({exu_ifu_pipe_flush_req, ifu_ir_state, ifu_ir_info})
+        case({ac_pipe_flush_req, ifu_ir_state, ifu_ir_info})
             5'b0_00_01: ifu_ir_nxt = `XLEN'h0000_0000;        // First cycle, both itcm_i_ir and ir_res are unavaliable.
 
             5'b0_01_00: ifu_ir_nxt = {16'h0000           , ifu_ir_res         };   // 16m, take the data inside ir_res.
@@ -282,7 +284,7 @@ module ifu(
             ifu_valid = 1'b1;
         end
         else begin: other_state
-            case({exu_ifu_pipe_flush_req, ifu_ir_state, ifu_ir_info})
+            case({ac_pipe_flush_req, ifu_ir_state, ifu_ir_info})
                 
                 // If no flush req, ifu always valid.
                 5'b0_01_00: ifu_valid = 1'b1;
@@ -302,7 +304,7 @@ module ifu(
                 5'b1_10_10: ifu_valid = 1'b0;
                 5'b1_10_11: ifu_valid = 1'b1;
 
-                // If no flush req, ifu always valid
+                // ifu always valid at 11.
                 5'b1_11_10: ifu_valid = 1'b1;
                 
                 // Other conditions are illegal.
@@ -319,6 +321,7 @@ module ifu(
     // Describe: the first cycle after the rst_n was pull up.
     ////////////////////////////////////////////////////////////////////////////////////
     reg ifu_pc_init_use_r;
+    reg ifu_pc_first_instr_raw;
 
     always@(posedge clk or negedge rst_n) begin
         if(~rst_n)
@@ -328,5 +331,63 @@ module ifu(
     end
 
     assign ifu_o_pc_init_use = ifu_pc_init_use_r;
+
+    always@(posedge clk or negedge rst_n) begin
+        if(~rst_n)
+            ifu_pc_first_instr_raw <= 1'b1;
+        else
+            ifu_pc_first_instr_raw <= ifu_pc_init_use_r;
+    end
+
+    assign ifu_o_pc_first_instr = ifu_pc_first_instr_raw & (~ifu_pc_init_use_r);
+
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    // P10: auto_correlation-pipe_flush_req
+    // Describe: ensure the length of flush req meet the need of pipe flush.
+    ////////////////////////////////////////////////////////////////////////////////////
+    reg ac_pipe_flush_req_raw;
+    reg ac_pipe_flush_req_nxt;
+
+    always@(posedge clk or negedge rst_n) begin
+        if (~rst_n)
+            ac_pipe_flush_req_raw <= 1'b0;
+        else
+            ac_pipe_flush_req_raw <= ac_pipe_flush_req_nxt;
+    end
+
+    always@(*) begin
+        case({ac_pipe_flush_req_raw|exu_ifu_pipe_flush_req, ifu_ir_state, ifu_ir_info})
+            5'b0_00_01: ac_pipe_flush_req_nxt = 1'b0;
+
+            // If no flush req, ac_pipe_flush_req always unvalid.
+            5'b0_01_00: ac_pipe_flush_req_nxt = 1'b0;
+            5'b0_01_01: ac_pipe_flush_req_nxt = 1'b0;
+            5'b0_01_10: ac_pipe_flush_req_nxt = 1'b0;
+            5'b0_01_11: ac_pipe_flush_req_nxt = 1'b0;
+
+            // If flush req, ac_pipe_flush_req always valid at 01.
+            5'b1_01_00: ac_pipe_flush_req_nxt = 1'b1;
+            5'b1_01_01: ac_pipe_flush_req_nxt = 1'b1;
+            5'b1_01_10: ac_pipe_flush_req_nxt = 1'b1;
+            5'b1_01_11: ac_pipe_flush_req_nxt = 1'b1;
+
+            // if flush req, ac_pipe_flush_req release at 10 except 32m.
+            5'b1_10_00: ac_pipe_flush_req_nxt = 1'b0;
+            5'b1_10_01: ac_pipe_flush_req_nxt = 1'b0;
+            5'b1_10_10: ac_pipe_flush_req_nxt = 1'b1;
+            5'b1_10_11: ac_pipe_flush_req_nxt = 1'b0;
+
+            // if no flush req, ac_pipe_flush_req will release at 11.
+            5'b1_11_10: ac_pipe_flush_req_nxt = 1'b0;
+                
+            // other conditions are illegal.
+            default: ac_pipe_flush_req_nxt = 1'b0; 
+        endcase
+    end
+
+    assign ac_pipe_flush_req = ac_pipe_flush_req_raw | exu_ifu_pipe_flush_req;
+    
+
     
 endmodule
